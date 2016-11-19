@@ -1,0 +1,24 @@
+<%- include layouts/admin_header.ejs %>
+
+            <form method="post" action="/quiz/add">
+                <table cellpadding="8">
+                <tr>
+                    <td class="label">Name:</td>
+                    <td> <input type="text" name="name" required></td>
+                </tr>
+                <tr>
+                    <td class="label">URL:</td>
+                    <td><input type="text" name="link" required></td>
+                </tr>                
+
+
+                <td>
+                    &nbsp; <button type="submit" name="idproject" value="<%=idproject%>">Save</button>
+
+                    <input type="button" name="cancel" value="Cancel" class="cancel" onclick="window.location.href='/quiz/list/<%=idproject%>'">
+                </td>
+
+                </table>
+            </form>
+            
+<%- include layouts/footer.ejs %>

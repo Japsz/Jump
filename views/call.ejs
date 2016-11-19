@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Call Manager</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <style>
+        body        { padding-top:0px; }
+        .contact-info{ align-content: center }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.dev.skype.com/uri/skype-uri.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"><%=page_title%></a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="/user_logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="col-md-6 contact-info">
+        <h1>Información Del Contacto</h1>
+        <p>Nombre: <%=data.name%></p>
+        <p>Apellido: <%=data.last_name%></p>
+        <p>Telefono: <%=data.phone%></p>
+    </div>
+
+
+    <div class="col-md-6 call-update">
+
+        <a class="btn btn-large btn-primary" href="skype:+<%=data.phone%>?call" onclick="makeCall('<%=link%>')">Llamar</a>
+        <h1>Opciones de llamada</h1>
+
+        <button id="myBtn1" type="button" href="/call/save/success/<%=data.idcontact%>" class="btn btn-success" disabled><span class="fa fa-phone"></span> Exitosa</button>
+        <button id="myBtn2" type="button" href="/call/save/noanswer/<%=data.idcontact%>" class="btn btn-warning" disabled><span class="fa fa-phone"></span> No Contesta</button>
+        <button id="myBtn3" type="button" href="/call/save/notexists/<%=data.idcontact%>" class="btn btn-danger" disabled><span class="fa fa-phone"></span> No Existe</button>
+    </div>
+
+</div>
+
+<script>
+function makeCall(x) {
+    var win = window.open(x, '_blank');
+    if (win) {
+        //Browser has allowed it to be opened
+        win.focus();
+        document.getElementById("myBtn1").disabled = false;
+        document.getElementById("myBtn2").disabled = false;
+        document.getElementById("myBtn3").disabled = false;
+    } else {
+        //Browser has blocked it
+        alert('Active los Pop-Ups para esta página');
+    }
+}
+</script>
+
+</body>
+</html>

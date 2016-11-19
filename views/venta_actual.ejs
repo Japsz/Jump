@@ -1,0 +1,58 @@
+<%- include layouts/user_header.ejs %>
+<h1 class="page-header">Venta</h1>
+<div class="row placeholders">
+    <form action="/visit/save" method="post">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 placeholder">
+            <h4>Jumpers</h4>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Tiempo</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <%
+                        if(data.length){
+                            for(var i = 0;i < data.length; i++){ %>
+                      <tr>
+                          <td><%= data[i].name%></td>
+                          <td><%= data[i].last_name%></td>
+                          <td>><select NAME=tiempos[] >
+                                  <option>30</option>
+                                  <option>60</option>
+                                  <option>90</option>
+                                  <option>PE</option>
+                              </select></td>
+                          <td><a class="btn btn-danger" href="#<%= data[i].id%>"> - Quitar</a></td>
+                      </tr>
+                    <%
+                            }
+                        } else{%>
+                    <tr><td>No hay Jumpers asociados a esta venta</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                    <%
+
+                            }
+                    %>
+
+                    </tbody>
+                </table>
+            </div>
+            <a href="/pjump" class="btn btn-primary">+ Agregar preJumper</a>
+        </div>
+
+        <div class="col-md-3 col-md-offset-9">
+            <button type="submit" class="btn btn-primary btn-lg">
+                Continuar al Pago
+            </button>
+
+        </div>
+    </form>
+</div>
+
+<%- include layouts/footer.ejs %>

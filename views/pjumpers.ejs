@@ -1,0 +1,78 @@
+<%- include layouts/user_header.ejs %>
+<h2 class="page-header">Pre Jumpers</h2>
+<form action="/pjump/register" method='post'>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Fecha de Nacimiento</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <%
+                if(data.length){
+                    for(var i = 0;i < data.length;i++) { %>
+
+            <tr>
+                <td><%= data[i].name%></td>
+                <td><%= data[i].last_name%></td>
+                <td><%= data[i].fnac%></td>
+                <td>
+                    <input  onclick="enable()" name ='ids' type='checkbox' value='<%= data[i].id%>'>
+                </td>
+            </tr>
+            <%
+                }
+                }else { %>
+            <tr>
+                <td>No hay coincidencias.</td>
+            </tr>
+            <%
+                }
+            %>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-3 col-md-offset-9">
+        <button type="button" class="btn btn-primary btn-lg" id="myBtn1" data-toggle="modal" data-target="#preregistro" disabled>
+            Registrar
+        </button>
+        <div class="modal fade" id="preregistro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Registro</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group ">
+                            <input type="text" name="verificador" class="form-control" placeholder="Verificador">
+                        </div>
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-primary active">
+                                <input type="radio" name="options" value="si" autocomplete="off" checked> Con Verificador
+                            </label>
+                            <label class="btn btn-primary">
+                                <input type="radio" name="options" value="no" autocomplete="off"> Sin Verificador
+                            </label>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" id="continue" class="btn btn-primary">Registrar y continuar venta</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<%- include layouts/footer.ejs %>

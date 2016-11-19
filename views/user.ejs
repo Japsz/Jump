@@ -1,0 +1,47 @@
+<%- include layouts/admin_header.ejs %>
+            <h1>Users in system</h1>
+            <h4>Here you can Add/edit/delete Users. Nothing more.</h4>
+            <table class="table">
+                <tr>
+                    <th width="50px">No</th>
+                    <th>Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Action</th>
+                </tr>
+                               
+                <% if(data.length){ 
+                                
+                 for(var i = 0;i < data.length;i++) { %>
+                 
+                <tr>
+                    <td><%=(i+1)%></td>
+                    <td><%=data[i].name%></td>
+                    <td><%=data[i].last_name%></td>
+                    <td><%=data[i].username%></td>
+                    <td><%=data[i].password%></td>
+                    <td>
+                        <a class="btn btn-warning btn-xs a-inside edit" href="../user/edit/<%=data[i].username%>">Edit</a>
+                       
+                        <a class="btn btn-danger btn-xs a-inside delete" href="../user/delete/<%=data[i].username%>">Delete</a>
+                       
+                    </td>
+                </tr>
+            <% }
+            
+             }else{ %>
+                 <tr>
+                    <td colspan="3">No contacts to call</td>
+                 </tr>
+            <% } %>
+
+                <tr>
+                    <td> 
+                        <a href="/user/add" class="btn btn-primary"><span class="fa fa-user"></span> + Add</a>
+                    </td>
+                </tr>
+                              
+            </table>
+        
+<%- include layouts/footer.ejs %>

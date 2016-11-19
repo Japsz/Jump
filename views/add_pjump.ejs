@@ -1,0 +1,27 @@
+<%- include layouts/tot_header.ejs %>
+
+<section id="header">
+  <div class="container">
+    <div class='banner text-center'>
+      <h1 class="section-title wow fadeInDown animated"><span>Pre Chequeo</span></h1>
+      <div class="col-sm-6 col-md-6 col-md-offset-3">
+        <form action="/pjump/save" method='POST'>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            <input type="text" name="nom" class="form-control" placeholder="Nombre">
+            <input type="text" name="ape" class="form-control" placeholder="Apellido">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            <input type="text" name="fnac" class="form-control" placeholder="Fecha de nacimiento" id="datepicker">
+          </div>
+          <button type="submit" class="btn btn-green">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row"></div>
+  <div class="row"></div>
+  <div class="row"></div>
+</section>
+<%- include layouts/tot_footer.ejs %>
