@@ -13,6 +13,7 @@ exports.admin_login = function(req, res){
 
 exports.user_logout = function(req, res){
 	req.session.isUserLogged = false;
+	req.session.jumps = [];
 	res.redirect('/');
 };
 
@@ -29,7 +30,8 @@ exports.user_login_handler = function(req, res){
 	var password = input.password;
 
     req.getConnection(function(err,connection){
-         
+        if(err)
+            console.log("Error Selecting : %s ",err );
           connection.query('SELECT * FROM user WHERE username = ? AND password = ?',[username,password],function(err,rows)
           {
           	  if(rows.length == 0 ){
@@ -42,11 +44,13 @@ exports.user_login_handler = function(req, res){
               
               if(rows.length == 1){
               	req.session.isUserLogged = true;
-              	res.redirect('/registro_Jumper');
-              }        });
+              	req.session.jumps = [];
+              	res.redirect('/venta');
+              }
+          });
            
            //console.log(query.sql);
-      });
+	});
   
 };
 

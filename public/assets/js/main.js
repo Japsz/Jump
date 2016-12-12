@@ -77,7 +77,8 @@ $(function() {
 });
 
 $('#datepicker').datepicker({
-    format: 'yyyy-mm-dd'
+    format: 'dd/mm/yyyy',
+    startView: 3
 });
 
 $(document).ready(function(){

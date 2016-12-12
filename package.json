@@ -14,6 +14,7 @@
     "express-myconnection": "1.0.4",
     "flash": "^1.1.0",
     "jade": "*",
+    "jimp": "^0.2.27",
     "mysql": "2.2.0",
     "passport": "^0.3.2"
   }

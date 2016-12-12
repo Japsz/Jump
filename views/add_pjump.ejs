@@ -8,12 +8,12 @@
         <form action="/pjump/save" method='POST'>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input type="text" name="nom" class="form-control" placeholder="Nombre">
-            <input type="text" name="ape" class="form-control" placeholder="Apellido">
+            <input type="text" name="nom" id="keyboard" class="form-control" placeholder="Nombre" required>
+            <input type="text" name="ape" id="keyboard2" class="form-control" placeholder="Apellido" required>
           </div>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-            <input type="text" name="fnac" class="form-control" placeholder="Fecha de nacimiento" id="datepicker">
+            <input type="text" name="fnac" class="form-control" data-provide="datepicker" placeholder="Fecha de nacimiento" id="datepicker" require>
           </div>
           <button type="submit" class="btn btn-green">Enviar</button>
         </form>

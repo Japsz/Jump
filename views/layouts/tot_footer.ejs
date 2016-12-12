@@ -7,6 +7,36 @@
 <!-- Date Picker -->
 <script src="assets/js/bootstrap-datepicker.js"></script>
 <script src="assets/js/locales/bootstrap-datepicker.es.js"></script>
+<script type="text/javascript">
+    $('#datepicker').datepicker({
+        format: 'yyyy/mm/dd',
+        startView: 3
+    });
+
+    $(function() {
+
+        $('#keyboard').keyboard({
+            usePreview: false,
+            autoAccept: true
+        })
+        // activate the typing extension
+            .addTyping({
+                showTyping: true,
+                delay: 250
+            });
+
+        $('#keyboard2').keyboard({
+            usePreview: false,
+            autoAccept: true
+        })
+        // activate the typing extension
+            .addTyping({
+                showTyping: true,
+                delay: 250
+            });
+
+    });
+</script>
 
 
 <!-- All JS plugin Triggers -->
@@ -19,6 +49,9 @@
 <script src="assets/js/jquery.counterup.min.js"></script>
 <!-- waypoints -->
 <script src="assets/js/waypoints.min.js"></script>
+<!-- virtual-keyboard -->
+<script src="assets/js/jquery.keyboard.js"></script>
+<script src="assets/js/jquery.keyboard.extension-all.min.js"></script>
 
 
 </body>

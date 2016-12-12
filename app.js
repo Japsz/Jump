@@ -37,10 +37,10 @@ app.use(
     
     connection(mysql,{
         
-        host: 'localhost',
+        host: '127.0.0.1',
         user: 'root',
         password : '1234',
-        port : 3306, 
+        port : 3306,
         database:'jump'
 
     },'pool')
@@ -50,10 +50,23 @@ app.use(
 
 
 app.get('/', routes.index);
-//Ventas
+// Visitas en progreso
+app.get('/vip_list', prod.list);
+app.get('/vip/save', prod.save);
+app.post('/vip/check', prod.check);
+app.get('/vip/end/:id', prod.time_end);
+app.get('/vip/delete', prod.delete);
+
+//Visitas
 app.get('/venta', visita.add);
+app.get('/venta/sessionpop/:id', visita.d_from_session);
+app.post('/visit/save', visita.save);
+app.get('/cods', visita.cods);
 // Jumpers
-app.get('/jumper/save', jumper.save);
+app.get('/jumper/save/:verif/:isverif', jumper.save);
+app.get('/begin_list', jumper.prelist);
+app.post('/list', jumper.list);
+app.post('/jumper/add2session', jumper.add2session);
 // Pre Jumpers
 
 app.get('/registro_jumper', prejump.list);

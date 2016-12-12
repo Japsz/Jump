@@ -21,7 +21,7 @@
                 <td><%= data[i].last_name%></td>
                 <td><%= data[i].fnac%></td>
                 <td>
-                    <input  onclick="enable()" name ='ids' type='checkbox' value='<%= data[i].id%>'>
+                    <input  onclick="enable2()" name ='ids' type='checkbox' value='<%= data[i].id%>'>
                 </td>
             </tr>
             <%
@@ -49,17 +49,17 @@
                         <h4 class="modal-title" id="myModalLabel">Registro</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="input-group ">
+                        <div class="form inline form-group">
                             <input type="text" name="verificador" class="form-control" placeholder="Verificador">
-                        </div>
-                        <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-primary active">
-                                <input type="radio" name="options" value="si" autocomplete="off" checked> Con Verificador
-                            </label>
-                            <label class="btn btn-primary">
-                                <input type="radio" name="options" value="no" autocomplete="off"> Sin Verificador
-                            </label>
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-primary active">
+                                    <input type="radio" name="options" value="si" autocomplete="off" checked> Con Verificador
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input type="radio" name="options" value="no" autocomplete="off"> Sin Verificador
+                                </label>
 
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
