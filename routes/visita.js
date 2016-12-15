@@ -23,9 +23,9 @@ exports.cods = function(req, res) {
         req.getConnection(function (err, connection) {
             connection.query('SELECT * FROM visita ORDER BY id DESC LIMIT ?',[req.session.jumps.length],function(err, rows){
                 if (err) console.log("Error selecting : %s", err);
-                var aux = 0;
+                var pat = 'public/cods/0.png';
                 for(var i = 0; i < rows.length; i++){
-                    var pat = 'public/cods/' + aux.toString() + '.png';
+                    var pat = 'public/cods/' + rows[i].id + '.png';
                     bwipjs.toBuffer({
                         bcid:        'code128',       // Barcode type
                         text:        rows[i].id.toString(),    // Text to encode
@@ -40,7 +40,7 @@ exports.cods = function(req, res) {
                         } else {
                             jimps.read(png, function (err, image) {
                                 if(err) console.log(err);
-                                image.write( pat, function (){console.log("exito")} );
+                                image.write( pat, function (){ console.log("exito" )} );
                                 // do stuff with the image (if no exception)
                             });
                             // `png` is a Buffer
@@ -49,7 +49,7 @@ exports.cods = function(req, res) {
                             // png.readUInt32BE(20) : PNG image height
                         }
                     });
-                    aux++;
+                    console.log(pat);
 
                 }
                 req.session.jumps = [];

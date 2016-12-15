@@ -1,0 +1,273 @@
+The game starts on port 4300
+[90mGET /vip_list [32m200 [90m62ms - 5.08kb[0m
+[90mGET /assets/css/jasny-bootstrap.min.css [32m200 [90m20ms - 13.67kb[0m
+[90mGET /assets/css/main.css [32m200 [90m17ms - 14.13kb[0m
+[90mGET /assets/css/responsive.css [32m200 [90m16ms - 3.45kb[0m
+[90mGET /assets/css/bootstrap.min.css [32m200 [90m22ms - 110.84kb[0m
+[90mGET /assets/extras/animate.css [32m200 [90m16ms - 75.07kb[0m
+[90mGET /assets/fonts/font-awesome/font-awesome.min.css [32m200 [90m21ms - 20.24kb[0m
+[90mGET /assets/js/jquery-min.js [32m200 [90m9ms - 93.54kb[0m
+[90mGET /assets/js/bootstrap.min.js [32m200 [90m2ms - 34.77kb[0m
+[90mGET /assets/js/main.js [32m200 [90m14ms - 2.13kb[0m
+[90mGET /assets/js/smooth-scroll.js [32m200 [90m17ms - 13.98kb[0m
+[90mGET /assets/js/wow.js [32m200 [90m18ms - 5.74kb[0m
+[90mGET /assets/js/jquery.counterup.min.js [32m200 [90m3ms - 1.05kb[0m
+[90mGET /assets/js/jasny-bootstrap.min.js [32m200 [90m4ms - 16.39kb[0m
+[90mGET /assets/js/waypoints.min.js [32m200 [90m3ms - 7.86kb[0m
+[90mGET /assets/img/backgrounds/banner.gif [32m200 [90m737ms - 13.63mb[0m
+[90mGET /assets/img/logo.png [32m200 [90m28ms - 1.22kb[0m
+[90mGET /vip/end/7 [36m302 [90m111ms - 62b[0m
+[90mGET /vip_list [32m200 [90m20ms - 4.08kb[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m3ms[0m
+[90mGET /assets/css/jasny-bootstrap.min.css [36m304 [90m3ms[0m
+[90mGET /assets/css/main.css [36m304 [90m3ms[0m
+[90mGET /assets/css/responsive.css [36m304 [90m3ms[0m
+[90mGET /assets/fonts/font-awesome/font-awesome.min.css [36m304 [90m1ms[0m
+[90mGET /assets/extras/animate.css [36m304 [90m2ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m1ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m5ms[0m
+[90mGET /assets/js/wow.js [36m304 [90m3ms[0m
+[90mGET /assets/js/main.js [36m304 [90m4ms[0m
+[90mGET /assets/js/smooth-scroll.js [36m304 [90m4ms[0m
+[90mGET /assets/js/jasny-bootstrap.min.js [36m304 [90m3ms[0m
+[90mGET /assets/js/jquery.counterup.min.js [36m304 [90m4ms[0m
+[90mGET /assets/js/waypoints.min.js [36m304 [90m1ms[0m
+[90mGET /assets/img/backgrounds/banner.gif [36m304 [90m2ms[0m
+[90mPOST /vip/check [36m302 [90m185ms - 62b[0m
+[90mGET /vip/save [36m302 [90m133ms - 62b[0m
+[90mGET /vip_list [32m200 [90m5ms - 5.25kb[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m2ms[0m
+[90mGET /assets/css/jasny-bootstrap.min.css [36m304 [90m3ms[0m
+[90mGET /assets/css/main.css [36m304 [90m2ms[0m
+[90mGET /assets/css/responsive.css [36m304 [90m3ms[0m
+[90mGET /assets/fonts/font-awesome/font-awesome.min.css [36m304 [90m2ms[0m
+[90mGET /assets/extras/animate.css [36m304 [90m3ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/wow.js [36m304 [90m1ms[0m
+[90mGET /assets/js/main.js [36m304 [90m2ms[0m
+[90mGET /assets/js/smooth-scroll.js [36m304 [90m2ms[0m
+[90mGET /assets/js/jasny-bootstrap.min.js [36m304 [90m1ms[0m
+[90mGET /assets/js/jquery.counterup.min.js [36m304 [90m1ms[0m
+[90mGET /assets/js/waypoints.min.js [36m304 [90m1ms[0m
+[90mGET /assets/img/backgrounds/banner.gif [36m304 [90m1ms[0m
+[90mPOST /vip/check [36m302 [90m3ms - 62b[0m
+[90mGET /vip_list [36m304 [90m7ms[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m2ms[0m
+[90mGET /assets/css/jasny-bootstrap.min.css [36m304 [90m2ms[0m
+[90mGET /assets/css/main.css [36m304 [90m3ms[0m
+[90mGET /assets/css/responsive.css [36m304 [90m3ms[0m
+[90mGET /assets/fonts/font-awesome/font-awesome.min.css [36m304 [90m3ms[0m
+[90mGET /assets/extras/animate.css [36m304 [90m3ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m3ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/wow.js [36m304 [90m2ms[0m
+[90mGET /assets/js/main.js [36m304 [90m1ms[0m
+[90mGET /assets/js/smooth-scroll.js [36m304 [90m1ms[0m
+[90mGET /assets/js/jasny-bootstrap.min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/jquery.counterup.min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/waypoints.min.js [36m304 [90m3ms[0m
+[90mGET /assets/img/backgrounds/banner.gif [36m304 [90m1ms[0m
+[90mPOST /vip/check [36m302 [90m6ms - 66b[0m
+[90mGET /vip/delete [36m302 [90m71ms - 62b[0m
+[90mGET /vip_list [32m200 [90m4ms - 5.08kb[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m2ms[0m
+[90mGET /assets/css/jasny-bootstrap.min.css [36m304 [90m3ms[0m
+[90mGET /assets/css/main.css [36m304 [90m4ms[0m
+[90mGET /assets/css/responsive.css [36m304 [90m3ms[0m
+[90mGET /assets/fonts/font-awesome/font-awesome.min.css [36m304 [90m4ms[0m
+[90mGET /assets/extras/animate.css [36m304 [90m3ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m1ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/wow.js [36m304 [90m1ms[0m
+[90mGET /assets/js/main.js [36m304 [90m2ms[0m
+[90mGET /assets/js/smooth-scroll.js [36m304 [90m2ms[0m
+[90mGET /assets/js/jasny-bootstrap.min.js [36m304 [90m3ms[0m
+[90mGET /assets/js/jquery.counterup.min.js [36m304 [90m3ms[0m
+[90mGET /assets/js/waypoints.min.js [36m304 [90m1ms[0m
+[90mGET /assets/img/backgrounds/banner.gif [36m304 [90m1ms[0m
+[90mGET /vip_list [32m200 [90m6ms - 5.12kb[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m3ms[0m
+[90mGET /assets/css/jasny-bootstrap.min.css [36m304 [90m2ms[0m
+[90mGET /assets/css/main.css [36m304 [90m2ms[0m
+[90mGET /assets/css/responsive.css [36m304 [90m3ms[0m
+[90mGET /assets/fonts/font-awesome/font-awesome.min.css [36m304 [90m1ms[0m
+[90mGET /assets/extras/animate.css [36m304 [90m3ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m1ms[0m
+[90mGET /assets/js/wow.js [36m304 [90m2ms[0m
+[90mGET /assets/js/main.js [36m304 [90m2ms[0m
+[90mGET /assets/js/smooth-scroll.js [36m304 [90m2ms[0m
+[90mGET /assets/js/jasny-bootstrap.min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/jquery.counterup.min.js [36m304 [90m3ms[0m
+[90mGET /assets/js/waypoints.min.js [36m304 [90m4ms[0m
+[90mGET /assets/img/backgrounds/banner.gif [36m304 [90m2ms[0m
+[90mGET /assets/img/logo.png [36m304 [90m1ms[0m
+[90mPOST /vip/check [36m302 [90m35ms - 62b[0m
+[90mGET /vip/save [36m302 [90m45ms - 62b[0m
+[90mGET /vip_list [32m200 [90m12ms - 6.47kb[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m5ms[0m
+[90mGET /assets/css/jasny-bootstrap.min.css [36m304 [90m5ms[0m
+[90mGET /assets/css/main.css [36m304 [90m4ms[0m
+[90mGET /assets/css/responsive.css [36m304 [90m1ms[0m
+[90mGET /assets/fonts/font-awesome/font-awesome.min.css [36m304 [90m1ms[0m
+[90mGET /assets/extras/animate.css [36m304 [90m1ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m3ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/wow.js [36m304 [90m3ms[0m
+[90mGET /assets/js/main.js [36m304 [90m2ms[0m
+[90mGET /assets/js/smooth-scroll.js [36m304 [90m2ms[0m
+[90mGET /assets/js/jasny-bootstrap.min.js [36m304 [90m1ms[0m
+[90mGET /assets/js/jquery.counterup.min.js [36m304 [90m0ms[0m
+[90mGET /assets/js/waypoints.min.js [36m304 [90m1ms[0m
+[90mGET /assets/img/backgrounds/banner.gif [36m304 [90m1ms[0m
+[90mPOST /vip/check [36m302 [90m4ms - 66b[0m
+[90mGET /vip/delete [36m302 [90m75ms - 62b[0m
+[90mGET /vip_list [32m200 [90m14ms - 5.11kb[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m7ms[0m
+[90mGET /assets/css/jasny-bootstrap.min.css [36m304 [90m7ms[0m
+[90mGET /assets/css/main.css [36m304 [90m6ms[0m
+[90mGET /assets/css/responsive.css [36m304 [90m5ms[0m
+[90mGET /assets/fonts/font-awesome/font-awesome.min.css [36m304 [90m4ms[0m
+[90mGET /assets/extras/animate.css [36m304 [90m3ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m10ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m8ms[0m
+[90mGET /assets/js/wow.js [36m304 [90m9ms[0m
+[90mGET /assets/js/main.js [36m304 [90m7ms[0m
+[90mGET /assets/js/smooth-scroll.js [36m304 [90m6ms[0m
+[90mGET /assets/js/jasny-bootstrap.min.js [36m304 [90m6ms[0m
+[90mGET /assets/js/jquery.counterup.min.js [36m304 [90m1ms[0m
+[90mGET /assets/js/waypoints.min.js [36m304 [90m1ms[0m
+[90mGET /assets/img/backgrounds/banner.gif [36m304 [90m1ms[0m
+[90mGET /venta [32m200 [90m22ms - 4.95kb[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m2ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m3ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m2ms[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [32m200 [90m7ms - 534b[0m
+[90mGET /assets/css/dashboard.css [32m200 [90m8ms - 1.62kb[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [32m200 [90m13ms - 664b[0m
+[90mGET /assets/img/logo.png [36m304 [90m0ms[0m
+[90mGET /begin_list [32m200 [90m11ms - 6.32kb[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m2ms[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [36m304 [90m2ms[0m
+[90mGET /assets/css/dashboard.css [36m304 [90m3ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [36m304 [90m3ms[0m
+[90mGET /assets/fonts/glyphicons-halflings-regular.woff [32m200 [90m14ms - 22.75kb[0m
+[90mGET /registro_jumper [32m200 [90m12ms - 6.26kb[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m3ms[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [36m304 [90m2ms[0m
+[90mGET /assets/css/dashboard.css [36m304 [90m3ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m3ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m3ms[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [36m304 [90m3ms[0m
+[90mGET /venta [36m304 [90m10ms[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m2ms[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [36m304 [90m3ms[0m
+[90mGET /assets/css/dashboard.css [36m304 [90m2ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m3ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m3ms[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [36m304 [90m4ms[0m
+[90mGET /registro_jumper [36m304 [90m11ms[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m5ms[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [36m304 [90m5ms[0m
+[90mGET /assets/css/dashboard.css [36m304 [90m8ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m10ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [36m304 [90m1ms[0m
+[90mGET /begin_list [36m304 [90m7ms[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m2ms[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [36m304 [90m2ms[0m
+[90mGET /assets/css/dashboard.css [36m304 [90m2ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m3ms[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [36m304 [90m4ms[0m
+[90mGET /registro_jumper [36m304 [90m3ms[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m5ms[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [36m304 [90m4ms[0m
+[90mGET /assets/css/dashboard.css [36m304 [90m4ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m4ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m4ms[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [36m304 [90m4ms[0m
+[90mGET /venta [36m304 [90m3ms[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m1ms[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [36m304 [90m2ms[0m
+[90mGET /assets/css/dashboard.css [36m304 [90m2ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m1ms[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [36m304 [90m2ms[0m
+[90mGET /registro_jumper [36m304 [90m10ms[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m4ms[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [36m304 [90m4ms[0m
+[90mGET /assets/css/dashboard.css [36m304 [90m4ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m4ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m4ms[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [36m304 [90m4ms[0m
+[90mGET /begin_list [36m304 [90m3ms[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m1ms[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [36m304 [90m1ms[0m
+[90mGET /assets/css/dashboard.css [36m304 [90m2ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m1ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m1ms[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [36m304 [90m1ms[0m
+[90mGET / [32m200 [90m18ms - 803b[0m
+[90mGET /favicon.ico [33m404 [90m2ms[0m
+[90mGET /user_login [32m200 [90m16ms - 1.21kb[0m
+Invalid Username or Password.
+[90mPOST /user_login_handler [36m302 [90m45ms - 64b[0m
+[90mGET /bad_login [32m200 [90m23ms - 649b[0m
+[90mGET / [36m304 [90m1ms[0m
+[90mGET /user_login [36m304 [90m1ms[0m
+[90mPOST /user_login_handler [36m302 [90m1ms - 56b[0m
+[90mGET /venta [32m200 [90m2ms - 4.95kb[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [32m200 [90m5ms - 534b[0m
+[90mGET /assets/css/dashboard.css [32m200 [90m5ms - 1.62kb[0m
+[90mGET /assets/css/bootstrap.min.css [32m200 [90m7ms - 110.84kb[0m
+[90mGET /assets/js/jquery-min.js [32m200 [90m6ms - 93.54kb[0m
+[90mGET /assets/js/bootstrap.min.js [32m200 [90m3ms - 34.77kb[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [32m200 [90m3ms - 664b[0m
+[90mGET /assets/img/logo.png [32m200 [90m1ms - 1.22kb[0m
+[90mGET /begin_list [32m200 [90m4ms - 6.32kb[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m2ms[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [36m304 [90m2ms[0m
+[90mGET /assets/css/dashboard.css [36m304 [90m7ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m6ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m5ms[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [36m304 [90m3ms[0m
+[90mGET /assets/fonts/glyphicons-halflings-regular.woff [32m200 [90m8ms - 22.75kb[0m
+[90mGET /begin_list [36m304 [90m4ms[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m2ms[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [36m304 [90m2ms[0m
+[90mGET /assets/css/dashboard.css [36m304 [90m2ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [36m304 [90m2ms[0m
+[90mGET /registro_jumper [32m200 [90m3ms - 6.26kb[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m1ms[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [36m304 [90m2ms[0m
+[90mGET /assets/css/dashboard.css [36m304 [90m2ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m1ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m1ms[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [36m304 [90m1ms[0m
+[90mGET /begin_list [36m304 [90m2ms[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m2ms[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [36m304 [90m2ms[0m
+[90mGET /assets/css/dashboard.css [36m304 [90m2ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m2ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m1ms[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [36m304 [90m3ms[0m
+[90mPOST /list [32m200 [90m6ms - 6.58kb[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m2ms[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [36m304 [90m2ms[0m
+[90mGET /assets/css/dashboard.css [36m304 [90m2ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m3ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m3ms[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [36m304 [90m4ms[0m
+[90mPOST /list [32m200 [90m4ms - 6.58kb[0m
+[90mGET /assets/css/bootstrap.min.css [36m304 [90m3ms[0m
+[90mGET /assets/css/ie10-viewport-bug-workaround.css [36m304 [90m4ms[0m
+[90mGET /assets/css/dashboard.css [36m304 [90m4ms[0m
+[90mGET /assets/js/jquery-min.js [36m304 [90m7ms[0m
+[90mGET /assets/js/bootstrap.min.js [36m304 [90m7ms[0m
+[90mGET /assets/js/ie10-viewport-bug-workaround.js [36m304 [90m3ms[0m

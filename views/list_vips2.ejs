@@ -7,42 +7,6 @@
         <div class='banner text-center'>
             <h1 class="section-title wow fadeInDown animated"><span>Tiempos</span></h1>
             <div class="col-sm-10 col-md-10 col-md-offset-1">
-                <div class="panel panel-danger">
-                    <div class="panel-heading">
-                        Tiempo Cumplido
-                    </div>
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>N°</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Tiempo Restante</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        <%
-                        if(ends.length){
-                        for(var i = 0;i < ends.length; i++){
-                        %>
-                        <tr>
-                            <td><%= ends[i].id%></td>
-                            <td><%= ends[i].name%></td>
-                            <td><%= ends[i].last_name%></td>
-                            <td><div class="text-danger">TIEMPO CUMPLIDO</div></td>
-                        </tr>
-
-                        <%
-                            }
-                        } else{%>
-                        <tr><td>-</td><td>-</td><td>-</td></tr>
-                        <%
-                        }
-                        %>
-                        </tbody>
-                    </table>
-                </div>
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         En Curso

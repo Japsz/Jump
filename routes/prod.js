@@ -6,7 +6,9 @@ exports.list = function(req, res){
 			{
 				if(err)
 					console.log("Error Selecting : %s ",err );
-				var endeds = rows;
+                if(rows.length){
+                    var endeds = rows;
+                } else var endeds = [];
                 connection.query('SELECT * FROM vip WHERE ended = 0',function(err,rows)
                 {
                     if(err)
@@ -24,41 +26,41 @@ exports.check = function(req,res){
     var input = JSON.parse(JSON.stringify(req.body));
     var idvisit = input.idvisita;
 	req.getConnection(function(err,connection){
-
 		connection.query('SELECT * FROM visita WHERE id = ?',[idvisit],function(err,rows)
 		{
 			if(err)
 				console.log("Error Selecting : %s ",err );
 			if (rows.length == 0){
 				res.redirect('/vip_list');
-			}
-			if(rows[0].status == "new"){
-				req.session.visita = rows[0];
-                connection.query("UPDATE visita SET status = 'inprog' WHERE id = ?",[idvisit],function(err,rows)
-                {
-                    if(err)
-                        console.log("Error updating : %s ",err );
-                    res.redirect('/vip/save');
-                });
-			} else if(rows[0].status == "inprog"){
-				req.session.visita = rows[0];
-                connection.query("SELECT * FROM vip WHERE id = ?",[idvisit],function(err,rows)
-                {
-                    if(err)
-                        console.log("Error updating : %s ",err );
-                    var target_date = new Date(rows[0].date_f ).getTime();
-                    // find the amount of "seconds" between now and target
-                    var current_date = new Date().getTime();
-                    var seconds_left = (target_date - current_date) / 1000;
-                    var minutes = parseInt(seconds_left / 60);
-                    if(req.session.visita.duration - minutes < 5){
-                    	res.redirect('vip_list');
-					} else
-                    res.redirect('/vip/delete');
-                });
-            } else {
-				res.redirect('vip_list');
-			}
+			} else {
+    			if(rows[0].status == "new"){
+    				req.session.visita = rows[0];
+                    connection.query("UPDATE visita SET status = 'inprog' WHERE id = ?",[idvisit],function(err,rows)
+                    {
+                        if(err)
+                            console.log("Error updating : %s ",err );
+                        res.redirect('/vip/save');
+                    });
+    			} else if(rows[0].status == "inprog"){
+    				req.session.visita = rows[0];
+                    connection.query("SELECT * FROM vip WHERE id = ?",[idvisit],function(err,rows)
+                    {
+                        if(err)
+                            console.log("Error updating : %s ",err );
+                        var target_date = new Date(rows[0].date_f ).getTime();
+                        // find the amount of "seconds" between now and target
+                        var current_date = new Date().getTime();
+                        var seconds_left = (target_date - current_date) / 1000;
+                        var minutes = parseInt(seconds_left / 60);
+                        if(req.session.visita.duration - minutes < 5){
+                        	res.redirect('vip_list');
+    					} else
+                        res.redirect('/vip/delete');
+                    });
+                } else {
+    				res.redirect('vip_list');
+    			}
+            }
         });
 		//console.log(query.sql);
 	});

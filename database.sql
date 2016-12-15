@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `jumper` (
   `name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `fnac` DATE NOT NULL,
-  `verificador` VARCHAR(50),
+  `correo` VARCHAR(50),
   PRIMARY KEY (`id`)
 );
 
@@ -39,11 +39,20 @@ CREATE TABLE IF NOT EXISTS `Productos` (
 );
 
 CREATE TABLE IF NOT EXISTS `visita` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `idjumper` INT(11) NOT NULL,
   `duration` INT(11),
   `date_g`	DATE NOT NULL,
   `status`	VARCHAR(30),
-  PRIMARY KEY(`idjump`,`date_g`),
+  PRIMARY KEY(`id`),
   FOREIGN KEY(`idjumper`) REFERENCES jumper(id)
   );
   
+CREATE TABLE IF NOT EXISTS `vip` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45),
+  `fnac` DATE,
+  `date_f`	DATETIME NOT NULL,
+  PRIMARY KEY(`id`)
+  );
