@@ -61,7 +61,9 @@ app.get('/vip/delete', prod.delete);
 app.get('/venta', visita.add);
 app.get('/venta/sessionpop/:id', visita.d_from_session);
 app.post('/visit/save', visita.save);
-app.get('/cods', visita.cods);
+app.get('/precods', visita.precods);
+app.get('/cods/:cod', visita.cods);
+
 // Jumpers
 app.get('/jumper/save/:verif/:isverif', jumper.save);
 app.get('/begin_list', jumper.prelist);
