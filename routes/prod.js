@@ -8,6 +8,7 @@ exports.list = function(req, res){
 					console.log("Error Selecting : %s ",err );
                 if(rows.length){
                     var endeds = rows;
+                    var view = 'list_vips2.ejs';
                 } else var endeds = [];
                 connection.query('SELECT * FROM vip WHERE ended = 0',function(err,rows)
                 {
