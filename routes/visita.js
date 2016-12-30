@@ -17,50 +17,22 @@ exports.d_from_session = function(req, res) {
 //Mostrar Visitas creadas - precods
 exports.precods = function(req, res) {
 	if(req.session.isUserLogged){
-        var path = require('path');
-        var bwipjs = require('bwip-js');
-        var jimps = require('jimp');
         req.getConnection(function (err, connection) {
             connection.query('SELECT * FROM visita ORDER BY id DESC LIMIT ?',[req.session.jumps.length],function(err, rows){
                 if (err) console.log("Error selecting : %s", err);
-                res.render('getcodes',{data: rows});
-                var aux = 0;
-                for(var i = 0; i < rows.length; i++){
-                    var pat = 'public/cods/' + rows[i].id + '.png';
-                    bwipjs.toBuffer({
-                        bcid:        'code128',       // Barcode type
-                        text:        rows[i].id.toString(),    // Text to encode
-                        height:      10,              // Bar height, in millimeters
-                        includetext: true,            // Show human-readable text
-                        textxalign:  'center'        // Always good to set this
-                    }, function (err, png) {
-                        if (err) {
-                            throw err;
-                            // Decide how to handle the error
-                            // `err` may be a string or Error object
-                        } else {
-                            jimps.read(png, function (err, image) {
-                                if(err) console.log(err);
-                                image.write( pat, function (){ console.log("exito" )} );
-                                // do stuff with the image (if no exception)
-                            });
-                            // `png` is a Buffer
-                            // png.length           : PNG file length
-                            // png.readUInt32BE(16) : PNG image width
-                            // png.readUInt32BE(20) : PNG image height
-                        }
-                    });
-                    console.log(pat);
-
-                }
-                req.session.jumps = [];
-                res.redirect('/venta');
+                res.render('getcodes',{data: rows,jumps: req.session.jumps});
             });
         });
 
 	} else res.redirect('/bad_login');
 }
+exports.end = function(req,res) {
+    if(req.session.isUserLogged){
+        req.session.jumps = [];
+        res.redirect('/venta')
+    } else res.redirect('/bad_login');
 
+}
 // Generar code128
 exports.cods = function(req, res) {
     if(req.session.isUserLogged){
@@ -71,32 +43,31 @@ exports.cods = function(req, res) {
                 if (err) console.log("Error selecting : %s", err);
                 for(var i = 0; i < req.session.jumps.length; i++){
                     if(rows[0].idjumper == req.session.jumps[i][0]){
-
+                        var pat = 'public/cods/' + req.params.cod.toString() + req.session.jumps[i][1].toString() + '.png';
+                        bwipjs.toBuffer({
+                            bcid:        'code128',       // Barcode type
+                            text:        req.params.cod.toString(),    // Text to encode
+                            height:      10,              // Bar height, in millimeters
+                            includetext: true,            // Show human-readable text
+                            textxalign:  'center'        // Always good to set this
+                        }, function (err, png) {
+                            if (err) {
+                                throw err;
+                                // Decide how to handle the error
+                                // `err` may be a string or Error object
+                            } else {
+                                jimps.read(png, function (err, image) {
+                                    if(err) console.log(err);
+                                    image.write( pat, function (){ console.log("exito") } );
+                                    // do stuff with the image (if no exception)
+                                });
+                                // `png` is a Buffer
+                                // png.length           : PNG file length
+                                // png.readUInt32BE(16) : PNG image width
+                                // png.readUInt32BE(20) : PNG image height
+                            }
+                        });
                     }
-                    var pat = 'public/cods/' + req.params.cod.toString() + req.session.jumps[i][1].toString() + '.png';
-                    bwipjs.toBuffer({
-                        bcid:        'code128',       // Barcode type
-                        text:        req.params.cod.toString(),    // Text to encode
-                        height:      10,              // Bar height, in millimeters
-                        includetext: true,            // Show human-readable text
-                        textxalign:  'center'        // Always good to set this
-                    }, function (err, png) {
-                        if (err) {
-                            throw err;
-                            // Decide how to handle the error
-                            // `err` may be a string or Error object
-                        } else {
-                            jimps.read(png, function (err, image) {
-                                if(err) console.log(err);
-                                image.write( pat, function (){ console.log("exito") } );
-                                // do stuff with the image (if no exception)
-                            });
-                            // `png` is a Buffer
-                            // png.length           : PNG file length
-                            // png.readUInt32BE(16) : PNG image width
-                            // png.readUInt32BE(20) : PNG image height
-                        }
-                    });
                 }
                 res.redirect('/cods/' + req.params.cod.toString() + req.session.jumps[i][1].toString() + '.png');
             });
@@ -128,7 +99,7 @@ exports.save = function(req, res){
 		req.getConnection(function (err, connection) {
 			connection.query(query,[data],function(err, rows){
 				if (err) console.log("Error inserting : %s", err);
-				res.redirect('/cods');
+				res.redirect('/precods');
 			});
 		});
 

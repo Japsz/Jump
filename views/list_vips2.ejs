@@ -82,9 +82,15 @@
             minutes = parseInt(seconds_left / 60);
             seconds = parseInt(seconds_left % 60);
 
-            // format countdown string + set tag value
-            countdown.innerHTML = '<span class="minutes">'
-                + minutes + ' <b>Minutes</b></span> <span class="seconds">' + seconds + ' <b>Seconds</b></span>';
+            if(hours > 0){
+                // format countdown string + set tag value
+                countdown.innerHTML = '<span class="hours">' + hours +  ' <b>Hrs</b></span> <span class="minutes">'
+                    + minutes + ' <b>Min</b></span> <span class="seconds">' + seconds + ' <b>s</b></span>';
+            } else {
+                countdown.innerHTML = '<span class="minutes">'
+                    + minutes + ' <b>Min</b></span> <span class="seconds">' + seconds + ' <b>s</b></span>';
+
+            }
             <% } } %>
         }, 1000);
 

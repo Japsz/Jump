@@ -8,14 +8,19 @@ exports.list = function(req, res){
 					console.log("Error Selecting : %s ",err );
                 if(rows.length){
                     var endeds = rows;
-                    var view = 'list_vips2.ejs';
-                } else var endeds = [];
+                    var view = 'list_vips';
+                } else {
+                    var endeds = [];
+                    var view = 'list_vips2';
+                }
                 connection.query('SELECT * FROM vip WHERE ended = 0',function(err,rows)
                 {
                     if(err)
                         console.log("Error Selecting : %s ",err );
-
-                    res.render('list_vips',{page_title:"Tiempos",data:rows,ends:endeds});
+                    if(req.session.isUserLogged){
+                        res.render('user_vips',{page_title:"Tiempos",data:rows,ends:endeds});
+                    }
+                    res.render(view,{page_title:"Tiempos",data:rows,ends:endeds});
                 });
 			 });
 			 //console.log(query.sql);

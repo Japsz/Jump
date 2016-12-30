@@ -39,7 +39,7 @@ app.use(
         
         host: '127.0.0.1',
         user: 'root',
-        password : '1355gojump',
+        password : '1234',
         port : 3306,
         database:'jump'
 
@@ -62,7 +62,7 @@ app.get('/venta', visita.add);
 app.get('/venta/sessionpop/:id', visita.d_from_session);
 app.post('/visit/save', visita.save);
 app.get('/precods', visita.precods);
-app.get('/cods/:cod', visita.cods);
+app.get('/venta_fin', visita.end);
 
 // Jumpers
 app.get('/jumper/save/:verif/:isverif', jumper.save);

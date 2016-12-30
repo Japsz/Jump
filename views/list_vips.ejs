@@ -6,7 +6,7 @@
     <div class="container">
         <div class='banner text-center'>
             <h1 class="section-title wow fadeInDown animated"><span>Tiempos</span></h1>
-            <div class="col-sm-10 col-md-10 col-md-offset-1">
+            <div class="col-sm-6 col-md-10 col-md-offset-1">
                 <div class="panel panel-danger">
                     <div class="panel-heading">
                         Tiempo Cumplido
@@ -43,6 +43,8 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="col-sm-5 col-md-10 col-md-offset-1">
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         En Curso
@@ -118,9 +120,15 @@
             minutes = parseInt(seconds_left / 60);
             seconds = parseInt(seconds_left % 60);
 
-            // format countdown string + set tag value
-            countdown.innerHTML = '<span class="minutes">'
-                + minutes + ' <b>Minutes</b></span> <span class="seconds">' + seconds + ' <b>Seconds</b></span>';
+            if(hours > 0){
+                // format countdown string + set tag value
+                countdown.innerHTML = '<span class="hours">' + hours +  ' <b>Hrs</b></span> <span class="minutes">'
+                    + minutes + ' <b>Min</b></span> <span class="seconds">' + seconds + ' <b>s</b></span>';
+            } else {
+                countdown.innerHTML = '<span class="minutes">'
+                    + minutes + ' <b>Min</b></span> <span class="seconds">' + seconds + ' <b>s</b></span>';
+
+            }
             <% } } %>
         }, 1000);
 
