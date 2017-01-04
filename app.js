@@ -56,6 +56,7 @@ app.get('/vip/save', prod.save);
 app.post('/vip/check', prod.check);
 app.get('/vip/end/:id', prod.time_end);
 app.get('/vip/delete', prod.delete);
+app.get('/sudo_del/:id',prod.sudo_del);
 
 //Visitas
 app.get('/venta', visita.add);

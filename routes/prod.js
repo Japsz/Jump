@@ -112,17 +112,17 @@ exports.save = function(req,res){
 	});
 };
 
-exports.disable_quiz = function(req,res){
-	if(req.session.isAdminLogged){
-		var idquiz = req.params.idquiz;
-		var activated = req.params.activated;
-		var idproject = req.params.idproject;
+exports.sudo_del = function(req,res){
+	if(req.session.isUserLogged){
+		var idvip = req.params.id;
 		req.getConnection(function(err, connection){
-			connection.query('UPDATE quiz SET activated = ? WHERE idquiz = ? AND idproject = ?',[activated,idquiz,idproject],function(err,rows)
+			connection.query('SELECT * FROM visita WHERE id = ?',[idvip],function(err,rows)
 			{
-				if(err) console.log("Error Selecting : %s ",err);
-
-			res.redirect('/quiz/list/'+idproject);
+                if(err) console.log("Error Selecting : %s ",err);
+			    if(rows.length){
+                    req.session.visita = rows[0];
+                    res.redirect('/vip/delete');
+                }
 			});
 		});
 	}else res.redirect('/bad_login')

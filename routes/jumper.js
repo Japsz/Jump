@@ -4,11 +4,11 @@ exports.list = function(req, res){
     var dats = [];
     if(req.session.isUserLogged){
         if(input.tipo == "nom"){
-            var query = 'SELECT * FROM jumper WHERE name = ?';
-            dats.push(input.nom);
+            var query = 'SELECT * FROM jumper WHERE name LIKE ?';
+            dats.push(input.nom + '%');
         } else if(input.tipo == "ape"){
-            var query = 'SELECT * FROM jumper WHERE last_name = ?';
-            dats.push(input.ape);
+            var query = 'SELECT * FROM jumper WHERE last_name LIKE ?';
+            dats.push(input.ape + '%');
         } else if(input.tipo == "nom-ape"){
             var query = 'SELECT * FROM jumper WHERE name = ? AND last_name = ?';
             dats.push(input.nom);
