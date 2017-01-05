@@ -76,10 +76,7 @@ $(function() {
   });
 });
 
-$('#datepicker').datepicker({
-    format: 'dd/mm/yyyy',
-    startView: 3
-});
+
 
 $(document).ready(function(){
           $('#myModal').modal('show');

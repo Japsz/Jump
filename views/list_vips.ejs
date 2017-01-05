@@ -1,9 +1,9 @@
 <%- include layouts/vip_header.ejs %>
 <section id="header">
-    <form action="/vip/check" method="post">
-        <input type="text" class="invis" name="idvisita" id="ids">
-    </form>
     <div class="container">
+        <form action="/vip/check" method="post">
+            <input type="text" class="invis" name="idvisita" id="ids">
+        </form>
         <div class='banner text-center'>
             <h1 class="section-title wow fadeInDown animated"><span>Tiempos</span></h1>
             <div class="col-sm-6 col-md-10 col-md-offset-1">
@@ -75,7 +75,7 @@
                             <%
                             }
                         } else{%>
-                            <tr><td>No hay Jumpers asociados a esta venta</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                            <tr><td>No hay Jumpers</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
                         <% } %>
                         </tbody>
                     </table>
@@ -83,11 +83,7 @@
             </div>
         </div>
     </div>
-    <div class="row"></div>
-    <div class="row"></div>
-    <div class="row">
 
-    </div>
     <script type="text/javascript">
         // set the date we're counting down to
         var days, hours, minutes, seconds;
@@ -133,6 +129,7 @@
         }, 1000);
 
     </script>
+
 </section>
 
 

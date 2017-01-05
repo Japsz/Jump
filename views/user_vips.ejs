@@ -51,7 +51,7 @@
                         <th>N°</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
-                        <th>Tiempo Restante</th>
+                        <th>Fin de visita</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -64,7 +64,8 @@
                         <td><%= data[k].id%></td>
                         <td><%= data[k].name%></td>
                         <td><%= data[k].last_name%></td>
-                        <td><div id="<%= data[k].id%>"></div></td>
+                        <td><%= new Date(data[k].date_f).toLocaleTimeString()%></td>
+                        <td></td>
                         <td><a href="/sudo_del/<%= data[k].id%>" class="btn btn-danger">- Quitar</a></td>
 
                     </tr>
@@ -79,50 +80,6 @@
             </div>
         </div>
 
-<script type="text/javascript">
-    // set the date we're counting down to
-    var days, hours, minutes, seconds;
 
-
-
-    // update the tag with id "countdown" every 1 second
-    setInterval(function () {
-
-        <%for(var j = 0; j < data.length;j++) {
-        if(!data[j].ended){
-        %>
-        var target_date = new Date('<%= data[j].date_f %>').getTime();
-        // get tag element
-        var countdown = document.getElementById('<%= data[j].id %>');
-        // find the amount of "seconds" between now and target
-        var current_date = new Date().getTime();
-        var seconds_left = (target_date - current_date) / 1000;
-        if (seconds_left <= 0){
-            window.location.href = "/vip/end/<%= data[j].id %>"
-        }
-
-        // do some time calculations
-        days = parseInt(seconds_left / 86400);
-        seconds_left = seconds_left % 86400;
-
-        hours = parseInt(seconds_left / 3600);
-        seconds_left = seconds_left % 3600;
-
-        minutes = parseInt(seconds_left / 60);
-        seconds = parseInt(seconds_left % 60);
-
-        if(hours > 0){
-            // format countdown string + set tag value
-            countdown.innerHTML = '<span class="hours">' + hours +  ' <b>Hrs</b></span> <span class="minutes">'
-                + minutes + ' <b>Min</b></span> <span class="seconds">' + seconds + ' <b>s</b></span>';
-        } else {
-            countdown.innerHTML = '<span class="minutes">'
-                + minutes + ' <b>Min</b></span> <span class="seconds">' + seconds + ' <b>s</b></span>';
-
-        }
-        <% } } %>
-    }, 1000);
-
-</script>
         
 <%- include layouts/footer.ejs %>

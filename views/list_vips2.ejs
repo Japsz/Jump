@@ -30,14 +30,13 @@
                                 <td><%= data[k].id%></td>
                                 <td><%= data[k].name%></td>
                                 <td><%= data[k].last_name%></td>
-
                                 <td><div id="<%= data[k].id%>"></div></td>
                             </tr>
 
                             <%
                             }
                         } else{%>
-                            <tr><td>No hay Jumpers asociados a esta venta</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                            <tr><td>-</td><td>No hay Jumpers</td><td>-</td><td>-</td></tr>
                         <% } %>
                         </tbody>
                     </table>
@@ -45,11 +44,7 @@
             </div>
         </div>
     </div>
-    <div class="row"></div>
-    <div class="row"></div>
-    <div class="row">
 
-    </div>
     <script type="text/javascript">
         // set the date we're counting down to
         var days, hours, minutes, seconds;
@@ -71,7 +66,7 @@
              if (seconds_left <= 0){
                  window.location.href = "/vip/end/<%= data[j].id %>"
              }
-
+             window.
             // do some time calculations
             days = parseInt(seconds_left / 86400);
             seconds_left = seconds_left % 86400;

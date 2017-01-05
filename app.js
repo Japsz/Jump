@@ -39,7 +39,7 @@ app.use(
         
         host: '127.0.0.1',
         user: 'root',
-        password : '1234',
+        password : '1355gojump',
         port : 3306,
         database:'jump'
 
@@ -57,6 +57,7 @@ app.post('/vip/check', prod.check);
 app.get('/vip/end/:id', prod.time_end);
 app.get('/vip/delete', prod.delete);
 app.get('/sudo_del/:id',prod.sudo_del);
+app.get('/extend', prod.extend);
 
 //Visitas
 app.get('/venta', visita.add);

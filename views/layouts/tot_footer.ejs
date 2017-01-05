@@ -5,12 +5,14 @@
 <!-- WOW JS plugin for animation -->
 <script src="assets/js/wow.js"></script>
 <!-- Date Picker -->
-<script src="assets/js/bootstrap-datepicker.js"></script>
-<script src="assets/js/locales/bootstrap-datepicker.es.js"></script>
+<script src="assets/js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript">
     $('#datepicker').datepicker({
+        defaultViewDate: {year:2000 ,month:0, day:1},
         format: 'yyyy/mm/dd',
-        startView: 3
+        startView: 2,
+        endDate: new Date(),
+        autoclose: true,
     });
 
     $(function() {

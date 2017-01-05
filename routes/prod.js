@@ -13,7 +13,7 @@ exports.list = function(req, res){
                     var endeds = [];
                     var view = 'list_vips2';
                 }
-                connection.query('SELECT * FROM vip WHERE ended = 0',function(err,rows)
+                connection.query('SELECT * FROM vip WHERE ended = 0 ORDER BY date_f ASC',function(err,rows)
                 {
                     if(err)
                         console.log("Error Selecting : %s ",err );
@@ -85,6 +85,18 @@ exports.time_end = function(req,res){
     });
 };
 
+exports.extend = function(req,res){
+    var idvisit = req.params.id;
+    req.getConnection(function(err,connection){
+
+        connection.query("UPDATE vip SET ended = 1 WHERE id = ?", [idvisit], function (err, rows) {
+            if (err)
+                console.log("Error updating : %s ", err);
+            res.redirect('/vip_list');
+        });
+        //console.log(query.sql);
+    });
+};
 //Logica iniciar visita.
 exports.save = function(req,res){
 	req.getConnection(function (err, connection){
@@ -130,22 +142,19 @@ exports.sudo_del = function(req,res){
 
 //Logica borrar encuesta.
 exports.delete = function(req,res){
-	if(req.session.isUserLogged){
-		req.getConnection(function(err, connection){
-			connection.query("DELETE FROM vip WHERE id = ? ",[req.session.visita.id], function(err,rows){
-				if(err)
-					console.log("Error deleting : %s", err);
+    req.getConnection(function(err, connection){
+        connection.query("DELETE FROM vip WHERE id = ? ",[req.session.visita.id], function(err,rows){
+            if(err)
+                console.log("Error deleting : %s", err);
 
-                connection.query("UPDATE visita SET status = 'ended' WHERE id = ? ",[req.session.visita.id], function(err,rows){
-                    if(err)
-                        console.log("Error deleting : %s", err);
+            connection.query("UPDATE visita SET status = 'ended' WHERE id = ? ",[req.session.visita.id], function(err,rows){
+                if(err)
+                    console.log("Error deleting : %s", err);
 
-                    res.redirect('/vip_list');
-                });
-			});
-		});
-	}
-	else
-		res.redirect('/bad_login');
+                res.redirect('/vip_list');
+            });
+        });
+    });
+
 };
 
