@@ -19,7 +19,9 @@ exports.list = function(req, res){
 
 //Vista agregar projectos
 exports.add = function(req, res){
-	res.render('add_pjump',{page_title:"Registro"});
+	if(req.params.id){
+		res.render('add_pjump',{page_title:"Registro",success: parseInt(req.params.id)});			
+	} else res.render('add_pjump',{page_title:"Registro",success: 0});
 };
 
 //Logica agregar prejumpers.
@@ -34,7 +36,7 @@ exports.save = function(req, res){
 		var query = connection.query("INSERT INTO pJumper set ? ",data,function(err, rows){
 			if (err) console.log("Error inserting : %s", err);
 
-			res.redirect('/pjump')
+			res.redirect('/pjump/1');
 		});
 	});
 };

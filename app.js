@@ -78,7 +78,7 @@ app.get('/get_ids', jumper.get_ids);
 
 app.get('/registro_jumper', prejump.list);
 app.post('/pjump/save', prejump.save);
-app.get('/pjump', prejump.add);
+app.get('/pjump/:id', prejump.add);
 app.post('/pjump/register', prejump.transfer);
 //Users
 app.get('/user', admin.list);
