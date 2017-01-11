@@ -2,7 +2,7 @@
 exports.list = function(req, res){
 	req.getConnection(function(err,connection){
 
-			connection.query('SELECT * FROM vip WHERE ended = 1',function(err,rows)
+			connection.query('SELECT * FROM vip WHERE NOT(ended = 0) ORDER BY date_f ASC',function(err,rows)
 			{
 				if(err)
 					console.log("Error Selecting : %s ",err );
@@ -56,27 +56,39 @@ exports.check = function(req,res){
                         var target_date = new Date(rows[0].date_f ).getTime();
                         // find the amount of "seconds" between now and target
                         var current_date = new Date().getTime();
-                        var seconds_left = (target_date - current_date) / 1000;
-                        var minutes = parseInt(seconds_left / 60);
-                        if(req.session.visita.duration - minutes < 5){
-                        	res.redirect('vip_list');
+                        var seconds_left = (target_date - current_date);
+                        if( seconds_left < 0){
+                        	res.redirect('/vip/delete');
     					} else
-                        res.redirect('/vip/delete');
+                        res.redirect('/vip_list');
                     });
                 } else {
-    				res.redirect('vip_list');
+    				res.redirect('/vip_list');
     			}
             }
         });
 		//console.log(query.sql);
 	});
 };
+// 5 minutos restantes
+exports.time_near = function(req,res){
+    var idvisit = req.params.id;
+    req.getConnection(function(err,connection){
+
+        connection.query("UPDATE vip SET ended = 1 WHERE id = ?", [idvisit], function (err, rows) {
+            if (err)
+                console.log("Error updating : %s ", err);
+            res.redirect('/vip_list');
+        });
+        //console.log(query.sql);
+    });
+};
 // Tiempo cumplido
 exports.time_end = function(req,res){
     var idvisit = req.params.id;
     req.getConnection(function(err,connection){
 
-        connection.query("UPDATE vip SET ended = 1 WHERE id = ?", [idvisit], function (err, rows) {
+        connection.query("UPDATE vip SET ended = 2 WHERE id = ?", [idvisit], function (err, rows) {
             if (err)
                 console.log("Error updating : %s ", err);
             res.redirect('/vip_list');

@@ -5,16 +5,16 @@
             <input type="text" class="invis" name="idvisita" id="ids">
         </form>
         <div class='banner text-center'>
-            <h1 class="section-title wow fadeInDown animated"><span>Tiempos</span></h1>
-            <div class="col-sm-6 col-md-10 col-md-offset-1">
-                <div class="panel panel-danger">
+            <h1 class="section-title wow bounceInDown animated"><span>Tiempos</span></h1>
+            <div class="col-sm-12 col-md-12">
+                <div class="panel panel-warning">
                     <div class="panel-heading">
-                        Tiempo Cumplido
+                        Últimos 5 minutos
                     </div>
-                    <table class="table table-striped">
+                    <table class="table table-responsive">
                         <thead>
-                        <tr>
-                            <th>N°</th>
+                        <tr class="warning">
+                            <th></th>
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Tiempo Restante</th>
@@ -25,15 +25,60 @@
                         <%
                         if(ends.length){
                         for(var i = 0;i < ends.length; i++){
+                            if(i%2) {
+                                var activ = "";
+                            } else {
+                                var activ = " traslucid"
+                            }
+                            if(ends[i].ended == 1){
                         %>
-                        <tr>
+                        <tr class="warning<%= activ%>">
+                            <td></td>
+                            <td><%= ends[i].name%></td>
+                            <td><%= ends[i].last_name%></td>
+                            <td><div id="<%= ends[i].id%>" class="text-warning"></div></td>
+                        </tr>
+                        <script type="text/javascript">
+                            setInterval(function () {
+                                var target_date = new Date('<%= ends[i].date_f %>').getTime();
+                                // find the amount of "seconds" between now and target
+                                var current_date = new Date().getTime();
+                                var seconds_left = (target_date - current_date) / 1000;
+                                var countdown = document.getElementById('<%= ends[i].id %>');
+                                if (seconds_left <= 0){
+                                    window.location.href = "/vip/end/<%= ends[i].id %>"
+                                }
+                                // do some time calculations
+                                minutes = parseInt(seconds_left / 60);
+                                seconds = parseInt(seconds_left % 60);
+                                countdown.innerHTML = '<span class="minutes">'
+                                    + minutes + ' <b>Min</b></span> <span class="seconds">' + seconds + ' <b>s</b></span>';
+                            },1000);
+                        </script>
+                        <% } else {%>
+                        <tr class="danger<%= activ%>">
                             <td><%= ends[i].id%></td>
                             <td><%= ends[i].name%></td>
                             <td><%= ends[i].last_name%></td>
-                            <td><div class="text-danger">TIEMPO CUMPLIDO</div></td>
+                            <td><div class="text-danger">Tiempo Cumplido</div></td>
                         </tr>
-
+                        <form id="<%= ends[i].id%>" method="post" action="/vip/check">
+                            <input type="hidden" name="idvisita" value="<%= ends[i].id%>" />
+                            </form>
+                        <script type="text/javascript">
+                            setInterval(function () {
+                                var target_date = new Date('<%= ends[i].date_f %>').getTime();
+                                // find the amount of "seconds" between now and target
+                                var current_date = new Date().getTime();
+                                var seconds_left = (target_date - current_date) / 1000;
+                                if(seconds_left <= -5*60) {
+                                    var form = document.getElementById('<%= ends[i].id %>');
+                                    form.submit();
+                                }
+                            },1000);
+                        </script>
                         <%
+                                }
                             }
                         } else{%>
                         <tr><td>-</td><td>-</td><td>-</td></tr>
@@ -44,15 +89,14 @@
                     </table>
                 </div>
             </div>
-            <div class="col-sm-5 col-md-10 col-md-offset-1">
+            <div class="col-sm-12 col-md-12 ">
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         En Curso
                     </div>
-                    <table class="table table-striped">
+                    <table class="table table-responsive">
                         <thead>
                         <tr>
-                            <th>N°</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Tiempo Restante</th>
@@ -62,15 +106,50 @@
 
                         <%
                         if(data.length){
+
                             for(var k = 0;k < data.length; k++){
-                            %>
-                            <tr>
-                                <td><%= data[k].id%></td>
+                            if(k%2) {
+                                var activ = "";
+                            } else {
+                                var activ = " traslucid"
+                            }
+                        %>
+                            <tr class="<%= activ%>">
                                 <td><%= data[k].name%></td>
                                 <td><%= data[k].last_name%></td>
-
                                 <td><div id="<%= data[k].id%>"></div></td>
                             </tr>
+                            <script type="text/javascript">
+                                var hours, minutes, seconds;
+                                setInterval(function () {
+                                    var target_date = new Date('<%= data[k].date_f %>').getTime();
+                                    // get tag element
+                                    var countdown = document.getElementById('<%= data[k].id %>');
+                                    // find the amount of "seconds" between now and target
+                                    var current_date = new Date().getTime();
+                                    var seconds_left = (target_date - current_date) / 1000;
+                                    if (seconds_left <= 5 * 60) {
+                                        window.location.href = "/vip/near/<%= data[k].id %>"
+                                    }
+
+
+                                    hours = parseInt(seconds_left / 3600);
+                                    seconds_left = seconds_left % 3600;
+
+                                    minutes = parseInt(seconds_left / 60);
+                                    seconds = parseInt(seconds_left % 60);
+
+                                    if (hours > 0) {
+                                        // format countdown string + set tag value
+                                        countdown.innerHTML = '<span class="hours">' + hours + ' <b>Hrs</b></span> <span class="minutes">'
+                                            + minutes + ' <b>Min</b></span> <span class="seconds">' + seconds + ' <b>s</b></span>';
+                                    } else {
+                                        countdown.innerHTML = '<span class="minutes">'
+                                            + minutes + ' <b>Min</b></span> <span class="seconds">' + seconds + ' <b>s</b></span>';
+
+                                    }
+                                },1000);
+                            </script>
 
                             <%
                             }
@@ -83,52 +162,6 @@
             </div>
         </div>
     </div>
-
-    <script type="text/javascript">
-        // set the date we're counting down to
-        var days, hours, minutes, seconds;
-
-
-
-            // update the tag with id "countdown" every 1 second
-        setInterval(function () {
-
-            <%for(var j = 0; j < data.length;j++) {
-                if(!data[j].ended){
-            %>
-            var target_date = new Date('<%= data[j].date_f %>').getTime();
-            // get tag element
-            var countdown = document.getElementById('<%= data[j].id %>');
-            // find the amount of "seconds" between now and target
-            var current_date = new Date().getTime();
-            var seconds_left = (target_date - current_date) / 1000;
-             if (seconds_left <= 0){
-                 window.location.href = "/vip/end/<%= data[j].id %>"
-             }
-
-            // do some time calculations
-            days = parseInt(seconds_left / 86400);
-            seconds_left = seconds_left % 86400;
-
-            hours = parseInt(seconds_left / 3600);
-            seconds_left = seconds_left % 3600;
-
-            minutes = parseInt(seconds_left / 60);
-            seconds = parseInt(seconds_left % 60);
-
-            if(hours > 0){
-                // format countdown string + set tag value
-                countdown.innerHTML = '<span class="hours">' + hours +  ' <b>Hrs</b></span> <span class="minutes">'
-                    + minutes + ' <b>Min</b></span> <span class="seconds">' + seconds + ' <b>s</b></span>';
-            } else {
-                countdown.innerHTML = '<span class="minutes">'
-                    + minutes + ' <b>Min</b></span> <span class="seconds">' + seconds + ' <b>s</b></span>';
-
-            }
-            <% } } %>
-        }, 1000);
-
-    </script>
 
 </section>
 
