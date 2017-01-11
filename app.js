@@ -64,6 +64,7 @@ app.get('/venta', visita.add);
 app.get('/venta/sessionpop/:id', visita.d_from_session);
 app.post('/visit/save', visita.save);
 app.get('/precods', visita.precods);
+app.get('/getcod/:cod', visita.cods);
 app.get('/venta_fin', visita.end);
 
 // Jumpers
