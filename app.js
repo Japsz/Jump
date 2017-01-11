@@ -58,6 +58,7 @@ app.get('/vip/end/:id', prod.time_end);
 app.get('/vip/delete', prod.delete);
 app.get('/sudo_del/:id',prod.sudo_del);
 app.get('/extend', prod.extend);
+app.get('/vip/near/:id', prod.time_near);
 
 //Visitas
 app.get('/venta', visita.add);
@@ -72,6 +73,7 @@ app.get('/jumper/save/:verif/:isverif', jumper.save);
 app.get('/begin_list', jumper.prelist);
 app.post('/list', jumper.list);
 app.post('/jumper/add2session', jumper.add2session);
+app.get('/get_ids', jumper.get_ids);
 // Pre Jumpers
 
 app.get('/registro_jumper', prejump.list);

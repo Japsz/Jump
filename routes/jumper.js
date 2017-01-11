@@ -103,7 +103,7 @@ exports.save = function(req,res){
         for(var i = 0; i < req.session.pjumps.length;i++){
             req.session.pjumps[i].fnac = dateFormat(req.session.pjumps[i].fnac,
                 "yyyy-mm-dd");
-            var aux = [req.session.pjumps[i].id,req.session.pjumps[i].name,
+            var aux = [req.session.pjumps[i].name,
                 req.session.pjumps[i].last_name, req.session.pjumps[i].fnac];
             if(req.params.isverif == "si"){
                 aux.push(req.params.verif);
@@ -112,16 +112,16 @@ exports.save = function(req,res){
             data.push(aux);
         }
         if(req.params.isverif == "si"){
-            var query = "INSERT INTO jumper (`id`, `name`, `last_name`, `fnac`, `correo`) VALUES ?";
+            var query = "INSERT INTO jumper (`name`, `last_name`, `fnac`, `correo`) VALUES ?";
         } else {
-            var query = "INSERT INTO jumper (`id`, `name`, `last_name`, `fnac`) VALUES ?";
+            var query = "INSERT INTO jumper (`name`, `last_name`, `fnac`) VALUES ?";
         }
         req.getConnection(function (err, connection) {
 
             connection.query(query,[data], function (err, rows) {
                 if (err)
                     console.log("Error inserting : %s ", err);
-                res.redirect('/venta');
+                res.redirect('/get_ids');
             });
             // console.log(query.sql); get raw query
         });
@@ -129,42 +129,22 @@ exports.save = function(req,res){
 
     else res.redirect('/bad_login');
 };
-// No implementada
-exports.save_edit = function(req,res){
-
-
-    if(req.session.isAdminLogged){
-    
-    var input = JSON.parse(JSON.stringify(req.body));
-    var phone = req.params.phone;
-    
-    req.getConnection(function (err, connection) {
-        
-        var data = {
-            
-            name    : input.name,
-            last_name : input.last_name,
-            phone   : input.phone,
-            to_call   : input.to_call 
-        
-        };
-        
-        connection.query("UPDATE contact set ? WHERE phone = ? ",[data,phone], function(err, rows)
-        {
-  
-          if (err)
-              console.log("Error Updating : %s ",err );
-         
-          res.redirect('/contact');
-          
+exports.get_ids = function(req, res) {
+    if(req.session.isUserLogged){
+        req.getConnection(function (err, connection) {
+            connection.query('SELECT * FROM jumper ORDER BY id DESC LIMIT ?',[req.session.jumps.length],function(err, rows){
+                if (err) console.log("Error selecting : %s", err);
+                for(var i = 0;i < rows.length;i++){
+                    req.session.jumps[req.session.jumps.length-i-1].unshift(rows[i].id);
+                }
+                res.redirect('/venta');
+            });
         });
-    
-    });
-    }
-    else res.redirect('/bad_login');
-};
 
+    } else res.redirect('/bad_login');
+}
 
+// No implementada
 exports.delete_customer = function(req,res){
     var isAdminLogged = req.session.isAdminLogged;;
 
