@@ -75,6 +75,7 @@
                                     var form = document.getElementById('<%= ends[i].id %>');
                                     form.submit();
                                 }
+                                seconds_left = seconds_left + 20;
                             },1000);
                         </script>
                         <%
@@ -128,10 +129,11 @@
                                     // find the amount of "seconds" between now and target
                                     var current_date = new Date().getTime();
                                     var seconds_left = (target_date - current_date) / 1000;
+                                    
                                     if (seconds_left <= 5 * 60) {
                                         window.location.href = "/vip/near/<%= data[k].id %>"
                                     }
-
+                                    seconds_left = seconds_left + 20;
 
                                     hours = parseInt(seconds_left / 3600);
                                     seconds_left = seconds_left % 3600;

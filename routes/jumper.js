@@ -134,11 +134,12 @@ exports.save = function(req,res){
 exports.get_ids = function(req, res) {
     if(req.session.isUserLogged){
         req.getConnection(function (err, connection) {
-            connection.query('SELECT * FROM jumper ORDER BY id DESC LIMIT ?',[req.session.jumps.length],function(err, rows){
+            connection.query('SELECT * FROM jumper ORDER BY id DESC LIMIT ?',[req.session.pjumps.length],function(err, rows){
                 if (err) console.log("Error selecting : %s", err);
                 for(var i = 0;i < rows.length;i++){
                     req.session.jumps[req.session.jumps.length-i-1].unshift(rows[i].id);
                 }
+                console.log(req.session.jumps);
                 res.redirect('/venta');
             });
         });

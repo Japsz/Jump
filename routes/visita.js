@@ -95,7 +95,7 @@ exports.save = function(req, res){
         if (req.session.jumps.length == 1){
         	var data = {
 				idjumper : req.session.jumps[0][0],
-				duration: tiempos,
+				duration: parseInt(tiempos) + 5,
 				date_g: nowdate.toLocaleString(),
 				status: 'new'
 			}
