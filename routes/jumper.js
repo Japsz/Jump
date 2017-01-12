@@ -45,8 +45,10 @@ exports.add2session = function(req, res){
     if(req.session.isUserLogged){
         if(ids.length){
             var query = "SELECT * FROM jumper WHERE id = ?";
-            for (var i = 1; i<ids.length; i++){
-                query += "OR id = ?";
+            if( typeof ids == "object"){
+                for (var i = 1; i<ids.length; i++){
+                    query += "OR id = ?";
+                }
             }
             req.getConnection(function (err, connection) {
                 connection.query(query,ids, function (err, rows) {

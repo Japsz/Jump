@@ -24,6 +24,14 @@
     });
 </script>
 <script>
+    function enviar(){
+
+        $('input:checkbox:checked').each(
+            function() {
+                alert("El checkbox con valor " + $(this).val() + " está seleccionado");
+            }
+        );
+    }
     function enable2() {
         document.getElementById("myBtn1").disabled = false;
     }

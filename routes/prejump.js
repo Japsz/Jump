@@ -71,10 +71,12 @@ exports.transfer = function(req, res){
 		if(ids.length){
 			var query = "SELECT * FROM pJumper WHERE id = ?";
 			var query2 = "DELETE FROM pJumper WHERE id = ?";
-			for (var i = 1; i<ids.length; i++){
-				query += "OR id = ?";
-				query2 += "OR id = ?";
-			}
+			if(typeof ids == "object"){
+                for (var i = 1; i<ids.length; i++){
+                    query += "OR id = ?";
+                    query2 += "OR id = ?";
+                }
+            }
 			req.getConnection(function (err, connection) {
 				connection.query(query,ids, function (err, rows) {
 					if (err) console.log("Error selecting : %s ", err);
