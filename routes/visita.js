@@ -10,6 +10,7 @@ exports.d_from_session = function(req, res) {
     if (req.session.isUserLogged) {
     	// Nótese que el id es del array y no de el jumper
         if(req.params.id == 0){
+            req.session.jumps.shift();
         } else {
     	    req.session.jumps.splice(req.params.id);
         }
