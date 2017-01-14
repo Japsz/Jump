@@ -2,31 +2,33 @@
 exports.list = function(req, res){
 	req.getConnection(function(err,connection){
 
-			connection.query('SELECT * FROM vip WHERE NOT(ended = 0) ORDER BY date_f ASC',function(err,rows)
+			connection.query('SELECT * FROM vip ORDER BY date_f ASC',function(err,rows)
 			{
 				if(err)
 					console.log("Error Selecting : %s ",err );
-                if(rows.length){
-                    var endeds = rows;
-                    var view = 'list_vips';
-                } else {
-                    var endeds = [];
-                    var view = 'list_vips2';
-                }
-                connection.query('SELECT * FROM vip WHERE ended = 0 ORDER BY date_f ASC',function(err,rows)
-                {
-                    if(err)
-                        console.log("Error Selecting : %s ",err );
-                    if(req.session.isUserLogged){
-                        res.render('user_vips',{page_title:"Tiempos",data:rows,ends:endeds});
-                    }
-                    res.render(view,{page_title:"Tiempos",data:rows,ends:endeds});
-                });
+
+                if(req.session.isUserLogged){
+                    res.render('user_vips',{page_title:"Tiempos",data:rows});
+                } else res.render('list_vips2',{page_title:"Tiempos",data:rows});
 			 });
 			 //console.log(query.sql);
 	});
 };
+exports.tables = function(req, res){
+    req.getConnection(function(err,connection){
 
+        connection.query('SELECT * FROM vip ORDER BY date_f ASC',function(err,rows)
+        {
+            if(err)
+                console.log("Error Selecting : %s ",err );
+            if(req.params.num != rows.length){
+                res.render('false');
+            } else
+            res.render('list_vips');
+        });
+        //console.log(query.sql);
+    });
+};
 //Handler pulsera
 exports.check = function(req,res){
     var input = JSON.parse(JSON.stringify(req.body));
@@ -151,7 +153,6 @@ exports.save = function(req,res){
 };
 
 exports.sudo_del = function(req,res){
-	if(req.session.isUserLogged){
 		var idvip = req.params.id;
 		req.getConnection(function(err, connection){
 			connection.query('SELECT * FROM visita WHERE id = ?',[idvip],function(err,rows)
@@ -163,10 +164,9 @@ exports.sudo_del = function(req,res){
                 }
 			});
 		});
-	}else res.redirect('/bad_login')
 };
 
-//Logica borrar encuesta.
+//Logica borrar vip.
 exports.delete = function(req,res){
     req.getConnection(function(err, connection){
         connection.query("DELETE FROM vip WHERE id = ? ",[req.session.visita.id], function(err,rows){

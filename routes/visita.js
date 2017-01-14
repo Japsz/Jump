@@ -20,6 +20,7 @@ exports.precods = function(req, res) {
         req.getConnection(function (err, connection) {
             connection.query('SELECT * FROM visita ORDER BY id DESC LIMIT ?',[req.session.jumps.length],function(err, rows){
                 if (err) console.log("Error selecting : %s", err);
+                req.session.previps = rows;
                 res.render('getcodes',{data: rows,jumps: req.session.jumps});
             });
         });
@@ -28,8 +29,38 @@ exports.precods = function(req, res) {
 }
 exports.end = function(req,res) {
     if(req.session.isUserLogged){
-        req.session.jumps = [];
-        res.redirect('/venta')
+        var ahora = new Date().getTime();
+        if(req.session.previps.length == 1) {
+            var query = "INSERT INTO vip SET ? ";
+            ahora = ahora + req.session.previps[0].duration*60*1000;
+            var fin = new Date(ahora);
+            var data = {
+                id : req.session.previps[0].id,
+                name:req.session.jumps[0][1],
+                last_name:req.session.jumps[0][2],
+                date_f: fin.toLocaleString()
+            };
+        } else {
+            var data = [];
+            var query = "INSERT INTO vip (`id`, `name`, `last_name`, `date_f`) VALUES ?";
+            for (var i = 0; i<req.session.jumps.length; i++){
+                ahora = ahora + req.session.previps[req.session.previps.length - 1 - i].duration*60*1000;
+                var fin = new Date(ahora);
+                var aux = [req.session.previps[req.session.previps.length - 1 - i].id, req.session.jumps[i][1], req.session.jumps[i][2], fin.toLocaleString()];
+                data.push(aux);
+                ahora = new Date().getTime();
+            }
+        }
+        req.getConnection(function (err, connection){
+            connection.query(query,[data], function(err, rows){
+                if (err)
+                    console.log("Error selecting : %s ", err);
+                req.session.jumps = [];
+                req.session.previps = [];
+                res.redirect('/venta');
+
+            });
+        });
     } else res.redirect('/bad_login');
 
 }
@@ -95,16 +126,16 @@ exports.save = function(req, res){
         if (req.session.jumps.length == 1){
         	var data = {
 				idjumper : req.session.jumps[0][0],
-				duration: parseInt(tiempos) + 5,
+				duration: parseInt(tiempos) + 7,
 				date_g: nowdate.toLocaleString(),
-				status: 'new'
+				status: 'inprog'
 			}
             var query = "INSERT INTO visita SET ?";
 		} else {
             var data = [];
             var query = "INSERT INTO visita (`idjumper`, `duration`, `date_g`, `status`) VALUES ?";
             for (var i = 0; i<req.session.jumps.length; i++){
-                var aux = [req.session.jumps[i][0], tiempos[i], nowdate.toLocaleDateString(), 'new'];
+                var aux = [req.session.jumps[i][0], parseInt(tiempos[i]) + 7, nowdate.toLocaleDateString(), 'new'];
                 data.push(aux);
             }
         }

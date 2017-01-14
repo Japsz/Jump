@@ -7,22 +7,29 @@
             <tr>
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Fecha de Nacimiento</th>
+                <th>Edad</th>
             </tr>
             </thead>
             <tbody>
 
             <%
                 if(data.length){
-                    for(var i = 0;i < data.length;i++) { %>
+                    var nac, sec_left, years;
+                    var ahora = new Date().getTime();
+                    for(var i = 0;i < data.length;i++) {
+                        nac = new Date(data[i].fnac).getTime();
+                        sec_left = (ahora - nac) / 1000;
+                        years = parseInt(sec_left / 31536000);
+            %>
 
             <tr>
                 <td><%= data[i].name%></td>
                 <td><%= data[i].last_name%></td>
-                <td><%= data[i].fnac%></td>
+                <td><%= years%></td>
                 <td>
                     <input  onclick="enable2()" name ='ids' type='checkbox' value=<%= data[i].id%>>
                 </td>
+                <td><a class="btn btn-danger" href="/delete/<%=data[i].id%>">- Eliminar</a></td>
             </tr>
             <%
                 }

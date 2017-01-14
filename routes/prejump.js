@@ -16,6 +16,24 @@ exports.list = function(req, res){
   	}
   else res.redirect('/bad_login');
 };
+//Vista lista de projectos.
+exports.remove = function(req, res){
+
+    if(req.session.isUserLogged){
+        req.getConnection(function(err,connection){
+
+            connection.query('DELETE FROM pJumper WHERE id = ?',[req.params.id],function(err,rows)
+            {
+                if(err)
+                    console.log("Error Selecting : %s ",err );
+                res.redirect('/registro_jumper');
+            });
+
+            //console.log(query.sql);
+        });
+    }
+    else res.redirect('/bad_login');
+};
 
 //Vista agregar projectos
 exports.add = function(req, res){

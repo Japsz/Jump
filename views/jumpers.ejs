@@ -26,7 +26,7 @@
             <tr>
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Fecha de Nacimiento</th>
+                <th>Edad</th>
                 <th>Verificador</th>
                 <th></th>
             </tr>
@@ -35,11 +35,16 @@
 
             <%
             if(data.length){
-            for(var i = 0;i < data.length; i++){ %>
+                var nac, sec_left, years;
+                var ahora = new Date().getTime();
+                for(var i = 0;i < data.length; i++){
+                    nac = new Date(data[i].fnac).getTime();
+                    sec_left = (ahora - nac) / 1000;
+                    years = parseInt(sec_left / 31536000); %>
             <tr>
                 <td><%= data[i].name%></td>
                 <td><%= data[i].last_name%></td>
-                <td><%= data[i].fnac%></td>
+                <td><%= years%></td>
                 <td><%= data[i].correo%></td>
                 <td>
                     <input  onclick="enable()" name ='ids' type='checkbox' value=<%= data[i].id%> >
@@ -75,7 +80,6 @@
         <tr>
             <th>Nombre</th>
             <th>Apellido</th>
-            <th>Fecha de Nacimiento</th>
         </tr>
         </thead>
         <tbody>
@@ -86,7 +90,6 @@
         <tr>
             <td><%= data2[i][1]%></td>
             <td><%= data2[i][2]%></td>
-            <td><%= data2[i][3]%></td>
         </tr>
         <%
         }

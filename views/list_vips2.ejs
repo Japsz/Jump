@@ -1,8 +1,5 @@
 <%- include layouts/vip_header.ejs %>
 <section id="header">
-    <form action="/vip/check" method="post">
-        <input type="text" class="invis" name="idvisita" id="ids">
-    </form>
     <div class="container">
         <div class='banner text-center'>
             <h1 class="section-title wow bounceInDown animated"><span>Tiempos</span></h1>
@@ -10,6 +7,8 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         En Curso
+                    </div>
+                    <div id="tabla">
                     </div>
                     <table class="table table-striped table-responsive">
                         <thead>
@@ -24,79 +23,90 @@
                         <%
                         if(data.length){
 
-                            for(var k = 0;k < data.length; k++){
-                                if(k%2) {
-                                    var activ = "";
-                                } else {
-                                    var activ = " active"
-                                }
+                        for(var k = 0;k < data.length; k++){
                         %>
-                            <tr class="<%=activ%>">
-                                <td><%= data[k].name%></td>
-                                <td><%= data[k].last_name%></td>
-                                <td><div id="<%= data[k].id%>"></div></td>
-                            </tr>
+                        <tr id="<%= data[k].id%>">
+                            <td><%= data[k].name%></td>
+                            <td><%= data[k].last_name%></td>
+                            <td><div id="count<%= data[k].id%>"></div></td>
+                        </tr>
+                        <script type="text/javascript">
+                            var hours, minutes, seconds;
+                            setInterval(function () {
+                                var target_date = new Date('<%= data[k].date_f %>').getTime();
+                                // get tag element
+                                var row = document.getElementById('<%= data[k].id %>');
+                                var countdown = document.getElementById('count<%= data[k].id %>');
+                                // find the amount of "seconds" between now and target
+                                var current_date = new Date().getTime();
+                                var seconds_left = (target_date - current_date) / 1000;
+                                hours = parseInt(seconds_left / 3600);
+                                seconds = seconds_left % 3600;
 
-                            <%
-                            }
+                                minutes = parseInt(seconds / 60);
+                                seconds = parseInt(seconds % 60);
+                                if (seconds_left <= -5*60){
+                                    window.location.href = "/sudo_del/<%= data[k].id%>";
+                                } else if (seconds_left <= 0){
+                                    row.className = "danger";
+                                    countdown.className = "text-danger";
+                                    countdown.innerHTML = "TIEMPO CUMPLIDO"
+                                } else if (seconds_left <= 5 * 60) {
+                                    row.className = "warning";
+                                    countdown.className = "text-warning";
+                                    countdown.innerHTML = '<span class="minutes">'
+                                        + minutes + ' <b>Min</b></span> <span class="seconds">' + seconds + ' <b>s</b></span>';
+                                } else {
+                                    if (hours > 0) {
+                                        // format countdown string + set tag value
+                                        countdown.innerHTML = '<span class="hours">' + hours + ' <b>Hrs</b></span> <span class="minutes">'
+                                            + minutes + ' <b>Min</b></span> <span class="seconds">' + seconds + ' <b>s</b></span>';
+                                    } else {
+                                        countdown.innerHTML = '<span class="minutes">'
+                                            + minutes + ' <b>Min</b></span> <span class="seconds">' + seconds + ' <b>s</b></span>';
+
+                                    }
+                                }
+                            },1000);
+                        </script>
+
+                        <%
+                        }
                         } else{%>
-                            <tr><td>-</td><td>No hay Jumpers</td><td>-</td></tr>
+                        <tr><td>-</td><td>No hay Jumpers</td><td>-</td></tr>
                         <% } %>
                         </tbody>
                     </table>
                 </div>
             </div>
+            <div id="ups"></div>
         </div>
     </div>
 
-    <script type="text/javascript">
-        // set the date we're counting down to
-        var days, hours, minutes, seconds;
 
-
-
-            // update the tag with id "countdown" every 1 second
-        setInterval(function () {
-
-            <%for(var j = 0; j < data.length;j++) {
-                if(!data[j].ended){
-            %>
-            var target_date = new Date('<%= data[j].date_f %>').getTime();
-            // get tag element
-            var countdown = document.getElementById('<%= data[j].id %>');
-            // find the amount of "seconds" between now and target
-            var current_date = new Date().getTime();
-            var seconds_left = (target_date - current_date) / 1000;
-            seconds_left = seconds_left + 20;
-             if (seconds_left <= 5*60){
-                 window.location.href = "/vip/near/<%= data[j].id %>"
-             }
-             window.
-            // do some time calculations
-            days = parseInt(seconds_left / 86400);
-            seconds_left = seconds_left % 86400;
-
-            hours = parseInt(seconds_left / 3600);
-            seconds_left = seconds_left % 3600;
-
-            minutes = parseInt(seconds_left / 60);
-            seconds = parseInt(seconds_left % 60);
-
-            if(hours > 0){
-                // format countdown string + set tag value
-                countdown.innerHTML = '<span class="hours">' + hours +  ' <b>Hrs</b></span> <span class="minutes">'
-                    + minutes + ' <b>Min</b></span> <span class="seconds">' + seconds + ' <b>s</b></span>';
-            } else {
-                countdown.innerHTML = '<span class="minutes">'
-                    + minutes + ' <b>Min</b></span> <span class="seconds">' + seconds + ' <b>s</b></span>';
-
-            }
-            <% } } %>
-        }, 1000);
-
-    </script>
 </section>
 
+<script>
+    setInterval(
+        function () {
+            if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    if(this.responseText == "1"){
+                        window.location.href = "/vip_list";
+                    }
+                }
+            };
+            xmlhttp.open("GET", "/table_stream/<%= data.length%>", true);
+            xmlhttp.send();
+        },5000);
+</script>
 
 
         

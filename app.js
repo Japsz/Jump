@@ -39,7 +39,7 @@ app.use(
         
         host: '127.0.0.1',
         user: 'root',
-        password : '1355gojump',
+        password : '1234',
         port : 3306,
         database:'jump'
 
@@ -52,6 +52,7 @@ app.use(
 app.get('/', routes.index);
 // Visitas en progreso
 app.get('/vip_list', prod.list);
+app.get('/table_stream/:num', prod.tables);
 app.get('/vip/save', prod.save);
 app.post('/vip/check', prod.check);
 app.get('/vip/end/:id', prod.time_end);
@@ -75,7 +76,7 @@ app.post('/list', jumper.list);
 app.post('/jumper/add2session', jumper.add2session);
 app.get('/get_ids', jumper.get_ids);
 // Pre Jumpers
-
+app.get('/delete/:id',prejump.remove);
 app.get('/registro_jumper', prejump.list);
 app.post('/pjump/save', prejump.save);
 app.get('/pjump/:id', prejump.add);
