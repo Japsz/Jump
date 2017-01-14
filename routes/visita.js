@@ -9,7 +9,10 @@ exports.add = function(req, res) {
 exports.d_from_session = function(req, res) {
     if (req.session.isUserLogged) {
     	// Nótese que el id es del array y no de el jumper
-    	req.session.jumps.splice(req.params.id);
+        if(req.params.id == 0){
+        } else {
+    	    req.session.jumps.splice(req.params.id);
+        }
         res.redirect('/venta');
     }
     else res.redirect('/bad_login');
