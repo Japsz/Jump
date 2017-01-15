@@ -79,40 +79,16 @@ exports.cods = function(req, res) {
                 for(var i = 0; i < req.session.jumps.length; i++){
                     if(rows[0].idjumper == req.session.jumps[i][0]){
                         var pat = 'C:/Users/Go Jump/Desktop/Jump/public/cods/' + req.params.cod.toString() + req.session.jumps[i][1].toString() + '.png';
-                        bwipjs.toBuffer({
-                            bcid:        'code128',       // Barcode type
-                            text:        req.params.cod.toString(),    // Text to encode
-                            height:      10,              // Bar height, in millimeters
-                            includetext: true,            // Show human-readable text
-                            textxalign:  'center'        // Always good to set this
-                        }, function (err, png) {
-                            if (err) {
-                                throw err;
-                                console.log(err);
-                                // Decide how to handle the error
-                                // `err` may be a string or Error object
-                            } else {
-                                jimps.read(png, function (err, image) {
-                                    if(err) console.log(err);
-                                    jimps.read('C:/Users/Go Jump/Desktop/Jump/public/cods/base.png', function (err,image2) {
-                                        if(err) console.log(err);
-                                        image2.blit(image,300,5);
-                                        jimps.loadFont(jimps.FONT_SANS_32_BLACK).then(function (font) {
-                                            image2.print(font, 450, 20, req.session.jumps[i][1].toString());
-                                            image2.rotate(90);
-                                            image2.write( pat, function (){ 
-                                                console.log("yupi - " + pat);
-                                                res.redirect('/cods/' + req.params.cod.toString() + req.session.jumps[i][1].toString() + '.png');
-                                             } );
-                                        });
-                                    });
-                                    // do stuff with the image (if no exception)
-                                });
-                                // `png` is a Buffer
-                                // png.length           : PNG file length
-                                // png.readUInt32BE(16) : PNG image width
-                                // png.readUInt32BE(20) : PNG image height
-                            }
+                        jimps.read('C:/Users/Go Jump/Desktop/Jump/public/cods/base.png', function (err,image2) {
+                            if(err) console.log(err);
+                            jimps.loadFont(jimps.FONT_SANS_32_BLACK).then(function (font) {
+                                image2.print(font, 350, 20, req.params.cod.toString());
+                                image2.print(font, 450, 20, req.session.jumps[i][1].toString());
+                                image2.rotate(90);
+                                image2.write( pat, function (){ 
+                                    res.redirect('cods/' + req.params.cod.toString() + req.session.jumps[i][1].toString() + '.png');
+                                 } );
+                            });
                         });
                         break;
                     }
