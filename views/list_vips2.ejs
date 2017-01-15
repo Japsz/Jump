@@ -50,7 +50,7 @@
                                 } else if (seconds_left <= 0){
                                     row.className = "danger";
                                     countdown.className = "text-danger";
-                                    countdown.innerHTML = "TIEMPO CUMPLIDO"
+                                    countdown.innerHTML = "TIEMPO CUMPLIDO - #<%=data[k].id%>";
                                 } else if (seconds_left <= 5 * 60) {
                                     row.className = "warning";
                                     countdown.className = "text-warning";

@@ -106,7 +106,7 @@ exports.save = function(req, res){
         if (req.session.jumps.length == 1){
         	var data = {
 				idjumper : req.session.jumps[0][0],
-				duration: parseInt(tiempos) + 7,
+				duration: parseInt(tiempos) + 5,
 				date_g: nowdate.toLocaleString(),
 				status: 'inprog'
 			}
@@ -115,7 +115,7 @@ exports.save = function(req, res){
             var data = [];
             var query = "INSERT INTO visita (`idjumper`, `duration`, `date_g`, `status`) VALUES ?";
             for (var i = 0; i<req.session.jumps.length; i++){
-                var aux = [req.session.jumps[i][0], parseInt(tiempos[i]) + 7, nowdate.toLocaleDateString(), 'new'];
+                var aux = [req.session.jumps[i][0], parseInt(tiempos[i]) + 5, nowdate.toLocaleDateString(), 'new'];
                 data.push(aux);
             }
         }

@@ -10,6 +10,7 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Apellido</th>
+                        <th>Edad</th>
                         <th>Tiempo</th>
                         <th></th>
                         <th></th>
@@ -19,10 +20,16 @@
 
                     <%
                         if(data.length){
-                            for(var i = 0;i < data.length; i++){ %>
+                            var nac, sec_left, years;
+                            var ahora = new Date().getTime();
+                            for(var i = 0;i < data.length; i++){ 
+                              nac = new Date(data[i][3]).getTime();
+                              sec_left = (ahora - nac) / 1000;
+                              years = parseInt(sec_left / 31536000);%>
                       <tr>
                           <td><%= data[i][1]%></td>
                           <td><%= data[i][2]%></td>
+                          <td><%= years%></td>
                           <td><select name=tiempos class="form-control">
                                   <option value="30">30</option>
                                   <option value="60">60</option>
