@@ -78,16 +78,20 @@ exports.cods = function(req, res) {
                 if (err) console.log("Error selecting : %s", err);
                 for(var i = 0; i < req.session.jumps.length; i++){
                     if(rows[0].idjumper == req.session.jumps[i][0]){
+                        // 'C:/Users/Go Jump/Desktop/Jump/public/cods/'
                         var pat = 'C:/Users/Go Jump/Desktop/Jump/public/cods/' + req.params.cod.toString() + req.session.jumps[i][1].toString() + '.png';
                         jimps.read('C:/Users/Go Jump/Desktop/Jump/public/cods/base.png', function (err,image2) {
                             if(err) console.log(err);
                             jimps.loadFont(jimps.FONT_SANS_32_BLACK).then(function (font) {
                                 image2.print(font, 0, 20, req.params.cod.toString());
                                 image2.print(font, 100, 20, req.session.jumps[i][1].toString());
-                                image2.rotate(90);
-                                image2.write( pat, function (){ 
-                                    res.redirect('cods/' + req.params.cod.toString() + req.session.jumps[i][1].toString() + '.png');
-                                 } );
+                                jimps.loadFont(jimps.FONT_SANS_16_BLACK).then(function (font) {
+                                    image2.print(font, 0, 60, (parseInt(rows[0].duration) - 5).toString() + " Minutos");
+                                    image2.rotate(90);
+                                    image2.write( pat, function (){
+                                        res.redirect('cods/' + req.params.cod.toString() + req.session.jumps[i][1].toString() + '.png');
+                                    });
+                                });
                             });
                         });
                         break;

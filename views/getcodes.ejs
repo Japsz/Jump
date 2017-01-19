@@ -56,11 +56,17 @@
             <div class="row placeholders">
                 <%
                 if(data.length){
-                for(var i = 0;i < data.length; i++){
+                    var nac, sec_left, years;
+                    var ahora = new Date().getTime();
+                    for(var i = 0;i < data.length; i++){
+                        nac = new Date(jumps[jumps.length - 1 - i][3]).getTime();
+                        sec_left = (ahora - nac) / 1000;
+                        years = parseInt(sec_left / 31536000);%>
                 %>
                 <div class="col-sm-3 col-xs-6 placeholder">
                     <h2><%= data[i].id%></h2>
                     <h4><%= jumps[jumps.length - 1 - i][1]%></h4>
+                    <h4> Edad : <%= years%></h4>
                     <button onclick="getcod(<%=data[i].id%>)"  class="btn btn-info">Generar</button>
                 </div>
                 <%
