@@ -15,6 +15,7 @@
                         <tr>
                             <th>Nombre</th>
                             <th>Apellido</th>
+                            <th>Edad</th>
                             <th>Tiempo Restante</th>
                         </tr>
                         </thead>
@@ -22,12 +23,20 @@
 
                         <%
                         if(data.length){
-
-                        for(var k = 0;k < data.length; k++){
+                            var nac, sec_left, years;
+                            var ahora = new Date().getTime();
+                            for(var k = 0;k < data.length; k++){
+                                nac = new Date(data[k].fnac).getTime();
+                                sec_left = (ahora - nac) / 1000;
+                                years = parseInt(sec_left / 31536000);
+                                if(years > 28){
+                                    years = "AD"
+                                }
                         %>
                         <tr id="<%= data[k].id%>">
                             <td><%= data[k].name%></td>
                             <td><%= data[k].last_name%></td>
+                            <td><%= years%></td>
                             <td><div id="count<%= data[k].id%>"></div></td>
                         </tr>
                         <script type="text/javascript">

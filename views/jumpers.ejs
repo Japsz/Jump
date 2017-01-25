@@ -26,6 +26,7 @@
             <tr>
                 <th>Nombre</th>
                 <th>Apellido</th>
+                <th>Nacimiento</th>
                 <th>Edad</th>
                 <th>Verificador</th>
                 <th></th>
@@ -44,6 +45,7 @@
             <tr>
                 <td><%= data[i].name%></td>
                 <td><%= data[i].last_name%></td>
+                <td><%= new Date(data[i].fnac).toDateString()%></td>
                 <td><%= years%></td>
                 <td><%= data[i].correo%></td>
                 <td>

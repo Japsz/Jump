@@ -42,15 +42,16 @@ exports.end = function(req,res) {
                 id : req.session.previps[0].id,
                 name:req.session.jumps[0][1],
                 last_name:req.session.jumps[0][2],
+                fnac: req.session.jumps[0][3],
                 date_f: fin.toLocaleString()
             };
         } else {
             var data = [];
-            var query = "INSERT INTO vip (`id`, `name`, `last_name`, `date_f`) VALUES ?";
+            var query = "INSERT INTO vip (`id`, `name`, `last_name`, `fnac`, `date_f`) VALUES ?";
             for (var i = 0; i<req.session.jumps.length; i++){
                 ahora = ahora + req.session.previps[req.session.previps.length - 1 - i].duration*60*1000;
                 var fin = new Date(ahora);
-                var aux = [req.session.previps[req.session.previps.length - 1 - i].id, req.session.jumps[i][1], req.session.jumps[i][2], fin.toLocaleString()];
+                var aux = [req.session.previps[req.session.previps.length - 1 - i].id, req.session.jumps[i][1], req.session.jumps[i][2], req.session.jumps[i][3], fin.toLocaleString()];
                 data.push(aux);
                 ahora = new Date().getTime();
             }
