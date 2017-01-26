@@ -37,9 +37,7 @@ exports.remove = function(req, res){
 
 //Vista agregar projectos
 exports.add = function(req, res){
-	if(req.params.id){
-		res.render('add_pjump',{page_title:"Registro",success: parseInt(req.params.id)});			
-	} else res.render('add_pjump',{page_title:"Registro",success: 0});
+	res.render('add_pjump',{page_title:"Registro"});
 };
 
 //Logica agregar prejumpers.
@@ -58,7 +56,23 @@ exports.save = function(req, res){
 		});
 	});
 };
-
+//Logica agregar prejumpers.
+exports.save2 = function(req, res){
+    var input = JSON.parse(JSON.stringify(req.body));
+    req.getConnection(function(err,connection){
+        var data = {
+            name        :input.nom,
+            last_name   :input.ape,
+            fnac    :input.fnac,
+        };
+        var query = connection.query("INSERT INTO pJumper set ? ",data,function(err, rows){
+            if (err){
+                console.log("Error inserting : %s", err);
+            } 
+            res.send("yupi");
+        });
+    });
+};
 // Lógica borrar prejumper
 exports.delete = function(req, res){
     var input = JSON.parse(JSON.stringify(req.body));

@@ -6,30 +6,120 @@
 <script src="/assets/js/wow.js"></script>
 <!-- Date Picker -->
 <script type="text/javascript" src="/assets/js/bootstrap-datepicker.min.js"></script>
-<script type="text/javascript" src="/assets/js/moment.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment-with-locales.min.js"></script>
 <script type="text/javascript" src="/assets/js/transition.js"></script>
 <script type="text/javascript" src="/assets/js/collapse.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
+    setInterval(function(){
+        if($('#datepicker').data("DateTimePicker").viewMode() == 'decades'){
+            $('#datepicker').data("DateTimePicker").viewMode('years');
+        }
+    },500);
+</script>
+<script type="text/javascript">
+    $(function(){               
+        $('#enviar').click(function(e){
+            $("#enviar").attr("disabled", true);
+            e.preventDefault();
+            
+             /*$.ajax({
+                dataType: 'jsonp',
+                data: "data=yeah",                      
+                jsonp: 'callback',
+                url: 'http://localhost:3000/endpoint?callback=?',                       
+                success: function(data) {
+                    console.log('success');
+                    console.log(JSON.stringify(data));
+                }
+            });*/
+            var form = document.getElementById('pform');
+            var data = {};
+            var firstName = $("input#keyboard").val();
+            if(firstName == ""){
+                $("#enviar").attr("disabled", false);
+                $('#success').html("<div class='alert alert-danger'>");
+                $('#success > .alert-danger')
+                    .append("<strong>Error!</strong> porfavor escriba un nombre.");
+                $('#success > .alert-danger')
+                    .append('</div>');
+                $("#success").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#success").slideUp(500);
+                });
+                return;
+            }
+            var lastName = $("input#keyboard2").val();
+            if(lastName == ""){
+                $("#enviar").attr("disabled", false);
+                $('#success').html("<div class='alert alert-danger'>");
+                $('#success > .alert-danger')
+                    .append("<strong>Error!</strong> porfavor escriba un apellido.");
+                $('#success > .alert-danger')
+                    .append('</div>');
+                $("#success").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#success").slideUp(500);
+                });
+                return;
+            }
+            var fnac = $("input#datepicker").val();
+            if(fnac == ""){
+                $("#enviar").attr("disabled", false);
+                $('#success').html("<div class='alert alert-danger'>");
+                $('#success > .alert-danger')
+                    .append("<strong>Error!</strong> porfavor ingrese su fecha de nacimiento.");
+                $('#success > .alert-danger')
+                    .append('</div>');
+                $("#success").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#success").slideUp(500);
+                });
+                return;
+            }
+            if (firstName.indexOf(' ') >= 0) {
+                firstName = firstName.split(' ').slice(0, -1).join(' ');
+            }
+            if (lastName.indexOf(' ') >= 0) {
+                lastName = lastName.split(' ').slice(0, -1).join(' ');
+            }
+            data.nom = firstName;
+            data.ape = lastName;
+            data.fnac = $("input#datepicker").val();
 
-
-    $('#datepicker2').datepicker({
-        defaultViewDate: {year:2000 ,month:0, day:1},
-        format: 'yyyy/mm/dd',
-        startView: 2,
-        endDate: new Date(),
-        autoclose: true,
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: '/psave',                      
+                success: function(data) {
+                    $("#enviar").attr("disabled", false);
+                    $('#pform').trigger("reset");
+                    $('#success').html("<div class='alert alert-success'>");
+                    $('#success > .alert-success')
+                        .append("<strong>Bien!</strong> el registro fue exitoso.");
+                    $('#success > .alert-success')
+                        .append('</div>');
+                    $('#datepicker').data("DateTimePicker").viewMode('years');
+                    $("#success").fadeTo(2000, 500).slideUp(500, function(){
+                        $("#success").slideUp(500);
+                    });
+                }
+            });
+            /*$.ajax('http://localhost:3000/endpoint', {
+                    type: 'POST',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: function() { console.log('success');},
+                    error  : function() { console.log('error');}
+            });*/
+        });             
     });
-
-    $("#success").fadeTo(2000, 500).slideUp(500, function(){
-        $("#success").slideUp(500);
-    });
-
+</script>
+<script type="text/javascript">
     $(function() {
         $('#datepicker').datetimepicker({
             viewMode: 'years',
             format: 'YYYY/MM/DD',
             maxDate: new Date(),
+            locale: 'es',
             useCurrent: false
         });
 

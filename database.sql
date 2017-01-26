@@ -52,7 +52,8 @@ CREATE TABLE IF NOT EXISTS `vip` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45),
-  `fnac` DATE,
+  `fnac` DATE NULL,
   `date_f`	DATETIME NOT NULL,
+  `ended` INT(1),
   PRIMARY KEY(`id`)
   );

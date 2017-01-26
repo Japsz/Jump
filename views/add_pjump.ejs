@@ -1,5 +1,4 @@
 <%- include layouts/tot_header.ejs %>
-
 <section id="header">
   <div class="container">
     <div class='banner text-center'>
@@ -7,25 +6,22 @@
       <h2>Recuerde registrar a cada asistente</h2>
       <div class="col-sm-6 col-md-8 col-md-offset-2">
 
-        <form action="/pjump/save" method='POST'>
+        <form id="pform">
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input type="text" name="nom" id="keyboard" class="form-control" placeholder="Nombre" required>
-            <input type="text" name="ape" id="keyboard2" class="form-control" placeholder="Apellido" required>
+            <input type="text" name="nom" id="keyboard" class="form-control" placeholder="Nombre" required data-validation-required-message="Escriba algún nombre.">
+            <input type="text" name="ape" id="keyboard2" class="form-control" placeholder="Apellido" required data-validation-required-message="Escriba algún apellido.">
           </div>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-            <input type="text" name="fnac" class="form-control" placeholder="Fecha de nacimiento" id="datepicker" required>
+            <input type="text" name="fnac" class="form-control" placeholder="Fecha de nacimiento" id="datepicker" required data-validation-required-message="Entre una fecha de nacimiento.">
           </div>
-            <% if(success){ %>
-          <div class="alert alert-success" role="alert" id="success">
-            <strong>Bien!</strong> El registro fue exitoso.
-          </div>
-            <% }%>
-          <button type="submit" class="btn btn-primary">Enviar</button>
+          <div id="success"></div>
+          <a href="#" id="enviar" class="btn btn-info btn-lg">Enviar</a>
         </form>
       </div>
     </div>
   </div>
 </section>
-<%- include layouts/tot_footer.ejs %>
+
++<%- include layouts/tot_footer.ejs %>

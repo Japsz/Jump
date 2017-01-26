@@ -76,6 +76,7 @@ app.post('/list', jumper.list);
 app.post('/jumper/add2session', jumper.add2session);
 app.get('/get_ids', jumper.get_ids);
 // Pre Jumpers
+app.post('/psave',prejump.save2);
 app.get('/delete/:id',prejump.remove);
 app.get('/registro_jumper', prejump.list);
 app.post('/pjump/save', prejump.save);
