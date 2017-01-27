@@ -1,6 +1,5 @@
 <%- include layouts/admin_header.ejs %>
-            <h1>Users in system</h1>
-            <h4>Here you can Add/edit/delete Users. Nothing more.</h4>
+            <h1>Usuarios en el sistema</h1>
             <table class="table">
                 <tr>
                     <th width="50px">No</th>
@@ -18,9 +17,9 @@
                     <td><%=data[i].username%></td>
                     <td><%=data[i].password%></td>
                     <td>
-                        <a class="btn btn-warning btn-xs a-inside edit" href="../user/edit/<%=data[i].username%>">Edit</a>
+                        <a class="btn btn-warning btn-xs a-inside edit" href="user/edit/<%=data[i].username%>">Editar</a>
                        
-                        <a class="btn btn-danger btn-xs a-inside delete" href="../user/delete/<%=data[i].username%>">Delete</a>
+                        <a class="btn btn-danger btn-xs a-inside delete" href="user/delete/<%=data[i].username%>">- Borrar</a>
                        
                     </td>
                 </tr>
@@ -34,7 +33,7 @@
 
                 <tr>
                     <td> 
-                        <a href="/user/add" class="btn btn-primary"><span class="fa fa-user"></span> + Add</a>
+                        <a href="/user/add" class="btn btn-primary"><span class="fa fa-user"></span> + Añadir</a>
                     </td>
                 </tr>
                               

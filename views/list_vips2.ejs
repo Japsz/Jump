@@ -54,12 +54,16 @@
 
                                 minutes = parseInt(seconds / 60);
                                 seconds = parseInt(seconds % 60);
-                                if (seconds_left <= -5*60){
+                                if (seconds_left <= -10*60){
                                     window.location.href = "/sudo_del/<%= data[k].id%>";
                                 } else if (seconds_left <= 0){
                                     row.className = "danger";
                                     countdown.className = "text-danger";
-                                    countdown.innerHTML = "TIEMPO CUMPLIDO - #<%=data[k].id%>";
+                                    countdown.innerHTML = "<b>TIEMPO CUMPLIDO</b> - #<%=data[k].id%>";
+                                } else if (seconds_left <= 3 * 60) {
+                                    row.className = "warning";
+                                    countdown.className = "text-danger";
+                                    countdown.innerHTML = "< 3 <b>Min</b>";
                                 } else if (seconds_left <= 5 * 60) {
                                     row.className = "warning";
                                     countdown.className = "text-warning";

@@ -85,7 +85,9 @@ app.post('/pjump/register', prejump.transfer);
 //Users
 app.get('/user', admin.list);
 app.get('/user/add', admin.add);
+app.get('/csv', admin.stats);
 app.post('/user/add', admin.save);
+app.post('/g_csv', admin.g_csv);
 app.get('/user/delete/:username', admin.delete_user);
 app.get('/user/edit/:username', admin.edit);
 app.post('/user/edit/:username',admin.save_edit);

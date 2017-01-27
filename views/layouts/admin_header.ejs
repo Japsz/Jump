@@ -1,62 +1,60 @@
 <!DOCTYPE html>
-</html>
+<html lang="en">
 <head>
-    <title>Call Service</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <!-- load bootstrap css -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- load fontawesome -->
-    <style>
-        body        { padding-top:0px; }
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            }
-        .btn-default{
-            margin-bottom: 5px;
-            width: 180px;
-            font-size: 20px;
-            text-align: left;
-        }
-        .btn-primary{
-            margin-bottom: 5px;
-        }
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="assets/img/logo.png">
 
-        .sidebar{
-          padding-top: 60px;
-        }
+    <title>Portal Admin</title>
 
-        .main{
-          padding-top: 45px;
-        }
-        .col-md-offset-4{
-          padding-top: 20px;
-        }
-    </style>
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/bootstrap-datetimepicker.min.css" >
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/dashboard.css" rel="stylesheet">
+<!-- jQuery Load -->
+<script src="/assets/js/jquery-3.1.1.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="/assets/js/bootstrap.min.js"></script>
+
 </head>
+
 <body>
-        
-<!--Barra superior ADMIN -->
-<div class="container">
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">Logged as ADMIN</a>
-      </div>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="/admin_logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-      </ul>
-    </div>
-  </nav>
+<!-- Barra de navegación y barra Lateral -->
+<div class="cointainer">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/user">Go Jump!</a>
+            </div>
+            <div class="navbar-right">
+                <a href="/admin_logout">Salir</a>
+            </div>
+        </div>
+    </nav>
 </div>
-<!--Barra Lateral ADMIN -->
-  <div class="col-md-2 sidebar ">
-    <ul>
-      <li><a href="/user" class="btn btn-default"><span class="fa fa-pencil-square"></span> Users CRUD</a></li>
-      <li><a href="/contact" class="btn btn-default"><span class="fa fa-list"></span> Add Contacts</a></li>
-      <li><a href="/project" class="btn btn-default"><span class="fa fa-users"></span> project CRUD</a></li>
-      <li><a href="/contact/add" class="btn btn-default"><span class="fa fa-bar-chart"></span> User Stats</a></li>
 
-    </ul>
-  </div>
-
-<div class="col-md-8 main">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a class="h4">Panel de control</a></li>
+                <li><a href="/user">Usuarios</a></li>
+                <li><a href="/csv">Generar estadísticas</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
