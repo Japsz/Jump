@@ -67,24 +67,26 @@ exports.g_csv = function(req,res){
 	if(req.session.isAdminLogged){
 		var input = JSON.parse(JSON.stringify(req.body));
 		var csvWriter = require('csv-write-stream');
-		var writer = csvWriter({ headers: ["edad", "duración", "fecha"]});
+		var writer = csvWriter({ headers: ["edad", "duración", "fecha", "hora"]});
 		var fs = require('fs');
 		req.getConnection(function (err, connection) {
 				
-				var query = connection.query("SELECT jumper.fnac, visita.duration, visita.date_g FROM jumper INNER JOIN visita ON jumper.id=visita.idjumper AND visita.date_g >= ? AND  visita.date_g <= ?",[input.ini,input.end], function(err, rows)
+				var query = connection.query("SELECT jumper.fnac, visita.duration, visita.date_g FROM jumper INNER JOIN visita ON jumper.id=visita.idjumper AND visita.date_g >= ? AND  visita.date_g <= ? AND visita.status = 'ended'",[input.ini,input.end], function(err, rows)
 				{
 	
 					if (err)
 							console.log("Error inserting : %s ",err );
-					var nac, sec_left, years;
+					var nac, sec_left, years, date_g;
                     var ahora = new Date().getTime();
 				    if(rows.length){
-				    	writer.pipe(fs.createWriteStream('C:/Users/Go Jump/Desktop/' + input.ini + ' ~ ' + input.end + '.csv'));
+				    	// 'C:/Users/Go Jump/Desktop/'
+				    	writer.pipe(fs.createWriteStream('C:/Users/benja/Desktop/' + input.ini + ' ~ ' + input.end + '.csv'));
 				    	for (var i = 0; i <rows.length; i++) {
+				    		date_g = new Date(rows[i].date_g);
 				    		nac = new Date(rows[i].fnac).getTime();
                             sec_left = (ahora - nac) / 1000;
                             years = parseInt(sec_left / 31536000);
-                            writer.write([years.toString(),(parseInt(rows[i].duration)-5).toString(),new Date(rows[i].date_g).toLocaleDateString()]);
+                            writer.write([years.toString(),(parseInt(rows[i].duration)-5).toString(),date_g.toLocaleDateString(),date_g.toLocaleTimeString()]);
 				    	}
 				    	writer.end();
 				    } 

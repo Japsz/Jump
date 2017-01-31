@@ -134,3 +134,20 @@ exports.save = function(req, res){
 	}
 	else res.redirect('/bad_login');
 }
+exports.update = function(req,res){
+    req.getConnection(function(err,connection){
+
+        connection.query("ALTER TABLE jump.visita CHANGE COLUMN `date_g` `date_g` DATETIME NOT NULL",function(err,rows)
+        {
+
+            if(err)
+                console.log("Error Selecting : %s ",err );
+
+            res.redirect('/user');
+
+
+        });
+
+        //console.log(query.sql);
+    });
+}

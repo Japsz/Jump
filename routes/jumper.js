@@ -70,28 +70,31 @@ exports.add2session = function(req, res){
     }
     else res.redirect('/bad_login');
 };
-// Aún no implementada
+// Modificar Jumper
 exports.edit = function(req, res){
-    var isAdminLogged = req.session.isAdminLogged;
+    if(req.session.isUserLogged){
+        var input = JSON.parse(JSON.stringify(req.body));
+        var data = {
+            name: input.nom,
+            last_name: input.ape,
+            fnac: input.fnac,
+            correo: input.verif
+        }
+        req.getConnection(function(err,connection){
 
-    if(isAdminLogged){
-    var phone = req.session.options;
+            var query = connection.query("UPDATE jumper SET ? WHERE id = ?",[data,input.id],function(err,rows)
+            {
 
-    req.getConnection(function(err,connection){
+                if(err)
+                    console.log("Error Selecting : %s ",err );
 
-        var query = connection.query('SELECT * FROM jumper WHERE verificador = ?',[phone],function(err,rows)
-        {
-
-            if(err)
-                console.log("Error Selecting : %s ",err );
-
-            res.render('edit_contact',{page_title:"Edit Contacts",data:rows});
+                res.redirect('/begin_list');
 
 
-         });
+             });
 
-         //console.log(query.sql);
-    });
+             //console.log(query.sql);
+        });
     }
     else res.redirect('/bad_login');
 };

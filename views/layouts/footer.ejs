@@ -5,12 +5,70 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
+<div class="modal fade" id="extend" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modificar</h4>
+            </div>
+            <form action="/extend" method="POST">
+            <div class="modal-body">
+                <label>Hora de término</label>
+                    <input type="datetime" name="hora" class="form-control" id="time">
+
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" id="continue" name="id" value="" class="btn btn-primary">Modificar</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="mjump" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modificar</h4>
+            </div>
+            <form action="/m_jump" method="POST">
+                <div class="modal-body">
+                    <label>Nombre</label>
+                    <input type="datetime" name="nom" class="form-control" id="nom">
+                    <label>Apellido</label>
+                    <input type="text" name="ape" class="form-control" id="ape">
+                    <label>Fecha de nacimiento</label>
+                    <input type="text" name="fnac" class="form-control" id="fnac">
+                    <label>Correo</label>
+                    <input type="text" name="verif" class="form-control" id="verif">
+
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="continue" name="id" value="" class="btn btn-primary">Modificar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script src="/assets/js/jquery-min.js"></script>
 
 
 <script src="/assets/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="/assets/js/ie10-viewport-bug-workaround.js"></script>
+<!-- datepicker -->
+<script type="text/javascript" src="/assets/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment-with-locales.min.js"></script>
+<script type="text/javascript" src="/assets/js/transition.js"></script>
+<script type="text/javascript" src="/assets/js/collapse.js"></script><script type="text/javascript" src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="/assets/css/bootstrap-datetimepicker.min.css" >
 <script type="text/javascript">
     $("ul.qcontrols li").click(function(){
         // If this isn't already active
@@ -21,17 +79,39 @@
             $(this).addClass("active");
         }
     });
+    $(document).on("click", ".modif", function() {
+        var jumpid = $(this).data('id');
+        var hora = $(this).data('time');
+        $(".modal-body #time").val(hora);
+        $(".modal-footer #continue").val(jumpid);
+        $('#time').datetimepicker({
+            format: 'HH:mm:ss',
+            locale: 'es',
+            useCurrent: false
+        });
+    });
+    $(document).on("click", ".mjump", function() {
+        var jumpid = $(this).data('id');
+        var nom = $(this).data('nom');
+        var ape = $(this).data('ape');
+        var fnac = $(this).data('fnac');
+        var verif = $(this).data('verif');
+        $(".modal-body #nom").val(nom);
+        $(".modal-body #ape").val(ape);
+        $(".modal-body #fnac").val(fnac);
+        $(".modal-body #verif").val(verif);
+        $(".modal-footer #continue").val(jumpid);
+        $('#fnac').datetimepicker({
+            viewMode: 'years',
+            format: 'YYYY/MM/DD',
+            maxDate: new Date(),
+            locale: 'es',
+            useCurrent: false
+        });
+    });
 </script>
 <script>
 
-    function enviar(){
-
-        $('input:checkbox:checked').each(
-            function() {
-                alert("El checkbox con valor " + $(this).val() + " está seleccionado");
-            }
-        );
-    }
     function enable2() {
         document.getElementById("myBtn1").disabled = false;
     }

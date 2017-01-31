@@ -22,9 +22,9 @@ exports.tables = function(req, res){
             if(err)
                 console.log("Error Selecting : %s ",err );
             if(req.params.num != rows.length){
-                res.render('false');
+                res.send("1");
             } else
-            res.render('list_vips');
+            res.send("0");
         });
         //console.log(query.sql);
     });
@@ -100,30 +100,21 @@ exports.time_end = function(req,res){
 };
 
 exports.extend = function(req,res){
-    const escpos = require('escpos');
-     
-    const device  = new escpos.USB();
-    // const device  = new escpos.Network('localhost'); 
-    // const device  = new escpos.Serial('/dev/usb/lp0'); 
-     
-    const printer = new escpos.Printer(device);
-     
-    device.open(function(){
-     
-      printer
-      .font('a')
-      .align('ct')
-      .style('bu')
-      .size(1, 1)
-      .text('The quick brown fox jumps over the lazy dog')
-      .barcode('12345678', 'EAN8')
-      .qrimage('https://github.com/song940/node-escpos', function(err){
-        this.cut();
-        this.close();
-      });
-     
+    var input = JSON.parse(JSON.stringify(req.body));
+    var id = input.id;
+
+    var hora = new Date().toLocaleDateString();
+    hora += " " + input.hora;
+
+    req.getConnection(function(err,connection){
+
+        connection.query("UPDATE vip SET date_f = ? WHERE id = ?", [hora, id], function (err, rows) {
+            if (err)
+                console.log("Error updating : %s ", err);
+            res.redirect('/vip_list');
+        });
+        //console.log(query.sql);
     });
-    res.redirect('/venta');
 };
 //Logica iniciar visita.
 exports.save = function(req,res){

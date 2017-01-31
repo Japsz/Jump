@@ -28,7 +28,8 @@
                 <th>Apellido</th>
                 <th>Nacimiento</th>
                 <th>Edad</th>
-                <th>Verificador</th>
+                <th>Correo</th>
+                <th></th>
                 <th></th>
             </tr>
             </thead>
@@ -45,9 +46,10 @@
             <tr>
                 <td><%= data[i].name%></td>
                 <td><%= data[i].last_name%></td>
-                <td><%= new Date(data[i].fnac).toDateString()%></td>
+                <td><%= new Date(data[i].fnac).toLocaleDateString()%></td>
                 <td><%= years%></td>
                 <td><%= data[i].correo%></td>
+                <td><a class="btn btn-info mjump" data-toggle="modal" data-target="#mjump" data-id="<%=data[i].id%>" data-nom="<%=data[i].name%>" data-ape="<%=data[i].last_name%>" data-fnac="<%= new Date(data[i].fnac).toLocaleDateString()%>" data-verif="<%=data[i].correo%>">Modificar</a> </td>
                 <td>
                     <input  onclick="enable()" name ='ids' type='checkbox' value=<%= data[i].id%> >
                 </td>

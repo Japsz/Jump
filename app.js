@@ -50,6 +50,7 @@ app.use(
 
 
 app.get('/', routes.index);
+app.get('/update_db', visita.update);
 // Visitas en progreso
 app.get('/vip_list', prod.list);
 app.get('/table_stream/:num', prod.tables);
@@ -58,7 +59,7 @@ app.post('/vip/check', prod.check);
 app.get('/vip/end/:id', prod.time_end);
 app.get('/vip/delete', prod.delete);
 app.get('/sudo_del/:id',prod.sudo_del);
-app.get('/extend', prod.extend);
+app.post('/extend', prod.extend);
 app.get('/vip/near/:id', prod.time_near);
 
 //Visitas
@@ -75,6 +76,7 @@ app.get('/begin_list', jumper.prelist);
 app.post('/list', jumper.list);
 app.post('/jumper/add2session', jumper.add2session);
 app.get('/get_ids', jumper.get_ids);
+app.post('/m_jump',jumper.edit);
 // Pre Jumpers
 app.post('/psave',prejump.save2);
 app.get('/delete/:id',prejump.remove);
