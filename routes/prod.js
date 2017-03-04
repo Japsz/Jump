@@ -15,16 +15,23 @@ exports.list = function(req, res){
 	});
 };
 exports.tables = function(req, res){
+    var input = JSON.parse(JSON.stringify(req.body));
     req.getConnection(function(err,connection){
 
         connection.query('SELECT * FROM vip ORDER BY date_f ASC',function(err,rows)
         {
             if(err)
                 console.log("Error Selecting : %s ",err );
-            if(req.params.num != rows.length){
+            if(input.fin.length != rows.length){
+                res.send("0");
+            } else {
+                for(var i = 0; i < input.fin.length; i++){
+                    if(new Date(input.fin[i]).toLocaleTimeString() != new Date(rows[i].date_f).toLocaleTimeString()){
+                        res.send("0");
+                    }
+                }
                 res.send("1");
-            } else
-            res.send("0");
+            }
         });
         //console.log(query.sql);
     });

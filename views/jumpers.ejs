@@ -1,22 +1,17 @@
 <%- include layouts/user_header.ejs %>
     <h2 class="page-header">Jumpers</h2>
     <div class="row placeholder">
-        <div class="col-sm-6 col-xs-12">
-            <form action="/list" method="POST">
-                <input type="text" class="form-control" name="verif" placeholder="Correo">
-                <button type="submit" name="tipo" value="verif" class="btn btn-primary">Buscar por correo</button>
-            </form>
+        <div class="col-sm-4 col-xs-4">
+            <label>Correo</label>
+            <input type="text" class="form-control" name="verif" placeholder="juanp@gmail.com" onkeyup="stream()">
         </div>
-        <div class="col-sm-6 col-xs-12">
-            <form action="/list" method="POST">
-                <input type="text" class="form-control" name="nom" placeholder="Nombre ">
-                <input type="text" class="form-control" name="ape" placeholder="Apellido">
-                <div class="btn-group" role="group">
-                    <button type="submit" name="tipo" value="nom" class="btn btn-primary">Por nombre</button>
-                    <button type="submit" name="tipo" value="ape" class="btn btn-primary">Por apellido</button>
-                    <button type="submit" name="tipo" value="nom-ape" class="btn btn-primary">Por ambos</button>
-                </div>
-            </form>
+        <div class="col-sm-4 col-xs-4">
+            <label>Nombre</label>
+            <input type="text" class="form-control" name="nom" placeholder="Juan " onkeyup="stream()">
+        </div>
+        <div class="col-sm-4 col-xs-4">
+            <label>Apellido</label>
+            <input type="text" class="form-control" name="ape" placeholder="Pérez" onkeyup="stream()">
         </div>
     </div>
 <form action="/jumper/add2session" method="post">
@@ -33,35 +28,8 @@
                 <th></th>
             </tr>
             </thead>
-            <tbody>
-
-            <%
-            if(data.length){
-                var nac, sec_left, years;
-                var ahora = new Date().getTime();
-                for(var i = 0;i < data.length; i++){
-                    nac = new Date(data[i].fnac).getTime();
-                    sec_left = (ahora - nac) / 1000;
-                    years = parseInt(sec_left / 31536000); %>
-            <tr>
-                <td><%= data[i].name%></td>
-                <td><%= data[i].last_name%></td>
-                <td><%= new Date(data[i].fnac).toLocaleDateString()%></td>
-                <td><%= years%></td>
-                <td><%= data[i].correo%></td>
-                <td><a class="btn btn-info mjump" data-toggle="modal" data-target="#mjump" data-id="<%=data[i].id%>" data-nom="<%=data[i].name%>" data-ape="<%=data[i].last_name%>" data-fnac="<%= new Date(data[i].fnac).toLocaleDateString()%>" data-verif="<%=data[i].correo%>">Modificar</a> </td>
-                <td>
-                    <input  onclick="enable()" name ='ids' type='checkbox' value=<%= data[i].id%> >
-                </td>
-            </tr>
-            <%
-            }
-            } else{%>
-            <tr><td>No se encontraron Jumpers</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-            <%
-
-            }
-            %>
+            <tbody id="fila">
+                <tr><td>No se encontraron Jumpers</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
             </tbody>
         </table>
 
@@ -107,4 +75,34 @@
     </table>
 
 </div>
+<script>
+    function stream() {
+        var nom = document.getElementsByName("nom")[0].value;
+        var ape = document.getElementsByName("ape")[0].value;
+        var verif = document.getElementsByName("verif")[0].value;
+        var dats = {nom: nom, ape: ape, verif: verif};
+        if(nom == "" && ape == "" && verif == ""){
+            document.getElementById("fila").innerHTML = "<tr><td>No se encontraron Jumpers</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>";
+            return;
+        }
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.responseText != "0") {
+                    document.getElementById("fila").innerHTML = this.responseText;
+                }
+            }
+        };
+        xmlhttp.open("POST", "/jump_stream", true);
+        xmlhttp.setRequestHeader("Content-type", 'application/json');
+        xmlhttp.send(JSON.stringify(dats));
+    }
+</script>
+
 <%- include layouts/footer.ejs %>

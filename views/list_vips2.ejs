@@ -32,6 +32,7 @@
                                         years = "AD"
                                     }
                             %>
+                            <input type="hidden" name="fin" value="<%=data[k].date_f%>">
                             <tr id="<%= data[k].id%>">
                                 <td><%= data[k].name%></td>
                                 <td><%= data[k].last_name%></td>
@@ -102,6 +103,11 @@
 <script>
     setInterval(
         function () {
+            var fdates = document.getElementsByName("fin")
+            var fins = [];
+            for(var i = 0; i < fdates.length; i++){
+                fins.push(fdates[i].value);
+            }
             if (window.XMLHttpRequest) {
                 // code for IE7+, Firefox, Chrome, Opera, Safari
                 xmlhttp = new XMLHttpRequest();
@@ -111,13 +117,14 @@
             }
             xmlhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    if(this.responseText == "1"){
+                    if(this.responseText != "1"){
                         window.location.href = "/vip_list";
                     }
                 }
             };
-            xmlhttp.open("GET", "/table_stream/<%= data.length%>", true);
-            xmlhttp.send();
+            xmlhttp.open("POST", "/table_stream", true);
+            xmlhttp.setRequestHeader("Content-type", 'application/json');
+            xmlhttp.send(JSON.stringify({fin: fins}));
         },5000);
 </script>
 

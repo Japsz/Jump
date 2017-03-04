@@ -3,26 +3,22 @@ exports.list = function(req, res){
     var input = JSON.parse(JSON.stringify(req.body));
     var dats = [];
     if(req.session.isUserLogged){
-        if(input.tipo == "nom"){
-            var query = 'SELECT * FROM jumper WHERE name LIKE ?';
-            dats.push(input.nom + '%');
-        } else if(input.tipo == "ape"){
-            var query = 'SELECT * FROM jumper WHERE last_name LIKE ?';
-            dats.push(input.ape + '%');
-        } else if(input.tipo == "nom-ape"){
-            var query = 'SELECT * FROM jumper WHERE name = ? AND last_name = ?';
-            dats.push(input.nom);
-            dats.push(input.ape);
-        } else if (input.tipo == "verif"){
-            var query = 'SELECT * FROM jumper WHERE correo = ?';
-            dats.push(input.verif);
+        if(input.verif == ""){
+            var query = "SELECT * FROM jumper WHERE name LIKE ? AND last_name LIKE ?";
+            dats.push(input.nom + "%");
+            dats.push(input.ape + "%");
+        } else {
+            var query = 'SELECT * FROM jumper WHERE name LIKE ? AND last_name LIKE ? AND correo LIKE ?';
+            dats.push(input.nom + "%");
+            dats.push(input.ape + "%");
+            dats.push(input.verif + "%");
         }
         req.getConnection(function(err,connection){
             connection.query(query,dats,function(err,rows)
             {
                 if(err)
                     console.log("Error Selecting : %s ",err );
-                res.render('jumpers',{page_title:"Jumpers",data:rows,data2:req.session.jumps});
+                res.render('jump_stream',{data:rows});
 
             });
             //console.log(query.sql);
@@ -34,7 +30,7 @@ exports.list = function(req, res){
 //Index de Búsqueda
 exports.prelist = function (req, res) {
     if(req.session.isUserLogged){
-        res.render('jumpers',{page_title:"Jumpers", data:[],data2:req.session.jumps});
+        res.render('jumpers',{page_title:"Jumpers",data2:req.session.jumps});
     } else res.redirect('/bad_login');
 };
 
@@ -45,7 +41,7 @@ exports.add2session = function(req, res){
     if(req.session.isUserLogged){
         if(ids.length){
             var query = "SELECT * FROM jumper WHERE id = ?";
-            if( typeof ids == "object"){
+            if(typeof ids == "object"){
                 for (var i = 1; i<ids.length; i++){
                     query += "OR id = ?";
                 }
@@ -152,25 +148,22 @@ exports.get_ids = function(req, res) {
 
 // No implementada
 exports.delete_customer = function(req,res){
-    var isAdminLogged = req.session.isAdminLogged;;
-
-    if(req.session.isAdminLogged){
-          
-     var phone = req.params.phone;
-    
-     req.getConnection(function (err, connection) {
-        
-        connection.query("DELETE FROM contact WHERE phone = ? ",[phone], function(err, rows)
-        {
-            
-             if(err)
-                 console.log("Error deleting : %s ",err );
-            
-             res.redirect('/contact');
-             
-        });
-        
-     });
+    if(req.session.isUserLogged){
+        console.log()
+   //  var phone = req.params.phone;
+   //
+   //  req.getConnection(function (err, connection) {
+   //
+   //     connection.query("DELETE FROM contact WHERE phone = ? ",[phone], function(err, rows)
+   //     {
+   //
+   //          if(err)
+   //              console.log("Error deleting : %s ",err );
+   //
+   //          res.redirect('/contact');
+   //
+   //     });
+   //  });
     }
     else res.redirect('/bad_login');
 };

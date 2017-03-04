@@ -120,7 +120,7 @@ exports.save = function(req, res){
             var data = [];
             var query = "INSERT INTO visita (`idjumper`, `duration`, `date_g`, `status`) VALUES ?";
             for (var i = 0; i<req.session.jumps.length; i++){
-                var aux = [req.session.jumps[i][0], parseInt(tiempos[i]) + 5, nowdate.toLocaleDateString(), 'new'];
+                var aux = [req.session.jumps[i][0], parseInt(tiempos[i]) + 5, nowdate.toLocaleString(), 'inprog'];
                 data.push(aux);
             }
         }

@@ -53,7 +53,7 @@ app.get('/', routes.index);
 app.get('/update_db', visita.update);
 // Visitas en progreso
 app.get('/vip_list', prod.list);
-app.get('/table_stream/:num', prod.tables);
+app.post('/table_stream', prod.tables);
 app.get('/vip/save', prod.save);
 app.post('/vip/check', prod.check);
 app.get('/vip/end/:id', prod.time_end);
@@ -73,7 +73,7 @@ app.get('/venta_fin', visita.end);
 // Jumpers
 app.get('/jumper/save/:verif/:isverif', jumper.save);
 app.get('/begin_list', jumper.prelist);
-app.post('/list', jumper.list);
+app.post('/jump_stream', jumper.list);
 app.post('/jumper/add2session', jumper.add2session);
 app.get('/get_ids', jumper.get_ids);
 app.post('/m_jump',jumper.edit);

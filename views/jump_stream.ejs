@@ -1,0 +1,26 @@
+<%
+if(data.length){
+    var nac, sec_left, years;
+    var ahora = new Date().getTime();
+for(var i = 0;i < data.length; i++){
+    nac = new Date(data[i].fnac).getTime();
+    sec_left = (ahora - nac) / 1000;
+    years = parseInt(sec_left / 31536000); %>
+<tr>
+    <td><%= data[i].name%></td>
+    <td><%= data[i].last_name%></td>
+    <td><%= new Date(data[i].fnac).toLocaleDateString()%></td>
+    <td><%= years%></td>
+    <td><%= data[i].correo%></td>
+    <td><a class="btn btn-info mjump" data-toggle="modal" data-target="#mjump" data-id="<%=data[i].id%>" data-nom="<%=data[i].name%>" data-ape="<%=data[i].last_name%>" data-fnac="<%= new Date(data[i].fnac).toLocaleDateString()%>" data-verif="<%=data[i].correo%>">Modificar</a> </td>
+    <td>
+        <input  onclick="enable()" name ='ids' type='checkbox' value=<%= data[i].id%> >
+    </td>
+</tr>
+<%
+}
+} else{%>
+<tr><td>No se encontraron Jumpers</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+<%
+}
+%>
