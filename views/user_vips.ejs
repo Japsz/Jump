@@ -26,8 +26,9 @@
                         <td><%= data[k].id%></td>
                         <td><%= data[k].name%></td>
                         <td><%= data[k].last_name%></td>
+
                         <td><%= hora%></td>
-                        <td><a class="modif btn btn-info" data-toggle="modal" data-id="<%=data[k].id%>" data-time="<%=hora%>" data-target="#extend">Modficar</a> </td>
+                        <td><a class="modif btn btn-info" data-toggle="modal" data-id="<%=data[k].id%>" data-time="<%=hora%>" data-target="#extend">+ Extender</a> </td>
                         <td><a href="/sudo_del/<%= data[k].id%>" class="btn btn-danger">- Quitar</a></td>
 
                     </tr>

@@ -77,6 +77,7 @@ app.post('/jump_stream', jumper.list);
 app.post('/jumper/add2session', jumper.add2session);
 app.get('/get_ids', jumper.get_ids);
 app.post('/m_jump',jumper.edit);
+app.post('/delete_jump',jumper.delete_customer);
 // Pre Jumpers
 app.post('/psave',prejump.save2);
 app.get('/delete/:id',prejump.remove);

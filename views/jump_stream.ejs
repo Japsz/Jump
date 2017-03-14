@@ -12,10 +12,11 @@ for(var i = 0;i < data.length; i++){
     <td><%= new Date(data[i].fnac).toLocaleDateString()%></td>
     <td><%= years%></td>
     <td><%= data[i].correo%></td>
-    <td><a class="btn btn-info mjump" data-toggle="modal" data-target="#mjump" data-id="<%=data[i].id%>" data-nom="<%=data[i].name%>" data-ape="<%=data[i].last_name%>" data-fnac="<%= new Date(data[i].fnac).toLocaleDateString()%>" data-verif="<%=data[i].correo%>">Modificar</a> </td>
-    <td>
-        <input  onclick="enable()" name ='ids' type='checkbox' value=<%= data[i].id%> >
-    </td>
+    <td><a class="btn btn-info mjump" data-toggle="modal" data-target="#mjump"
+           data-id="<%=data[i].id%>" data-nom="<%=data[i].name%>"
+           data-ape="<%=data[i].last_name%>" data-fnac="<%= new Date(data[i].fnac).toLocaleDateString()%>"
+           data-verif="<%=data[i].correo%>">Modificar</a></td>
+    <td><input  onclick="enable()" name ='ids' type='checkbox' value=<%= data[i].id%>></td>
 </tr>
 <%
 }

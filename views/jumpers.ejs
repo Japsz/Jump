@@ -34,8 +34,10 @@
         </table>
 
     </div>
+
     <div class="col-md-5 col-md-offset-7">
         <div class="btn-group">
+            <a class="btn btn-primary btn-danger deljump disabled" data-toggle="modal" data-target="#deljump" id="del"> - Eliminar </a>
             <button type="submit" class="btn btn-primary" name="continue" value="0" id="add" disabled>
                 + Añadir a Venta
             </button>
@@ -100,6 +102,33 @@
             }
         };
         xmlhttp.open("POST", "/jump_stream", true);
+        xmlhttp.setRequestHeader("Content-type", 'application/json');
+        xmlhttp.send(JSON.stringify(dats));
+    }
+</script>
+<script>
+
+    function del() {
+        var val = [];
+        $(':checkbox:checked').each(function(i){
+            val[i] = $(this).val();
+        });
+        var dats = {ids: val};
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.responseText != "0") {
+                    stream();
+                }
+            }
+        };
+        xmlhttp.open("POST", "/delete_jump", true);
         xmlhttp.setRequestHeader("Content-type", 'application/json');
         xmlhttp.send(JSON.stringify(dats));
     }

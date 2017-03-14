@@ -110,15 +110,29 @@ exports.extend = function(req,res){
     var input = JSON.parse(JSON.stringify(req.body));
     var id = input.id;
 
-    var hora = new Date().toLocaleDateString();
-    hora += " " + input.hora;
-
     req.getConnection(function(err,connection){
 
-        connection.query("UPDATE vip SET date_f = ? WHERE id = ?", [hora, id], function (err, rows) {
+        connection.query("SELECT visita.idjumper, vip.date_f FROM visita INNER JOIN vip WHERE visita.id = vip.id AND vip.id = ?", [id], function (err, rows) {
             if (err)
                 console.log("Error updating : %s ", err);
-            res.redirect('/vip_list');
+            var ahora = new Date(rows[0].date_f).getTime();
+            ahora = ahora + parseInt(input.tiempo)*60*1000;
+            var fin = new Date(ahora);
+            var data = {
+                idjumper : rows[0].idjumper,
+                duration: parseInt(input.tiempo) + 5,
+                date_g: new Date().toLocaleString(),
+                status: 'ended'
+            }
+            connection.query("INSERT INTO visita SET  ?",[data], function (err, rows) {
+                if (err)
+                    console.log("Error updating : %s ", err);
+                connection.query("UPDATE vip SET date_f = ? WHERE id = ?",[fin.toLocaleString(), input.id], function (err, rows) {
+                    if (err)
+                        console.log("Error updating : %s ", err);
+                    res.redirect('/vip_list');
+                });
+            });
         });
         //console.log(query.sql);
     });

@@ -14,8 +14,16 @@
             </div>
             <form action="/extend" method="POST">
             <div class="modal-body">
-                <label>Hora de término</label>
-                    <input type="datetime" name="hora" class="form-control" id="time">
+                <label>Tiempo Extra</label>
+                <select name="tiempo" class="form-control">
+                    <option value="30">30</option>
+                    <option value="60">60</option>
+                    <option value="90">90</option>
+                    <option value="120">120</option>
+                    <option value="180">180</option>
+                    <option value="240">240</option>
+                    <option value="360">360</option>
+                </select>
             </div>
             <div class="modal-footer">
                 <div class="btn-group">
@@ -53,6 +61,25 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deljump" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modificar</h4>
+            </div>
+                <div class="modal-body">
+                    <div id="djump"></div>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-danger" data-dismiss="modal" id="dbtn" onclick="del()">Si, Eliminar</button>
+                    </div>
+                </div>
         </div>
     </div>
 </div>
@@ -108,6 +135,16 @@
             useCurrent: false
         });
     });
+    $(document).on("click", ".deljump", function() {
+        var val = [];
+        $(':checkbox:checked').each(function(i){
+            val[i] = $(this).val();
+        });
+        if(val.length){
+            $(".modal-body #djump").text("¿Está seguro que desea eliminar los jumpers seleccionados?");
+            $(".modal-footer #dbtn").text("Si, Eliminar (" + val.length + ")");
+        }
+    });
 </script>
 <script>
 
@@ -115,6 +152,7 @@
         document.getElementById("myBtn1").disabled = false;
     }
     function enable() {
+        document.getElementById("del").className = "btn btn-primary deljump btn-danger";
         document.getElementById("add").disabled = false;
         document.getElementById("continue").disabled = false;
     }

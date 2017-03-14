@@ -149,8 +149,29 @@ exports.get_ids = function(req, res) {
 // No implementada
 exports.delete_customer = function(req,res){
     if(req.session.isUserLogged){
-        console.log()
-   //  var phone = req.params.phone;
+        var input = JSON.parse(JSON.stringify(req.body));
+        var ids = input.ids;
+        if(ids.length){
+            var query2 = "DELETE FROM visita WHERE idjumper = ?";
+            var query = "DELETE FROM jumper WHERE id = ?";
+            if(typeof ids == "object"){
+                for (var i = 1; i<ids.length; i++){
+                    query += "OR id = ?";
+                    query2 += "OR idjumper = ?";
+                }
+            }
+            req.getConnection(function (err, connection) {
+                connection.query(query2,ids,function(err, rows){
+                    if (err) console.log("Error selecting : %s", err);
+                    connection.query(query,ids,function(err, rows){
+                        if (err) console.log("Error selecting : %s", err);
+                        res.send('1');
+                    });
+                });
+            });
+        } else
+        res.send("0");
+        //  var phone = req.params.phone;
    //
    //  req.getConnection(function (err, connection) {
    //

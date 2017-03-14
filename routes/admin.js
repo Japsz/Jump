@@ -71,7 +71,8 @@ exports.g_csv = function(req,res){
 		var fs = require('fs');
 		req.getConnection(function (err, connection) {
 				
-				var query = connection.query("SELECT jumper.fnac, visita.duration, visita.date_g FROM jumper INNER JOIN visita ON jumper.id=visita.idjumper AND visita.date_g >= ? AND  visita.date_g <= ? AND visita.status = 'ended'",[input.ini,input.end], function(err, rows)
+				var query = connection.query("SELECT jumper.fnac, visita.duration, visita.date_g FROM jumper INNER JOIN visita" +
+					" ON jumper.id=visita.idjumper AND visita.date_g >= ? AND  visita.date_g <= ? AND visita.status = 'ended'",[input.ini,input.end], function(err, rows)
 				{
 	
 					if (err)
