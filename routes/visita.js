@@ -12,7 +12,7 @@ exports.d_from_session = function(req, res) {
         if(req.params.id == 0){
             req.session.jumps.shift();
         } else {
-    	    req.session.jumps.splice(req.params.id);
+    	    req.session.jumps.splice(req.params.id,1);
         }
         res.redirect('/venta');
     }
@@ -108,7 +108,7 @@ exports.save = function(req, res){
         var input = JSON.parse(JSON.stringify(req.body));
         var tiempos = input.tiempos;
         var nowdate = new Date();
-        if (req.session.jumps.length == 1){
+        if (typeof tiempos == "string"){
         	var data = {
 				idjumper : req.session.jumps[0][0],
 				duration: parseInt(tiempos) + 5,
