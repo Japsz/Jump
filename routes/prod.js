@@ -120,7 +120,7 @@ exports.extend = function(req,res){
             var fin = new Date(ahora);
             var data = {
                 idjumper : rows[0].idjumper,
-                duration: parseInt(input.tiempo) + 5,
+                duration: parseInt(input.tiempo) + 7,
                 date_g: new Date().toLocaleString(),
                 status: 'ended'
             }
