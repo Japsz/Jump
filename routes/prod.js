@@ -120,7 +120,7 @@ exports.extend = function(req,res){
             var fin = new Date(ahora);
             var data = {
                 idjumper : rows[0].idjumper,
-                duration: parseInt(input.tiempo) + 7,
+                duration: parseInt(input.tiempo) + 5,
                 date_g: new Date().toLocaleString(),
                 status: 'ended'
             }
@@ -145,7 +145,7 @@ exports.save = function(req,res){
             if (err)
                 console.log("Error selecting : %s ", err);
             var ahora = new Date().getTime();
-            ahora = ahora + req.session.visita.duration*60*1000;
+            ahora = ahora + req.session.visita.duration*60*1000 + 1000*60*5;
             var fin = new Date(ahora);
             var data = {
             	id : req.session.visita.id,
