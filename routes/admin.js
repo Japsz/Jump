@@ -143,7 +143,7 @@ exports.g_csv = function(req,res){
 				    		nac = new Date(rows[i].fnac).getTime();
                             sec_left = (ahora - nac) / 1000;
                             years = parseInt(sec_left / 31536000);
-                            writer.write([rows[i].id, years.toString(), rows[i].idjumper,(parseInt(rows[i].duration)-5).toString(),
+                            writer.write([rows[i].id, years.toString(), rows[i].idjumper,(parseInt(rows[i].duration)-7).toString(),
 								date_g.toLocaleDateString(),date_g.toLocaleTimeString()]);
 				    	}
 				    	writer.end();
