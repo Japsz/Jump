@@ -36,7 +36,7 @@ exports.end = function(req,res) {
         var ahora = new Date().getTime();
         if(req.session.previps.length == 1) {
             var query = "INSERT INTO vip SET ? ";
-            ahora = ahora + req.session.previps[0].duration*60*1000 + 1000*60*5;
+            ahora = ahora + req.session.previps[0].duration*60*1000;
             var fin = new Date(ahora);
             var data = {
                 id : req.session.previps[0].id,
@@ -49,7 +49,7 @@ exports.end = function(req,res) {
             var data = [];
             var query = "INSERT INTO vip (`id`, `name`, `last_name`, `fnac`, `date_f`) VALUES ?";
             for (var i = 0; i<req.session.jumps.length; i++){
-                ahora = ahora + req.session.previps[req.session.previps.length - 1 - i].duration*60*1000 + 100*60*5;
+                ahora = ahora + req.session.previps[req.session.previps.length - 1 - i].duration*60*1000;
                 var fin = new Date(ahora);
                 var aux = [req.session.previps[req.session.previps.length - 1 - i].id, req.session.jumps[i][1], req.session.jumps[i][2], req.session.jumps[i][3], fin.toLocaleString()];
                 data.push(aux);
