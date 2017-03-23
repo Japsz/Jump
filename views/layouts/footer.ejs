@@ -45,7 +45,7 @@
             <form action="/m_jump" method="POST">
                 <div class="modal-body">
                     <label>Nombre</label>
-                    <input type="datetime" name="nom" class="form-control" id="nom">
+                    <input type="text" name="nom" class="form-control" id="nom">
                     <label>Apellido</label>
                     <input type="text" name="ape" class="form-control" id="ape">
                     <label>Fecha de nacimiento</label>
@@ -83,6 +83,26 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="timeset" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Ajustar Hora</h4>
+            </div>
+            <div class="modal-body">
+                Hora de término
+                <input type="text" class="form-control" id="time">
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button  id="continue" name="id" value="" class="set btn btn-primary">Modificar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="/assets/js/jquery-min.js"></script>
 
 
@@ -107,13 +127,32 @@
     });
     $(document).on("click", ".modif", function() {
         var jumpid = $(this).data('id');
-        var hora = $(this).data('time');
-        $(".modal-body #time").val(hora);
+        $(".modal-footer #continue").val(jumpid);
+    });
+    $(document).on("click", ".set", function() {
+        var jumpid = "#" + $("#continue").val();
+        var tiemp = '<input name="horas" type="hidden" value="' + $(".modal-body #time").val() + '">';
+        var html = '<a data-id="' + $(this).val() + '" data-toggle="modal" data-target="#timeset" class="timeset btn btn-success">' +
+            '<span class="glyphicon glyphicon-time" id="tiempo" aria-hidden="true"></span>' + $(".modal-body #time").val() + '</a>' +
+            '<button class="unset btn btn-sm btn-danger" value="' + $("#continue").val() + '"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>';
+        $(jumpid).html(tiemp + html);
+        $("#timeset").modal('toggle');
+    });
+    $(document).on("click", ".unset", function() {
+        var jumpid = "#" + $(this).val();
+        var tiemp = '<input name="horas" type="hidden" value="no">';
+        var html = '<a data-id="' + $(this).val() + '" data-toggle="modal" data-target="#timeset" class="timeset btn btn-info"><span class="glyphicon glyphicon-time" id="tiempo" aria-hidden="true"></span></a>';
+        $(jumpid).html(tiemp + html);
+    });
+    $(document).on("click", ".timeset", function() {
+        var jumpid = $(this).data('id');
+        $(this).removeClass("btn-info");
+        $(this).addClass("btn-success");
         $(".modal-footer #continue").val(jumpid);
         $('#time').datetimepicker({
             format: 'HH:mm:ss',
             locale: 'es',
-            useCurrent: false
+            useCurrent: true
         });
     });
     $(document).on("click", ".mjump", function() {

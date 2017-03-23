@@ -40,6 +40,12 @@
                                   <option value="360">360</option>
                               </select></td>
                           <td><a class="btn btn-danger btn-sm" href="/venta/sessionpop/<%= i%>"> - Quitar</a></td>
+                          <td><div id="<%= data[i][0]%>">
+                                  <input name="horas" type="hidden" value="no">
+                                  <a data-id="<%= data[i][0]%>" data-toggle="modal" data-target="#timeset" class="timeset btn btn-info">
+                                      <span class="glyphicon glyphicon-time" id="tiempo" aria-hidden="true"></span>
+                                  </a>
+                              </div></td>
                       </tr>
                     <%
                             }

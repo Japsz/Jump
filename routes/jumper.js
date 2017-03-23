@@ -78,7 +78,7 @@ exports.edit = function(req, res){
         }
         req.getConnection(function(err,connection){
 
-            var query = connection.query("UPDATE jumper SET ? WHERE id = ?",[data,input.id],function(err,rows)
+            connection.query("UPDATE jumper SET ? WHERE id = ?",[data,input.id],function(err,rows)
             {
 
                 if(err)

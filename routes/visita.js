@@ -24,7 +24,29 @@ exports.precods = function(req, res) {
         req.getConnection(function (err, connection) {
             connection.query('SELECT * FROM visita ORDER BY id DESC LIMIT ?',[req.session.jumps.length],function(err, rows){
                 if (err) console.log("Error selecting : %s", err);
+                var ahora, fin;
                 req.session.previps = rows;
+                if(typeof req.session.horas == "string"){
+                    if(req.session.horas != "no"){
+                        ahora = new Date();
+                        fin = ahora.toLocaleDateString() + " " + req.session.horas;
+                        fin=new Date(fin).getTime();
+                        ahora = new Date().getTime();
+                        fin = fin/60000 - ahora/60000;
+                        req.session.previps[0].duration = fin;
+                    }
+                }else {
+                    for(var i = 0; i<rows.length; i++){
+                        if(req.session.horas[req.session.horas.length - 1 - i] != "no"){
+                            ahora = new Date();
+                            fin = ahora.toLocaleDateString() + " " + req.session.horas[req.session.horas.length - 1 - i];
+                            fin=new Date(fin).getTime();
+                            ahora = new Date().getTime();
+                            fin = fin/60000 - ahora/60000;
+                            req.session.previps[i].duration = fin;
+                        }
+                    }
+                }
                 res.render('getcodes',{data: rows,jumps: req.session.jumps});
             });
         });
@@ -107,6 +129,7 @@ exports.save = function(req, res){
 	if(req.session.isUserLogged){
         var input = JSON.parse(JSON.stringify(req.body));
         var tiempos = input.tiempos;
+        req.session.horas = input.horas;
         var nowdate = new Date();
         if (typeof tiempos == "string"){
         	var data = {
