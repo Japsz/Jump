@@ -56,6 +56,22 @@ exports.save = function(req, res){
 		});
 	});
 };
+exports.sudo_pj = function(req, res){
+    var input = JSON.parse(JSON.stringify(req.body));
+    req.getConnection(function(err,connection){
+        var data = {
+            name        :input.nom,
+            last_name   :input.ape,
+            fnac    :input.fnac,
+        };
+        var query = connection.query("INSERT INTO pJumper set ? ",data,function(err, rows){
+            if (err){
+                console.log("Error inserting at" + new Date().toLocaleString() + " : %s", err);
+            }
+            res.redirect("/registro_jumper");
+        });
+    });
+};
 //Logica agregar prejumpers.
 exports.save2 = function(req, res){
     var input = JSON.parse(JSON.stringify(req.body));
@@ -95,9 +111,8 @@ exports.transfer = function(req, res){
 	if(req.session.isUserLogged){
 		var input = JSON.parse(JSON.stringify(req.body));
 		var verif = input.verificador;
-		var options = '/' + input.options;
 		var ids = input.ids;
-        if(options == "/no"){
+        if(verif == ""){
             verif = 'null';
         }
 		if(ids.length){
@@ -115,7 +130,7 @@ exports.transfer = function(req, res){
 					req.session.pjumps = rows;
 					connection.query(query2,ids,function (err,rows) {
                         if (err) console.log("Error selecting : %s ", err);
-                        res.redirect('/jumper/save/'+ verif + options);
+                        res.redirect('/jumper/save/'+ verif);
 					});
 				});
 			});

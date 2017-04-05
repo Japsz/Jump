@@ -57,7 +57,7 @@ app.post('/table_stream', prod.tables);
 app.get('/vip/save', prod.save);
 app.post('/vip/check', prod.check);
 app.get('/vip/end/:id', prod.time_end);
-app.get('/vip/delete', prod.delete);
+app.get('/uv_stream', prod.uv_stream);
 app.get('/sudo_del/:id',prod.sudo_del);
 app.post('/extend', prod.extend);
 app.get('/vip/near/:id', prod.time_near);
@@ -71,7 +71,7 @@ app.get('/getcod/:cod', visita.cods);
 app.get('/venta_fin', visita.end);
 
 // Jumpers
-app.get('/jumper/save/:verif/:isverif', jumper.save);
+app.get('/jumper/save/:verif', jumper.save);
 app.get('/begin_list', jumper.prelist);
 app.post('/jump_stream', jumper.list);
 app.post('/jumper/add2session', jumper.add2session);
@@ -80,6 +80,7 @@ app.post('/m_jump',jumper.edit);
 app.post('/delete_jump',jumper.delete_customer);
 // Pre Jumpers
 app.post('/psave',prejump.save2);
+app.post('/sudo_pj',prejump.sudo_pj);
 app.get('/delete/:id',prejump.remove);
 app.get('/registro_jumper', prejump.list);
 app.post('/pjump/save', prejump.save);

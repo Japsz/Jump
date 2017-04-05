@@ -1,5 +1,7 @@
 <%- include layouts/user_header.ejs %>
-<h2 class="page-header">Pre Jumpers</h2>
+
+<h2 class="page-header">Pre Jumpers        <a class="btn btn-info" data-toggle="modal" data-target="#prejump"> + <span class="glyphicon glyphicon-user"  aria-hidden="true"></span></a></h2>
+
 <form action="/pjump/register" method='post'>
     <div class="table-responsive">
         <table class="table table-striped">
@@ -58,15 +60,6 @@
                     <div class="modal-body">
                         <div class="form inline form-group">
                             <input type="email" name="verificador" class="form-control" placeholder="Correo">
-                            <div class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-primary active">
-                                    <input type="radio" name="options" value="si" autocomplete="off" checked> Con Correo
-                                </label>
-                                <label class="btn btn-primary">
-                                    <input type="radio" name="options" value="no" autocomplete="off"> Sin Correo
-                                </label>
-
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">

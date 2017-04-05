@@ -14,6 +14,19 @@ exports.list = function(req, res){
 			 //console.log(query.sql);
 	});
 };
+exports.uv_stream = function(req, res){
+    req.getConnection(function(err,connection){
+
+        connection.query('SELECT * FROM vip ORDER BY date_f ASC',function(err,rows)
+        {
+            if(err)
+                console.log("Error Selecting : %s ",err );
+
+            res.render("uvipstream",{data:rows});
+        });
+        //console.log(query.sql);
+    });
+};
 exports.tables = function(req, res){
     var input = JSON.parse(JSON.stringify(req.body));
     req.getConnection(function(err,connection){
@@ -167,25 +180,11 @@ exports.save = function(req,res){
 exports.sudo_del = function(req,res){
 		var idvip = req.params.id;
 		req.getConnection(function(err, connection){
-			connection.query('SELECT * FROM visita WHERE id = ?',[idvip],function(err,rows)
-			{
-                if(err) console.log("Error Selecting : %s ",err);
-			    if(rows.length){
-                    req.session.visita = rows[0];
-                    res.redirect('/vip/delete');
-                }
-			});
-		});
-};
-
-//Logica borrar vip.
-exports.delete = function(req,res){
-    req.getConnection(function(err, connection){
-        connection.query("DELETE FROM vip WHERE id = ? ",[req.session.visita.id], function(err,rows){
+			connection.query("DELETE FROM vip WHERE id = ? ",[idvip], function(err,rows){
             if(err)
                 console.log("Error deleting : %s", err);
 
-            connection.query("UPDATE visita SET status = 'ended' WHERE id = ? ",[req.session.visita.id], function(err,rows){
+            connection.query("UPDATE visita SET status = 'ended' WHERE id = ? ",[idvip], function(err,rows){
                 if(err)
                     console.log("Error deleting : %s", err);
 

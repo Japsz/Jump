@@ -1,5 +1,5 @@
 <%- include layouts/user_header.ejs %>
-        <h1 class="text-center"> Personas dentro: <%= data.length%></h1>
+        <h1 class="text-center">Personas dentro: <%= data.length%></h1>
         <div class="col-sm-5 col-md-10 col-md-offset-1">
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -14,8 +14,7 @@
                         <th>Fin de visita</th>
                     </tr>
                     </thead>
-                    <tbody>
-
+                    <tbody >
                     <%
                     if(data.length){
                         var hora;
@@ -28,8 +27,8 @@
                         <td><%= data[k].last_name%></td>
 
                         <td><%= hora%></td>
-                        <td><a class="modif btn btn-info" data-toggle="modal" data-id="<%=data[k].id%>" data-time="<%=hora%>" data-target="#extend">+ Extender</a> </td>
-                        <td><a href="/sudo_del/<%= data[k].id%>" class="btn btn-danger">- Quitar</a></td>
+                        <td><a class="modif btn btn-info" data-toggle="modal" data-id="<%=data[k].id%>" data-time="<%=hora%>" data-target="#extend"> + <span class="glyphicon glyphicon-time"  aria-hidden="true"></span></a> </td>
+                        <td><a href="/sudo_del/<%= data[k].id%>" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
 
                     </tr>
 
@@ -44,5 +43,4 @@
         </div>
 
 
-        
 <%- include layouts/footer.ejs %>

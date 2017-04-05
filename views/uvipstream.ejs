@@ -1,0 +1,22 @@
+<%
+if(data.length){
+    var hora;
+for(var k = 0;k < data.length; k++){
+    hora = new Date(data[k].date_f).toLocaleTimeString();
+%>
+<tr>
+    <td><%= data[k].id%></td>
+    <td><%= data[k].name%></td>
+    <td><%= data[k].last_name%></td>
+
+    <td><%= hora%></td>
+    <td><a class="modif btn btn-info" data-toggle="modal" data-id="<%=data[k].id%>" data-time="<%=hora%>" data-target="#extend">+ <span class="glyphicon glyphicon-time"  aria-hidden="true"></span></a> </td>
+    <td><a onclick="supr_vip(<%= data[k].id%>)" class="btn btn-danger">- <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+
+</tr>
+
+<%
+}
+} else{%>
+<tr><td>No hay Jumpers asociados a esta venta</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+<% } %>

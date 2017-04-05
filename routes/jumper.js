@@ -106,13 +106,13 @@ exports.save = function(req,res){
                 "yyyy-mm-dd");
             var aux = [req.session.pjumps[i].name,
                 req.session.pjumps[i].last_name, req.session.pjumps[i].fnac];
-            if(req.params.isverif == "si"){
+            if(req.params.verif != "null"){
                 aux.push(req.params.verif);
             }
             req.session.jumps.push(aux);
             data.push(aux);
         }
-        if(req.params.isverif == "si"){
+        if(req.params.verif != "null"){
             var query = "INSERT INTO jumper (`name`, `last_name`, `fnac`, `correo`) VALUES ?";
         } else {
             var query = "INSERT INTO jumper (`name`, `last_name`, `fnac`) VALUES ?";
