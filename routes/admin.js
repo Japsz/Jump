@@ -79,7 +79,7 @@ exports.g_csv_j = function(req,res){
                 var ahora = new Date();
                 if(rows.length){
                     // 'C:/Users/Go Jump/Desktop/'
-                    writer.pipe(fs.createWriteStream('C:/Users/Go Jump/Desktop/Jumpers hasta ~ ' + ahora.toLocaleDateString() + '.csv'));
+                    writer.pipe(fs.createWriteStream('C:/Users/Go Jump/Desktop/CAJA/Jumpers hasta ~ ' + ahora.toLocaleDateString() + '.csv'));
                     for (var i = 0; i <rows.length; i++) {
                         if(typeof rows[i].correo == "string"){
 							correo = rows[i].correo;
@@ -105,7 +105,7 @@ exports.g_csv = function(req,res){
 	if(req.session.isAdminLogged){
 		var input = JSON.parse(JSON.stringify(req.body));
         // 'C:/Users/Go Jump/Desktop/Visitas - '
-        var camino = "C:/Users/Go Jump/Desktop/Visitas - ";
+        var camino = "C:/Users/Go Jump/Desktop/CAJA/Visitas - ";
 		var dats =[];
 		if(input.hasta == "si"){
 			dats.push(input.ini);
