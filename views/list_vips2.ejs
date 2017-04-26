@@ -54,9 +54,7 @@
 
                                     minutes = parseInt(seconds / 60);
                                     seconds = parseInt(seconds % 60);
-                                    if (seconds_left <= -10*60){
-                                        window.location.href = "/sudo_del/<%= data[k].id%>";
-                                    } else if (seconds_left <= 0){
+                                    if (seconds_left <= 0){
                                         row.className = "danger";
                                         countdown.className = "text-danger";
                                         countdown.innerHTML = "<b>TIEMPO CUMPLIDO</b> - #<%=data[k].id%>";
