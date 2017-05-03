@@ -156,6 +156,30 @@
         var jumpid = $(this).data('id');
         $(".modal-footer #continue").val(jumpid);
     });
+    $(document).on("click", ".prejumps", function() { 
+        var val = [];
+        var emailRegex = '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$';
+        var email = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+        console.log(email.test(verif));
+        $(':checkbox:checked').each(function(i){
+            val[i] = $(this).val();
+        });
+        if(val.length){
+            var verif = $("#verif").val();
+            console.log(email.test(verif));
+            if(verif == ""){
+                $("#preregistro").modal("toggle");
+            } else if (email.test(verif)){
+                $("#pform").submit();
+            } else {
+                alert("Ingrese un email válido");
+            }
+        } else {
+            alert("Seleccione algún prejumper");
+        }
+        
+
+    });
     $(document).on("click", ".set", function() {
         var jumpid = "#" + $("#continue").val();
         var tiemp = '<input name="horas" type="hidden" value="' + $(".modal-body #time").val() + '">';
