@@ -51,41 +51,54 @@ img {
 .lg {
   width: 260px;
 }
+.btn-uncommon,
 .btn-border,
 .btn-common {
   color: #ffffff;
-  font-size: 22px;
+  font-size: 42px;
   border: 1px solid #FFF;
-  padding: 16px 36px;
-  font-weight: 400;
+  padding: 8px 36px;
+  font-weight: 6001;
   margin-left: 36px;
   margin-right: 36px;
   border-radius: 4px;
   position: relative;
   z-index: 10;
 }
-.btn-border:after,
-.btn-common:after {
-  width: 100%;
-  height: 0px;
-  bottom: 0px;
-  left: 0px;
-  background: #ffffff;
+
+.btn-uncommon {
+  background: #dd4b39;
+  border: 52px solid #dd4b39;
 }
 .btn-common {
   background: #82BC00;
-  border: 1px solid #82BC00;
+  border: 52px solid #82BC00;
+}
+.btn-border {
+  font-size: 36px;
+  background: #d9dd38;
+  border: 52px solid #d9dd38;
 }
 .btn-border:hover {
-  color: #82BC00;
+  color: #d9dd38;
+  background: #d9dd38;
+  border: 50px solid #d9dd38;
 }
 .btn-border:hover:after {
+  height: 100%;
+}
+.btn-uncommon:hover {
+  color: #dd4b39;
+  background: #dd4b39;
+  border: 50px solid #dd4b39;
+}
+.btn-uncommon:hover:after {
   height: 100%;
 }
 .btn-common:hover {
   color: #82BC00;
   background: #82BC00;
-  border: 1px solid #82BC00;
+  border: 50px solid #82BC00;
 }
 .btn-common:hover:after {
   height: 100%;
@@ -210,35 +223,48 @@ img {
 }
 #header .banner h1 {
   color: #82BC00;
-  font-size: 42px;
-  font-weight: 400;
-  text-transform: uppercase;
+  font-size: 52px;
+  font-weight: 800;
 }
 #header .banner h2 {
   color: #ffffff;
-  font-size: 25px;
+  font-size: 35px;
   margin: 32px 0px 50px;
 }
-#header .banner .scroll {
-  margin: 50px 0;
+#header .centro {
+  padding-top: 7%;
 }
-#header .banner .scroll a i {
-  font-size: 48px;
+#header .inpt {
+  width: 80%;
+}
+#header .banner .scroll {
+  margin: 10px ;
+}
+#header .banner .scroll a {
+  font-size: 22px;
+  font-weight: 400;
   color: #82BC00;
+  left: 0;
   padding: 12px;
-  width: 68px;
-  height: 68px;
+  width: 128px;
+  height: 50px;
   text-align: center;
-  border-radius: 50%;
+  border-radius: 26px;
   background: #fff;
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
   transition: all 0.3s ease;
+
 }
-#header .banner .scroll a i:hover {
+#header .banner .scroll i{
+  height: auto;
+}
+
+#header .banner .scroll a:hover {
   background: #82BC00;
   color: #ffffff;
 }
+
 /* Header Section End */
 /* Works Section Start */
 #works {

@@ -51,6 +51,12 @@ app.use(
 
 app.get('/', routes.index);
 app.get('/update_db', visita.update);
+app.get('/getreg', prejump.getreg);
+app.post('/getbsq_back', jumper.getbsq_b);
+app.get('/getbusq', prejump.getbusq);
+app.get('/cont', prejump.getcont);
+app.get('/gethom', prejump.gethom);
+
 // Visitas en progreso
 app.get('/vip_list', prod.list);
 app.post('/table_stream', prod.tables);

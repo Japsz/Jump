@@ -2,26 +2,11 @@
 <section id="header">
   <div class="container">
     <div class='banner text-center'>
-      <h1 class="section-title wow fadeInDown animated"><span>Pre Chequeo</span></h1>
-      <h2>Recuerde registrar a cada asistente</h2>
-      <div class="col-sm-6 col-md-8 col-md-offset-2">
-
-        <form id="pform">
-          <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input type="text" name="nom" id="keyboard" class="form-control" placeholder="Nombre" required data-validation-required-message="Escriba algún nombre.">
-            <input type="text" name="ape" id="keyboard2" class="form-control" placeholder="Apellido" required data-validation-required-message="Escriba algún apellido.">
-          </div>
-          <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-            <input type="text" name="fnac" class="form-control" placeholder="Fecha de nacimiento" id="datepicker" required data-validation-required-message="Entre una fecha de nacimiento.">
-          </div>
-          <div id="success"></div>
-          <a href="#" id="enviar" class="btn btn-info btn-lg">Enviar</a>
-        </form>
+      <div id="cuerpo">
+          <%- include continuar.ejs %>
       </div>
     </div>
   </div>
 </section>
 
-+<%- include layouts/tot_footer.ejs %>
+<%- include layouts/tot_footer.ejs %>

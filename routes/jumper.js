@@ -27,6 +27,20 @@ exports.list = function(req, res){
     else res.redirect('/bad_login');
 
 };
+exports.getbsq_b = function (req, res) {
+    var input = JSON.parse(JSON.stringify(req.body));
+    console.log(input.cor);
+    req.getConnection(function(err,connection){
+        connection.query('SELECT * FROM jumper WHERE  correo LIKE ?',input.cor,function(err,rows)
+        {
+            if(err)
+                console.log("Error Selecting : %s ",err );
+            res.render('bsq_stream',{data:rows, cor: input.cor.substring(0, input.cor.length - 1)});
+
+        });
+        //console.log(query.sql);
+    });
+}
 //Index de Búsqueda
 exports.prelist = function (req, res) {
     if(req.session.isUserLogged){

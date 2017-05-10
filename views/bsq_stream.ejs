@@ -1,0 +1,85 @@
+<div class="col-md-2">
+    <div class="scroll wow bounceInDown animated">
+        <a href="#" id="hom" class="btn btn-lg"><i class="fa fa-arrow-circle-left"></i> Volver</a>
+    </div>
+</div>
+<div class="col-md-8">
+    <h1 class="wow bounceInDown animated"> Pre Chequeo</h1>
+    <h3 class="wow bounceInDown animated"> Mostrando resultados de: <%= cor%></h3>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Edad</th>
+                <th>Correo</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <%
+            if(data.length){
+                var nac, sec_left, years;
+                var ahora = new Date().getTime();
+            for(var i = 0;i < data.length; i++){
+                nac = new Date(data[i].fnac).getTime();
+                sec_left = (ahora - nac) / 1000;
+                years = parseInt(sec_left / 31536000); %>
+            <tr>
+                <td><%= data[i].name%></td>
+                <td><%= data[i].last_name%></td>
+                <td><%= years%></td>
+                <td><%= data[i].correo%></td>
+            </tr>
+            <%
+            }
+            } else{%>
+            <tr><td>No se encontraron resultados</td><td>-</td><td>-</td><td>-</td></tr>
+            <%
+            }
+            %>
+
+            </tbody>
+        </table>
+    </div>
+    <h3 class="Wow bounceInDown animated">Si desea intentar con otro correo haga click <a id="busq" class="btn btn-info">aquí</a>.</h3>
+    <h3 class="Wow bounceInDown animated">Si desea registrar a los no inscritos haga click <a id="reg" class="btn btn-primary">aquí</a>.</h3>
+
+    <div id="success"></div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('#hom').click(function(){
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                url: '/gethom',
+                success: function(data) {
+                    $('#cuerpo').html(data);
+                }
+            });
+        });
+        $('#reg').click(function(){
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                url: '/getreg',
+                success: function(data) {
+                    $('#cuerpo').html(data);
+                }
+            });
+        });
+        $('#busq').click(function(){
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                url: '/getbusq',
+                success: function(data) {
+                    $('#cuerpo').html(data);
+                }
+            });
+        });
+    });
+</script>

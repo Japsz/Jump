@@ -34,7 +34,18 @@ exports.remove = function(req, res){
     }
     else res.redirect('/bad_login');
 };
-
+exports.getreg = function(req, res){
+    res.render('registro',{});
+};
+exports.getbusq = function(req, res){
+    res.render('busqueda',{});
+};
+exports.gethom = function(req, res){
+    res.render('continuar',{});
+};
+exports.getcont = function(req, res){
+    res.render('pas2',{});
+};
 //Vista agregar projectos
 exports.add = function(req, res){
 	res.render('add_pjump',{page_title:"Registro"});
