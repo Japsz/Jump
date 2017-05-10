@@ -2,11 +2,15 @@
 <div class="col-md-8 col-md-offset-2 centr">
     <h1 class="wow bounceInDown animated">Continúa al paso 2 <i class="fa fa-arrow-circle-right"></i></h1>
     <h2 class="wow bounceInDown animated">Pase al mostrador.</h2>
+    <div class="scroll wow bounceInDown animated">
+        <a href="#" id="hom" class="btn btn-lg"><i class="fa fa-arrow-circle-left"></i> Volver</a>
+    </div>
     <div id="success"></div>
 </div>
 <script type="text/javascript">
+    var timeout;
     $(function(){
-        setTimeout(function () {
+        timeout = setTimeout(function () {
             $.ajax({
                 type: 'GET',
                 contentType: 'application/json',
@@ -16,5 +20,16 @@
                 }
             });
         },5000);
+        $('#hom').click(function(){
+            clearTimeout(timeout);
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                url: '/gethom',
+                success: function(data) {
+                    $('#cuerpo').html(data);
+                }
+            });
+        });
     });
 </script>
