@@ -1,0 +1,85 @@
+
+
+<form id="pform" class="wow bounceInDown animated">
+    <div class="col-md-2">
+        <div class="scroll wow bounceInDown animated">
+            <a href="#" id="hom" class="btn btn-lg"><i class="fa fa-arrow-circle-left"></i> Volver</a>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <h1 class="wow bounceInDown animated"> Pre Chequeo</h1>
+        <h2 class="wow bounceInDown animated">Ingrese su correo hasta antes del @.</h2>
+        <div class="input-group input-group-lg">
+            <input type="text" name="correo" id="keyboard" class="form-control" placeholder="Correo" required data-validation-required-message="Escriba algún nombre.">
+            <span class="input-group-addon" id="basic-addon2">@ ...</span>
+            <div class="input-group-btn">
+                <button type="button" id="bsq" class="btn btn-info btn-lg"><span class="fa fa-search"></span></button>
+            </div>
+        </div>
+        <h3 class="wow bounceInDown animated">Si nunca diste tu correo haz click <a href="#" id="aqui" class="btn btn-primary">aquí</a> para ir al registro.</h3>
+        <div id="success"></div>
+    </div>
+</form>
+
+
+<script type="text/javascript">
+    $(function(){
+        $('#hom').click(function(){
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                url: '/gethom',
+                success: function(data) {
+                    $('#cuerpo').html(data);
+                }
+            });
+        });
+        $('#aqui').click(function(){
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                url: '/getreg',
+                success: function(data) {
+                    $('#cuerpo').html(data);
+                }
+            });
+        });
+        $('#bsq').click(function(e){
+            e.preventDefault();
+            var data = {};
+            var correo = $('input#keyboard').val();
+            if(correo == ""){
+                $("#enviar").attr("disabled", false);
+                $('#success').html("<div class='alert alert-danger'>");
+                $('#success > .alert-danger')
+                    .append("<strong>Error!</strong> porfavor algún correo hasta antes del @.");
+                $('#success > .alert-danger')
+                    .append('</div>');
+                $("#success").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#success").slideUp(500);
+                });
+                return;
+            }
+            data.cor = correo + "%";
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: '/getbsq_back',
+                success: function(data) {
+                    $('#cuerpo').html(data);
+                }
+            });
+        });
+        $('#keyboard').keyboard({
+            usePreview: false,
+            autoAccept: true
+        })
+        // activate the typing extension
+            .addTyping({
+                showTyping: true,
+                delay: 250
+            });
+
+    });
+</script>

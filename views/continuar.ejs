@@ -1,0 +1,41 @@
+<h1 class="wow fadeInDown animated">Pre Chequeo</h1>
+<h2 class="wow bounceInDown animated">¿Están TODOS los que van a SALTAR registrados?</h2>
+<div class="centro">
+    <button href="#" id="cont" class="btn btn-common lg wow bounceInDown animated">Si</button>
+    <a href="#" id="reg" class="btn btn-uncommon lg wow bounceInDown animated">No</a>
+    <a href="#" id="busq" class="btn btn-border lg wow bounceInDown animated">No sé</a>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('#reg').click(function(){
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                url: '/getreg',
+                success: function(data) {
+                    $('#cuerpo').html(data);
+                }
+            });
+        });
+        $('#busq').click(function(){
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                url: '/getbusq',
+                success: function(data) {
+                    $('#cuerpo').html(data);
+                }
+            });
+        });
+        $('#cont').click(function(){
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                url: '/cont',
+                success: function(data) {
+                    $('#cuerpo').html(data);
+                }
+            });
+        });
+    });
+</script>
