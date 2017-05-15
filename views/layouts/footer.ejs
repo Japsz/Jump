@@ -61,7 +61,32 @@
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="mpjump" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modificar</h4>
+            </div>
+            <form action="/m_pjump" method="POST">
+                <div class="modal-body">
+                    <label>Nombre</label>
+                    <input type="text" name="nom" class="form-control" id="nom">
+                    <label>Apellido</label>
+                    <input type="text" name="ape" class="form-control" id="ape">
+                    <label>Fecha de nacimiento</label>
+                    <input type="text" name="fnac" class="form-control" id="fnac">
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="continue" name="id" value="" class="btn btn-primary">Modificar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="mjump" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -216,6 +241,23 @@
         $(".modal-body #ape").val(ape);
         $(".modal-body #fnac").val(fnac);
         $(".modal-body #verif").val(verif);
+        $(".modal-footer #continue").val(jumpid);
+        $('#fnac').datetimepicker({
+            viewMode: 'years',
+            format: 'YYYY/MM/DD',
+            maxDate: new Date(),
+            locale: 'es',
+            useCurrent: false
+        });
+    });
+    $(document).on("click", ".mpjump", function() {
+        var jumpid = $(this).data('id');
+        var nom = $(this).data('nom');
+        var ape = $(this).data('ape');
+        var fnac = $(this).data('fnac');
+        $(".modal-body #nom").val(nom);
+        $(".modal-body #ape").val(ape);
+        $(".modal-body #fnac").val(fnac);
         $(".modal-footer #continue").val(jumpid);
         $('#fnac').datetimepicker({
             viewMode: 'years',

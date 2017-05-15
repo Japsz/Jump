@@ -34,6 +34,33 @@ exports.remove = function(req, res){
     }
     else res.redirect('/bad_login');
 };
+exports.edit = function(req, res){
+    if(req.session.isUserLogged){
+        var input = JSON.parse(JSON.stringify(req.body));
+        var data = {
+            name: input.nom,
+            last_name: input.ape,
+            fnac: input.fnac,
+        }
+        req.getConnection(function(err,connection){
+
+            connection.query("UPDATE pjumper SET ? WHERE id = ?",[data,input.id],function(err,rows)
+            {
+
+                if(err)
+                    console.log("Error Selecting : %s ",err );
+
+                res.redirect('/registro_jumper');
+
+
+            });
+
+            //console.log(query.sql);
+        });
+    }
+    else res.redirect('/bad_login');
+};
+
 exports.getreg = function(req, res){
     res.render('registro',{});
 };

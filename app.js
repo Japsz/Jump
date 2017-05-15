@@ -92,6 +92,7 @@ app.get('/registro_jumper', prejump.list);
 app.post('/pjump/save', prejump.save);
 app.get('/pjump/:id', prejump.add);
 app.post('/pjump/register', prejump.transfer);
+app.post('/m_pjump',prejump.edit);
 //Users
 app.get('/user', admin.list);
 app.get('/user/add', admin.add);
