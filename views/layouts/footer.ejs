@@ -94,7 +94,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Modificar</h4>
             </div>
-            <form action="/m_jump" method="POST">
+            <form>
                 <div class="modal-body">
                     <label>Nombre</label>
                     <input type="text" name="nom" class="form-control" id="nom">
@@ -109,7 +109,7 @@
                 <div class="modal-footer">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="continue" name="id" value="" class="btn btn-primary">Modificar</button>
+                        <button type="submit" id="continue-j" name="id" value=""  class="btn btn-primary">Modificar</button>
                     </div>
                 </div>
             </form>
@@ -241,7 +241,7 @@
         $(".modal-body #ape").val(ape);
         $(".modal-body #fnac").val(fnac);
         $(".modal-body #verif").val(verif);
-        $(".modal-footer #continue").val(jumpid);
+        $(".modal-footer #continue-j").val(jumpid);
         $('#fnac').datetimepicker({
             viewMode: 'years',
             format: 'YYYY/MM/DD',
@@ -250,6 +250,7 @@
             useCurrent: false
         });
     });
+
     $(document).on("click", ".mpjump", function() {
         var jumpid = $(this).data('id');
         var nom = $(this).data('nom');
@@ -273,20 +274,63 @@
             val[i] = $(this).val();
         });
         if(val.length){
-            $(".modal-body #djump").text("¿Está seguro que desea eliminar los jumpers seleccionados?");
+            $(".modal-body #djump").text("¿Está seguro que desea eliminar los seleccionados?");
             $(".modal-footer #dbtn").text("Si, Eliminar (" + val.length + ")");
         }
+    });
+    $(function () {
+        $('#continue-j').click(function(e){
+            $("#continue-j").attr("disabled", true);
+            e.preventDefault();
+
+            /*$.ajax({
+             dataType: 'jsonp',
+             data: "data=yeah",
+             jsonp: 'callback',
+             url: 'http://localhost:3000/endpoint?callback=?',
+             success: function(data) {
+             console.log('success');
+             console.log(JSON.stringify(data));
+             }
+             });*/
+            var data = {};
+
+            data.nom = $("#mjump .modal-body #nom").val();
+            data.ape = $("#mjump .modal-body #ape").val();
+            data.fnac = $("#mjump .modal-body #fnac").val();
+            data.verif = $("#mjump .modal-body #verif").val();
+            data.id = $("#mjump .modal-footer #continue-j").val();
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: '/m_jump',
+                success: function(data) {
+                    $("#continue-j").attr("disabled", false);
+                    $("#mjump").modal("toggle");
+                    stream();
+                }
+            });
+            /*$.ajax('http://localhost:3000/endpoint', {
+             type: 'POST',
+             data: JSON.stringify(data),
+             contentType: 'application/json',
+             success: function() { console.log('success');},
+             error  : function() { console.log('error');}
+             });*/
+        });
     });
 </script>
 <script>
 
     function enable2() {
         document.getElementById("myBtn1").disabled = false;
+        document.getElementById("del").className = "btn btn-primary btn-danger btn-lg deljump";
     }
     function enable() {
         document.getElementById("del").className = "btn btn-primary deljump btn-danger";
         document.getElementById("add").disabled = false;
-        document.getElementById("continue").disabled = false;
+        document.getElementById("continuar").disabled = false;
     }
 </script>
 

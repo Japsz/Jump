@@ -87,7 +87,7 @@ app.post('/delete_jump',jumper.delete_customer);
 // Pre Jumpers
 app.post('/psave',prejump.save2);
 app.post('/sudo_pj',prejump.sudo_pj);
-app.get('/delete/:id',prejump.remove);
+app.post('/delete_pj',prejump.remove);
 app.get('/registro_jumper', prejump.list);
 app.post('/pjump/save', prejump.save);
 app.get('/pjump/:id', prejump.add);

@@ -18,19 +18,38 @@ exports.list = function(req, res){
 };
 //Vista lista de projectos.
 exports.remove = function(req, res){
-
     if(req.session.isUserLogged){
-        req.getConnection(function(err,connection){
-
-            connection.query('DELETE FROM pJumper WHERE id = ?',[req.params.id],function(err,rows)
-            {
-                if(err)
-                    console.log("Error Selecting : %s ",err );
-                res.redirect('/registro_jumper');
+        var input = JSON.parse(JSON.stringify(req.body));
+        var ids = input.ids;
+        if(ids.length){
+            var query = "DELETE FROM pjumper WHERE id = ?";
+            if(typeof ids == "object"){
+                for (var i = 1; i<ids.length; i++){
+                    query += "OR id = ?";
+                }
+            }
+            req.getConnection(function (err, connection) {
+                connection.query(query,ids,function(err, rows){
+                    if (err) console.log("Error selecting : %s", err);
+                    res.send("1");
+                });
             });
-
-            //console.log(query.sql);
-        });
+        } else
+            res.send("0");
+        //  var phone = req.params.phone;
+        //
+        //  req.getConnection(function (err, connection) {
+        //
+        //     connection.query("DELETE FROM contact WHERE phone = ? ",[phone], function(err, rows)
+        //     {
+        //
+        //          if(err)
+        //              console.log("Error deleting : %s ",err );
+        //
+        //          res.redirect('/contact');
+        //
+        //     });
+        //  });
     }
     else res.redirect('/bad_login');
 };

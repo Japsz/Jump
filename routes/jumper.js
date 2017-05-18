@@ -98,7 +98,7 @@ exports.edit = function(req, res){
                 if(err)
                     console.log("Error Selecting : %s ",err );
 
-                res.redirect('/begin_list');
+                res.send("1");
 
 
              });
