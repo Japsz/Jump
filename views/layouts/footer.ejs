@@ -211,6 +211,16 @@
         var html = '<a data-id="' + $(this).val() + '" data-toggle="modal" data-target="#timeset" class="timeset btn btn-success">' +
             '<span class="glyphicon glyphicon-time" id="tiempo" aria-hidden="true"></span>' + $(".modal-body #time").val() + '</a>' +
             '<button class="unset btn btn-sm btn-danger" value="' + $("#continue").val() + '"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>';
+        if(jumpid == "#tot"){
+            var horas = document.getElementsByName("horas");
+            for(var i=0, n=horas.length;i<n;i++) {
+                horas[i].value = $(".modal-body #time").val();
+            }
+            var bots = document.getElementsByClassName("timeset btn btn-info");
+            for(var j=0, n=bots.length;j<n;j++) {
+                bots[j].className = "timeset btn btn-success";
+            }
+        }
         $(jumpid).html(tiemp + html);
         $("#timeset").modal('toggle');
     });

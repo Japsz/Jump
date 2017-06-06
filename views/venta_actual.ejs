@@ -1,64 +1,98 @@
 <%- include layouts/user_header.ejs %>
+
 <h1 class="page-header">Venta</h1>
 <div class="row placeholders">
     <form action="/visit/save" method="post">
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 placeholder">
-            <h4>Jumpers</h4>
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Edad</th>
-                        <th>Tiempo</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading text-center">Jumpers</div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Edad</th>
+                            <th>Tiempo</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
 
-                    <%
-                        if(data.length){
+                        <%
+                        var len = data.length;
+                        if(len){
                             var nac, sec_left, years;
                             var ahora = new Date().getTime();
-                            for(var i = 0;i < data.length; i++){ 
-                              nac = new Date(data[i][3]).getTime();
-                              sec_left = (ahora - nac) / 1000;
-                              years = parseInt(sec_left / 31536000);%>
-                      <tr>
-                          <td><%= data[i][1]%></td>
-                          <td><%= data[i][2]%></td>
-                          <td><%= years%></td>
-                          <td><select name=tiempos class="form-control">
-                                  <option value="30">30</option>
-                                  <option value="60">60</option>
-                                  <option value="90">90</option>
-                                  <option value="120">120</option>
-                                  <option value="180">180</option>
-                                  <option value="240">240</option>
-                                  <option value="360">360</option>
-                              </select></td>
-                          <td><a class="btn btn-danger btn-sm" href="/venta/sessionpop/<%= i%>"> - Quitar</a></td>
-                          <td><div id="<%= data[i][0]%>">
-                                  <input name="horas" type="hidden" value="no">
-                                  <a data-id="<%= data[i][0]%>" data-toggle="modal" data-target="#timeset" class="timeset btn btn-info">
-                                      <span class="glyphicon glyphicon-time" id="tiempo" aria-hidden="true"></span>
-                                  </a>
-                              </div></td>
-                      </tr>
-                    <%
-                            }
+                        for(var i = 0;i < data.length; i++){
+                            nac = new Date(data[i][3]).getTime();
+                            sec_left = (ahora - nac) / 1000;
+                            years = parseInt(sec_left / 31536000);%>
+                        <tr>
+                            <td><%= data[i][1]%></td>
+                            <td><%= data[i][2]%></td>
+                            <td><%= years%></td>
+                            <td><select name="tiempos" class="form-control">
+                                    <option value="30">30</option>
+                                    <option value="60">60</option>
+                                    <option value="90">90</option>
+                                    <option value="120">120</option>
+                                    <option value="180">180</option>
+                                    <option value="240">240</option>
+                                    <option value="360">360</option>
+                                </select></td>
+                            <td><a class="btn btn-danger btn-sm" href="/venta/sessionpop/<%= i%>"> - Quitar</a></td>
+                            <td><div id="<%= data[i][0]%>">
+                                    <input name="horas" type="hidden" value="no">
+                                    <a data-id="<%= data[i][0]%>" data-toggle="modal" data-target="#timeset" class="timeset btn btn-info">
+                                        <span class="glyphicon glyphicon-time" id="tiempo" name="bot" aria-hidden="true"></span>
+                                    </a>
+                                </div></td>
+                        </tr>
+                        <%
+                        if(i == len - 1 && len > 1){
+                        %>
+                        <div id="todos">
+                            <tr>
+                                <td></td>
+                                <td><b>Todos</b></td>
+                                <td></td>
+                                <td><select name=tiempos_tot class="form-control" onClick="toggle(this)">
+                                        <option value="30" onClick="toggle(this)">30</option>
+                                        <option value="60" onClick="toggle(this)">60</option>
+                                        <option value="90" onClick="toggle(this)">90</option>
+                                        <option value="120" onClick="toggle(this)">120</option>
+                                        <option value="180" onClick="toggle(this)">180</option>
+                                        <option value="240" onClick="toggle(this)">240</option>
+                                        <option value="360">360</option>
+                                    </select></td>
+                                <td></td>
+                                <td><div id="tot">
+                                        <input name="horas_tot" type="hidden" value="no">
+                                        <a data-id="tot" data-toggle="modal" data-target="#timeset" class="timeset btn btn-info">
+                                            <span class="glyphicon glyphicon-time" id="tiempo" aria-hidden="true"></span>
+                                        </a>
+                                    </div></td>
+                            </tr>
+                        </div>
+                        <%
+                        }
+                        }
                         } else{%>
-                    <tr><td>No hay Jumpers asociados a esta venta</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-                    <%
+                        <tr><td>No hay Jumpers asociados a esta venta</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                        <%
 
-                            }
-                    %>
+                        }
+                        %>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
+
             <a href="/begin_list" class="btn btn-primary">+ Agregar Jumper</a>
             <a href="/registro_jumper" class="btn btn-primary">+ Agregar preJumper</a>
         </div>
@@ -71,5 +105,13 @@
         </div>
     </form>
 </div>
+<script language="JavaScript">
+    function toggle(source) {
+        tiempos = document.getElementsByName('tiempos');
 
+        for(var i=0, n=tiempos.length;i<n;i++) {
+            tiempos[i].value = source.value;
+        }
+    }
+</script>
 <%- include layouts/footer.ejs %>
