@@ -23,8 +23,21 @@
 
 
 <script type="text/javascript">
+    var timeout;
+    timeout = setTimeout(function () {
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                url: '/gethom',
+                success: function(data) {
+                    $('#cuerpo').html(data);
+                }
+            });
+        },90000);
     $(function(){
+
         $('#hom').click(function(){
+            window.clearTimeout(timeout);
             $.ajax({
                 type: 'GET',
                 contentType: 'application/json',
@@ -35,6 +48,7 @@
             });
         });
         $('#aqui').click(function(){
+            window.clearTimeout(timeout);
             $.ajax({
                 type: 'GET',
                 contentType: 'application/json',
@@ -46,6 +60,7 @@
         });
         $('#bsq').click(function(e){
             e.preventDefault();
+            window.clearTimeout(timeout);
             var data = {};
             var correo = $('input#keyboard').val();
             if(correo == ""){
@@ -68,6 +83,7 @@
                 url: '/getbsq_back',
                 success: function(data) {
                     $('#cuerpo').html(data);
+                    
                 }
             });
         });

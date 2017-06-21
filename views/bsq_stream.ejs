@@ -55,8 +55,20 @@
 </div>
 
 <script type="text/javascript">
+    var timeout;
     $(function(){
+        timeout = setTimeout(function () {
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                url: '/gethom',
+                success: function(data) {
+                    $('#cuerpo').html(data);
+                }
+            });
+        },90000);
         $('#hom').click(function(){
+            clearTimeout(timeout);
             $.ajax({
                 type: 'GET',
                 contentType: 'application/json',
@@ -67,6 +79,7 @@
             });
         });
         $('#reg').click(function(){
+            clearTimeout(timeout);
             $.ajax({
                 type: 'GET',
                 contentType: 'application/json',
@@ -77,6 +90,7 @@
             });
         });
         $('#busq').click(function(){
+            clearTimeout(timeout);
             $.ajax({
                 type: 'GET',
                 contentType: 'application/json',

@@ -22,8 +22,9 @@
 </form>
 
 <script type="text/javascript">
+    var timeout;
     $(function() {
-        $('#hom').click(function(){
+        timeout = setTimeout(function () {
             $.ajax({
                 type: 'GET',
                 contentType: 'application/json',
@@ -32,10 +33,24 @@
                     $('#cuerpo').html(data);
                 }
             });
+        },90000);
+        $('#hom').click(function(){
+            window.clearTimeout(timeout);
+            $.ajax({
+                type: 'GET',
+                contentType: 'application/json',
+                url: '/gethom',
+                success: function(data) {
+                    $('#cuerpo').html(data);
+                    
+                }
+            });
         });
         $('#enviar').click(function(e){
             $("#enviar").attr("disabled", true);
             e.preventDefault();
+            window.clearTimeout(timeout);
+
 
             /*$.ajax({
              dataType: 'jsonp',
@@ -114,6 +129,16 @@
                     $("#success").fadeTo(2000, 500).slideUp(500, function(){
                         $("#success").slideUp(500);
                     });
+                    timeout = setTimeout(function () {
+                        $.ajax({
+                            type: 'GET',
+                            contentType: 'application/json',
+                            url: '/gethom',
+                            success: function(data) {
+                                $('#cuerpo').html(data);
+                            }
+                        });
+                    },90000);
                 }
             });
             /*$.ajax('http://localhost:3000/endpoint', {
