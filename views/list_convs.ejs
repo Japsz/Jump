@@ -1,0 +1,101 @@
+<%- include layouts/admin_header.ejs %>
+    <div class="row">
+        <h1 class="page-header">Convenios <a class="btn btn-info" data-toggle="modal" data-target="#c_conv">+ <span class="glyphicon glyphicon-certificate"></span></a>
+        </h1>
+    </div>
+    <div class="row">
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <%
+                var len = data.length;
+                if(len){
+                for(var i = 0;i < data.length; i++){
+                %>
+                <tr>
+                    <td><%= data[i].name%></td>
+                    <td><div class="btn-group"><a class="btn btn-primary" href="#"><i class="glyphicon glyphicon-wrench"></i> Editar</a><a class="btn btn-danger" href="#"> - Borrar</a></div></td>
+                    <td></td>
+                </tr>
+
+                <%
+                }
+                } else{%>
+                <tr><td>No hay Jumpers asociados a esta venta</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                <%
+
+                }
+                %>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal fade" id="c_conv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Crear Convenio</h4>
+                </div>
+                <form action="/conv/add" method="POST">
+                    <div class="modal-body">
+                        <label>Nombre</label>
+                        <input class="form-control" type="text" name="name" maxlength="50" required>
+                        <div class="form-group checkbox">
+                            <label>
+                                <input name ='opt' type='checkbox' value="correo">
+                                Correo
+                            </label>
+                            <label>
+                                <input name ='opt' type='checkbox' value="rut">
+                                Rut
+                            </label>
+                            <label>
+                                <input name ='opt' type='checkbox' value="name">
+                                Nombre
+                            </label>
+                            <label>
+                                <input name ='opt' type='checkbox' value="ape">
+                                Apellido
+                            </label>
+                            <label>
+                                <input name ='opt' type='checkbox' value="addr">
+                                Dirección
+                            </label>
+                            <label>
+                                <input name ='opt' type='checkbox' value="comuna">
+                                Comuna
+                            </label>
+                            <label>
+                            <input name ='opt' type='checkbox' value="zona">
+                                Zona
+                            </label>
+                            <label>
+                                <input name ='opt' type='checkbox' value="cargo">
+                                Cargo
+                            </label>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" id="continue" name="id" value="" class="btn btn-primary">Modificar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+            
+<%- include layouts/footer.ejs %>

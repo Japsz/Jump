@@ -4,6 +4,7 @@ var http = require('http');
 var path = require('path');
 
 var jumper = require('./routes/jumper');
+var convenio = require('./routes/convenio');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
 var prod = require('./routes/prod');
@@ -76,6 +77,11 @@ app.get('/precods', visita.precods);
 app.get('/getcod/:cod', visita.cods);
 app.get('/venta_fin', visita.end);
 
+// Convenios
+app.get('/convs', convenio.convs);
+app.post('/conv/add', convenio.save_conv);
+app.post('/convinfo/add', convenio.save_convinfo);
+
 // Jumpers
 app.get('/jumper/save/:verif', jumper.save);
 app.get('/begin_list', jumper.prelist);
@@ -84,6 +90,7 @@ app.post('/jumper/add2session', jumper.add2session);
 app.get('/get_ids', jumper.get_ids);
 app.post('/m_jump',jumper.edit);
 app.post('/delete_jump',jumper.delete_customer);
+
 // Pre Jumpers
 app.post('/psave',prejump.save2);
 app.post('/sudo_pj',prejump.sudo_pj);
@@ -93,6 +100,7 @@ app.post('/pjump/save', prejump.save);
 app.get('/pjump/:id', prejump.add);
 app.post('/pjump/register', prejump.transfer);
 app.post('/m_pjump',prejump.edit);
+
 //Users
 app.get('/user', admin.list);
 app.get('/user/add', admin.add);

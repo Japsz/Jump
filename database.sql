@@ -28,7 +28,26 @@ CREATE TABLE IF NOT EXISTs `pJumper` (
   `fnac` DATE NOT NULL,
   PRIMARY KEY(`id`)
 );
-
+CREATE TABLE IF NOT EXISTS `convenio` (
+  `idconvenio` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(50) NOT NULL,
+  `html` MEDIUMTEXT NOT NULL,
+  PRIMARY KEY(`idconvenio`)
+);
+CREATE TABLE IF NOT EXISTS `convinfo` (
+  `idinfo` INT(11) NOT NULL AUTO_INCREMENT,
+  `idconv` INT(11) NOT NULL,
+  `rut` VARCHAR(12),
+  `correo` VARCHAR(50),
+  `name` VARCHAR(50),
+  `ape` VARCHAR(50),
+  `cargo` VARCHAR(50),
+  `addr` VARCHAR(50),
+  `comuna` VARCHAR(50),
+  `zona` VARCHAR(50),
+  PRIMARY KEY(`idinfo`),
+  FOREIGN KEY(`idconv`) REFERENCES convenio(idconvenio)
+);
 CREATE TABLE IF NOT EXISTS `Productos` (
   `idquiz` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -57,3 +76,4 @@ CREATE TABLE IF NOT EXISTS `vip` (
   `ended` INT(1),
   PRIMARY KEY(`id`)
   );
+ALTER TABLE visita ADD COLUMN conv

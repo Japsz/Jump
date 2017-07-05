@@ -1,7 +1,14 @@
-//Redirección y obtención de encuesta(s)
+//Vista venta actual
 exports.add = function(req, res) {
 	if (req.session.isUserLogged) {
-		res.render('venta_actual',{data:req.session.jumps});
+        req.getConnection(function (err, connection){
+            connection.query("SELECT * FROM convenio", function(err, rows){
+                if (err)
+                    console.log("Error selecting : %s ", err);
+                req.session.convs = rows;
+                res.render('venta_actual',{data:req.session.jumps, convs : rows});
+            });
+        });
 	}
 	else res.redirect('/bad_login');
 };
@@ -131,6 +138,7 @@ exports.save = function(req, res){
         var tiempos = input.tiempos;
         req.session.horas = input.horas;
         var nowdate = new Date();
+        console.log(input.isconv);
         if (typeof tiempos == "string"){
         	var data = {
 				idjumper : req.session.jumps[0][0],
@@ -138,18 +146,29 @@ exports.save = function(req, res){
 				date_g: nowdate.toLocaleString(),
 				status: 'inprog'
 			}
+			if(input.isconv != "no"){
+        	    data.idinfo = input.isconv;
+
+            }
             var query = "INSERT INTO visita SET ?";
 		} else {
             var data = [];
+            if(input.isconv != "no"){
+                var query = "INSERT INTO visita (`idjumper`, `duration`, `date_g`, `status`,`idinfo`) VALUES ?";
+            } else
             var query = "INSERT INTO visita (`idjumper`, `duration`, `date_g`, `status`) VALUES ?";
             for (var i = 0; i<req.session.jumps.length; i++){
                 var aux = [req.session.jumps[i][0], parseInt(tiempos[i]) + 5, nowdate.toLocaleString(), 'inprog'];
+                if(input.isconv != "no"){
+                    aux.push(input.isconv);
+                }
                 data.push(aux);
             }
         }
 		req.getConnection(function (err, connection) {
 			connection.query(query,[data],function(err, rows){
 				if (err) console.log("Error inserting : %s", err);
+
 				res.redirect('/precods');
 			});
 		});

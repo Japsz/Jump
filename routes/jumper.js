@@ -114,11 +114,12 @@ exports.save = function(req,res){
 
     if(req.session.isUserLogged){
         var data =[];
+        var aux;
         var dateFormat = require('dateFormat');
         for(var i = 0; i < req.session.pjumps.length;i++){
             req.session.pjumps[i].fnac = dateFormat(req.session.pjumps[i].fnac,
                 "yyyy-mm-dd");
-            var aux = [req.session.pjumps[i].name,
+            aux = [req.session.pjumps[i].name,
                 req.session.pjumps[i].last_name, req.session.pjumps[i].fnac];
             if(req.params.verif != "null"){
                 aux.push(req.params.verif);

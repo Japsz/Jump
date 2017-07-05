@@ -2,7 +2,8 @@
 
 <h1 class="page-header">Venta</h1>
 <div class="row placeholders">
-    <form action="/visit/save" method="post">
+    <form action="/visit/save" method="post" id="venta">
+        <input type="text" class="hidden" name="isconv" value="no" id="visit_sub">
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 placeholder">
             <div class="panel panel-default">
                 <!-- Default panel contents -->
@@ -98,12 +99,44 @@
         </div>
 
         <div class="col-md-3 col-md-offset-9">
-            <button type="submit" class="btn btn-primary btn-lg">
-                Generar visita
-            </button>
-
+            <div class="btn-group">
+                <button type="button" data-toggle="modal" data-target="#conv" class="btn btn-success btn-lg conven">Convenio</button>
+                <button type="submit" class="btn btn-primary btn-lg">Generar visita</button>
+            </div>
         </div>
     </form>
+        <div class="modal fade" id="conv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Generar con convenio</h4>
+                    </div>
+                    <form id="fconv">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Convenio</label>
+                                <select name="idconv" class="form-control cajax" id="sconv" required>
+                                    <option value="" selected disabled>Seleccione algún convenio</option>
+                                    <% for(var j = 0;j < convs.length;j++){%>
+                                        <option class="cajax" data-html="<%= convs[j].html%>" value="<%= convs[j].idconvenio%>"><%= convs[j].name%></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="form-group-lg" id="cform">
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <button type="submit"  data-dismiss="modal"  class="btn btn-primary" id="conv_submit">Generar con convenio</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 </div>
 <script language="JavaScript">
     function toggle(source) {

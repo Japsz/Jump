@@ -32,7 +32,7 @@ exports.stats = function(req, res){
 		} else res.redirect('/bad_login');
 };
 
-// Logica agregar producto.
+// Logica agregar User.
 exports.save = function(req,res){
 	if(req.session.isAdminLogged){
 		var input = JSON.parse(JSON.stringify(req.body));
@@ -181,7 +181,6 @@ exports.edit = function(req, res){
 		}
 		else res.redirect('/bad_login');
 };
-
 //Logica editar usuario.
 exports.save_edit = function(req,res){
 

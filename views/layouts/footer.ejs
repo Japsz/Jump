@@ -278,6 +278,7 @@
             useCurrent: false
         });
     });
+
     $(document).on("click", ".deljump", function() {
         var val = [];
         $(':checkbox:checked').each(function(i){
@@ -288,6 +289,10 @@
             $(".modal-footer #dbtn").text("Si, Eliminar (" + val.length + ")");
         }
     });
+    $(document).on("click", ".cajax", function() {
+        $("#cform").html($("#sconv option:selected").data('html'));
+    });
+
     $(function () {
         $('#continue-j').click(function(e){
             $("#continue-j").attr("disabled", true);
@@ -310,6 +315,7 @@
             data.fnac = $("#mjump .modal-body #fnac").val();
             data.verif = $("#mjump .modal-body #verif").val();
             data.id = $("#mjump .modal-footer #continue-j").val();
+
             $.ajax({
                 type: 'POST',
                 data: JSON.stringify(data),
@@ -321,6 +327,48 @@
                     stream();
                 }
             });
+            /*$.ajax('http://localhost:3000/endpoint', {
+             type: 'POST',
+             data: JSON.stringify(data),
+             contentType: 'application/json',
+             success: function() { console.log('success');},
+             error  : function() { console.log('error');}
+             });*/
+        });
+        $('#conv_submit').click(function(e){
+            $("#conv_submit").attr("disabled", true);
+            e.preventDefault();
+
+            /*$.ajax({
+             dataType: 'jsonp',
+             data: "data=yeah",
+             jsonp: 'callback',
+             url: 'http://localhost:3000/endpoint?callback=?',
+             success: function(data) {
+             console.log('success');
+             console.log(JSON.stringify(data));
+             }
+             });*/
+            var data = {idconv : $("#sconv option:selected").val()};
+            $('#fconv input').each(
+                function(index){
+                    var input = $(this);
+                    data[input.attr('name')] = input.val();
+                }
+            );
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: '/convinfo/add',
+                success: function(data) {
+                    $("#conv_submit").attr("disabled", false);
+                    $("#conv").modal("toggle");
+                    $("#visit_sub").val(parseInt(data));
+                    $("#venta").submit();
+                }
+            });
+
             /*$.ajax('http://localhost:3000/endpoint', {
              type: 'POST',
              data: JSON.stringify(data),
