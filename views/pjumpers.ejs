@@ -93,7 +93,7 @@
 <script>
     function del() {
         var val = [];
-        $(':checkbox:checked').each(function(i){
+        $(':checkbox:checked[name=ids]').each(function(i){
             val[i] = $(this).val();
         });
         var dats = {ids: val};
