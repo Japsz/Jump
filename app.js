@@ -96,9 +96,11 @@ app.post('/psave',prejump.save2);
 app.post('/sudo_pj',prejump.sudo_pj);
 app.post('/delete_pj',prejump.remove);
 app.get('/registro_jumper', prejump.list);
+app.get('/registro_jumper_red', prejump.list_red);
 app.post('/pjump/save', prejump.save);
 app.get('/pjump/:id', prejump.add);
 app.post('/pjump/register', prejump.transfer);
+app.post('/pjump_red/register', prejump.transfer_red);
 app.post('/m_pjump',prejump.edit);
 
 //Users

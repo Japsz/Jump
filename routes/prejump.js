@@ -1,14 +1,16 @@
-//Vista lista de projectos.
+//Vista lista de prejumper.
 exports.list = function(req, res){
 
 	if(req.session.isUserLogged){
+
+
      	req.getConnection(function(err,connection){
 
         	var query = connection.query('SELECT * FROM pJumper',function(err,rows)
         	{
             	if(err)
             	    console.log("Error Selecting : %s ",err );
-            	res.render('pjumpers',{page_title:"Pre Jumpers",data:rows});
+                    res.render('pjumpers',{page_title:"Pre Jumpers",data:rows});
        		});
 
            //console.log(query.sql);
@@ -16,6 +18,32 @@ exports.list = function(req, res){
   	}
   else res.redirect('/bad_login');
 };
+exports.list_red = function(req, res){
+
+    if(req.session.isUserLogged){
+        var red = require('mysql');
+        var con = red.createConnection({
+            host: "gojump.cl",
+            user: "gojumpcl_log",
+            password: "13551355",
+            database: "gojuamcl_1355"
+        });
+        con.connect(function(err) {
+            if (err) {
+                console.log("Error Selecting : %s ",err );
+                res.render('pjumpers_red',{page_title:"Pre Jumpers",data:[], con: "no"});
+            } else {
+                con.query("Select * FROM pJumper", function (err, result) {
+                    if (err)
+                        console.log("Error Selecting red : %s ",err );
+                    res.render('pjumpers_red',{page_title:"Pre Jumpers",data:result, con: "si"});
+                });
+            }
+        });
+    }
+    else res.redirect('/bad_login');
+};
+
 //Vista lista de projectos.
 exports.remove = function(req, res){
     if(req.session.isUserLogged){
@@ -195,4 +223,49 @@ exports.transfer = function(req, res){
 		} else res.redirect('/bad_login');
 	}
 	else res.redirect('/bad_login');
+};
+exports.transfer_red = function(req, res){
+    if(req.session.isUserLogged){
+        var input = JSON.parse(JSON.stringify(req.body));
+        var verif = input.verificador;
+        var ids = input.ids;
+        if(verif == ""){
+            verif = 'null';
+        }
+        if(ids.length){
+            var query = "SELECT * FROM pJumper WHERE id = ?";
+            var query2 = "DELETE FROM pJumper WHERE id = ?";
+            if(typeof ids == "object"){
+                for (var i = 1; i<ids.length; i++){
+                    query += "OR id = ?";
+                    query2 += "OR id = ?";
+                }
+            }
+            var red = require('mysql');
+            var con = red.createConnection({
+                host: "gojump.cl",
+                user: "gojumpcl_log",
+                password: "13551355",
+                database: "gojuamcl_1355"
+            });
+            con.connect(function(err) {
+                if (err) {
+                    console.log("Error connecting : %s ", err);
+                    res.render('pjumpers_red', {page_title: "Pre Jumpers", data: []});
+                } else {
+                    con.query(query,ids, function (err, rows) {
+                        if (err) console.log("Error selecting : %s ", err);
+                        req.session.pjumps = rows;
+                        console.log(rows);
+                        con.query(query2,ids,function (err,rows) {
+                            if (err) console.log("Error selecting : %s ", err);
+                            res.redirect('/jumper/save/'+ verif);
+                        });
+                    });
+                }
+            });
+
+        } else res.redirect('/bad_login');
+    }
+    else res.redirect('/bad_login');
 };

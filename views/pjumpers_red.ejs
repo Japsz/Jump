@@ -1,8 +1,8 @@
 <%- include layouts/user_header.ejs %>
 
-<form action="/pjump/register" method='post' id="pform">
+<form action="/pjump_red/register" method='post' id="pform">
     <div class="table-responsive">
-        <h2 class="page-header">Pre Jumpers        <a class="btn btn-info" data-toggle="modal" data-target="#prejump"> + <span class="glyphicon glyphicon-user"  aria-hidden="true"></span></a> </h2>
+        <h2 class="page-header">Pre Jumpers Red</h2>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -19,27 +19,30 @@
                 if(data.length){
                     var nac, sec_left, years;
                     var ahora = new Date().getTime();
-                for(var i = 0;i < data.length;i++) {
-                    nac = new Date(data[i].fnac).getTime();
-                    sec_left = (ahora - nac) / 1000;
-                    years = parseInt(sec_left / 31536000);
+                    for(var i = 0;i < data.length;i++) {
+                        nac = new Date(data[i].fnac).getTime();
+                        sec_left = (ahora - nac) / 1000;
+                        years = parseInt(sec_left / 31536000);
                 %>
 
                 <tr>
                     <td><%= data[i].name%></td>
                     <td><%= data[i].last_name%></td>
                     <td><%= years%></td>
-                    <td><a class="btn btn-info mpjump" data-toggle="modal" data-target="#mpjump"
-                           data-id="<%=data[i].id%>" data-nom="<%=data[i].name%>"
-                           data-ape="<%=data[i].last_name%>" data-fnac="<%= new Date(data[i].fnac).toLocaleDateString()%>"
-                           data-verif="<%=data[i].correo%>">Modificar</a></td>
+                    <td></td>
                     <td>
                         <input  onclick="enable2()" name ='ids' type='checkbox' value=<%= data[i].id%>>
                     </td>
                 </tr>
                 <%
-                }
-                }else { %>
+                    }
+                } else if(con == "no") { %>
+                <tr>
+                    <td>No se pudo conectar al registro online.</td>
+                </tr>
+                <%
+                } else {
+                    %>
                 <tr>
                     <td>No hay coincidencias.</td>
                 </tr>
@@ -55,7 +58,6 @@
     <div class="col-md-6 col-md-offset-6">
         <div class="form-inline form-group">
             <input type="email" name="verificador" id="verif" class="form-control input-lg" placeholder="Correo">
-            <a class="btn btn-primary btn-danger btn-lg deljump disabled" data-toggle="modal" data-target="#deljump" id="del"> - Eliminar </a>
             <button type="button" class="btn btn-primary btn-lg prejumps" id="myBtn1" disabled>
             Registrar
         </button>
@@ -91,31 +93,6 @@
         enable2();
     }
 </script>
-<script>
-    function del() {
-        var val = [];
-        $(':checkbox:checked').each(function(i){
-            val[i] = $(this).val();
-        });
-        var dats = {ids: val};
-        if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                if (this.responseText != "0") {
-                    window.location.href = "/registro_jumper";
-                }
-            }
-        };
-        xmlhttp.open("POST", "/delete_pj", true);
-        xmlhttp.setRequestHeader("Content-type", 'application/json');
-        xmlhttp.send(JSON.stringify(dats));
-    }
-</script>
+
 
 <%- include layouts/footer.ejs %>
