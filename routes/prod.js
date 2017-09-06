@@ -9,6 +9,8 @@ exports.list = function(req, res){
 
                 if(req.session.isUserLogged){
                     res.render('user_vips',{page_title:"Tiempos",data:rows});
+                } else if(req.session.isMonitLogged){
+                    res.render('monit_vips',{page_title:"Tiempos",data:rows});
                 } else res.render('list_vips2',{page_title:"Tiempos",data:rows});
 			 });
 			 //console.log(query.sql);

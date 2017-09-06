@@ -12,7 +12,8 @@ exports.admin_login = function(req, res){
 };
 
 exports.user_logout = function(req, res){
-	req.session.isUserLogged = false;
+	req.session.isUserLogged = null;
+    req.session.isMonitLogged = null;
 	req.session.jumps = [];
 	res.redirect('/');
 };
@@ -43,9 +44,15 @@ exports.user_login_handler = function(req, res){
                   console.log("Error Selecting : %s ",err );
               
               if(rows.length == 1){
-              	req.session.isUserLogged = true;
-              	req.session.jumps = [];
-              	res.redirect('/venta');
+              	if(rows[0].username == "monitor"){
+                    req.session.isMonitLogged = true;
+                    res.redirect('/vip_list');
+				} else {
+
+                    req.session.isUserLogged = true;
+                    req.session.jumps = [];
+                    res.redirect('/venta');
+                }
               }
           });
            

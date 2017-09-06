@@ -29,7 +29,7 @@ exports.d_from_session = function(req, res) {
 exports.precods = function(req, res) {
 	if(req.session.isUserLogged){
         req.getConnection(function (err, connection) {
-            connection.query('SELECT * FROM visita ORDER BY id DESC LIMIT ?',[req.session.jumps.length],function(err, rows){
+            connection.query('SELECT id,idjumper,duration FROM visita ORDER BY id DESC LIMIT ?',[req.session.jumps.length],function(err, rows){
                 if (err) console.log("Error selecting : %s", err);
                 var ahora, fin;
                 req.session.previps = rows;
@@ -54,6 +54,7 @@ exports.precods = function(req, res) {
                         }
                     }
                 }
+                console.log(req.session.previps);
                 res.render('getcodes',{data: rows,jumps: req.session.jumps});
             });
         });
@@ -61,8 +62,10 @@ exports.precods = function(req, res) {
 	} else res.redirect('/bad_login');
 }
 exports.end = function(req,res) {
+    console.log(req.session.previps);
     if(req.session.isUserLogged){
         var ahora = new Date().getTime();
+        console.log(req.session.jumps);
         if(req.session.previps.length == 1) {
             var query = "INSERT INTO vip SET ? ";
             ahora = ahora + req.session.previps[0].duration*60*1000;
@@ -101,7 +104,6 @@ exports.end = function(req,res) {
 // Generar code128
 exports.cods = function(req, res) {
     if(req.session.isUserLogged){
-        var bwipjs = require('bwip-js');
         var jimps = require('jimp');
         req.getConnection(function (err, connection) {
             connection.query('SELECT * FROM visita WHERE id = ?',[req.params.cod],function(err, rows){
@@ -138,7 +140,7 @@ exports.save = function(req, res){
         var tiempos = input.tiempos;
         req.session.horas = input.horas;
         var nowdate = new Date();
-        console.log(input.isconv);
+        console.log(input.tiempos);
         if (typeof tiempos == "string"){
         	var data = {
 				idjumper : req.session.jumps[0][0],
