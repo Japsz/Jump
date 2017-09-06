@@ -26,7 +26,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.methodOverride());
 app.use(flash());
 app.use(express.cookieParser('isLogged'));
-app.use(express.cookieSession());
+app.use(express.cookieSession({
+    name: 'session',
+    keys: ['isLoggd', 'extent']
+}));
 
 app.use(express.static(path.join(__dirname, 'public')));
 

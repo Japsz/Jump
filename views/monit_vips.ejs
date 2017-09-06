@@ -1,0 +1,38 @@
+<%- include layouts/monit_header.ejs %>
+        <h1 class="page-header text-center">Personas dentro: <%= data.length%></h1>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                En Curso
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody >
+                <%
+                if(data.length){
+                for(var k = 0;k < data.length; k++){
+                %>
+                <tr>
+                    <td><%= data[k].id%></td>
+                    <td><%= data[k].name%></td>
+                    <td><%= data[k].last_name%></td>
+                    <td><a href="/sudo_del/<%= data[k].id%>" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+
+                </tr>
+
+                <%
+                }
+                } else{%>
+                <tr><td>No hay Jumpers dentro.</td><td>-</td><td>-</td><td>-</td></tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+
+<%- include layouts/footer.ejs %>
