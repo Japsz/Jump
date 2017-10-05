@@ -78,7 +78,7 @@ app.get('/venta/sessionpop/:id', visita.d_from_session);
 app.post('/visit/save', visita.save);
 app.get('/precods', visita.precods);
 app.get('/getcod/:cod', visita.cods);
-app.get('/venta_fin', visita.end);
+app.post('/venta_fin', visita.end);
 
 // Convenios
 app.get('/convs', convenio.convs);
@@ -98,6 +98,7 @@ app.post('/delete_jump',jumper.delete_customer);
 app.post('/psave',prejump.save2);
 app.post('/sudo_pj',prejump.sudo_pj);
 app.post('/delete_pj',prejump.remove);
+app.post('/delete_pj_red',prejump.remove_red);
 app.get('/registro_jumper', prejump.list);
 app.get('/registro_jumper_red', prejump.list_red);
 app.post('/pjump/save', prejump.save);
@@ -105,6 +106,7 @@ app.get('/pjump/:id', prejump.add);
 app.post('/pjump/register', prejump.transfer);
 app.post('/pjump_red/register', prejump.transfer_red);
 app.post('/m_pjump',prejump.edit);
+app.post('/m_pjump_red',prejump.edit_red);
 
 //Users
 app.get('/user', admin.list);

@@ -29,7 +29,10 @@
                     <td><%= data[i].name%></td>
                     <td><%= data[i].last_name%></td>
                     <td><%= years%></td>
-                    <td></td>
+                    <td><a class="btn btn-info mpjump" data-toggle="modal" data-target="#mpjump"
+                           data-id="<%=data[i].id%>" data-nom="<%=data[i].name%>"
+                           data-ape="<%=data[i].last_name%>" data-fnac="<%= new Date(data[i].fnac).toLocaleDateString()%>"
+                           >Modificar</a></td>
                     <td>
                         <input  onclick="enable2()" name ='ids' type='checkbox' value=<%= data[i].id%>>
                     </td>
@@ -58,6 +61,7 @@
     <div class="col-md-6 col-md-offset-6">
         <div class="form-inline form-group">
             <input type="email" name="verificador" id="verif" class="form-control input-lg" placeholder="Correo">
+            <a class="btn btn-primary btn-danger btn-lg deljump disabled" data-toggle="modal" data-target="#deljump" id="del"> - Eliminar </a>
             <button type="button" class="btn btn-primary btn-lg prejumps" id="myBtn1" disabled>
             Registrar
         </button>
@@ -91,6 +95,32 @@
             checkboxes[i].checked = source.checked;
         }
         enable2();
+    }
+</script>
+<script>
+    function del() {
+        var val = [];
+        $(':checkbox:checked[name=ids]').each(function(i){
+            val[i] = $(this).val();
+        });
+        var dats = {ids: val};
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.responseText != "0") {
+                    window.location.href = "/registro_jumper_red";
+                }
+            }
+        };
+        xmlhttp.open("POST", "/delete_pj_red", true);
+        xmlhttp.setRequestHeader("Content-type", 'application/json');
+        xmlhttp.send(JSON.stringify(dats));
     }
 </script>
 

@@ -32,7 +32,7 @@ exports.precods = function(req, res) {
             connection.query('SELECT id,idjumper,duration FROM visita ORDER BY id DESC LIMIT ?',[req.session.jumps.length],function(err, rows){
                 if (err) console.log("Error selecting : %s", err);
                 var ahora, fin;
-                req.session.previps = rows;
+                var previps = rows;
                 if(typeof req.session.horas == "string"){
                     if(req.session.horas != "no"){
                         ahora = new Date();
@@ -40,7 +40,7 @@ exports.precods = function(req, res) {
                         fin=new Date(fin).getTime();
                         ahora = new Date().getTime();
                         fin = fin/60000 - ahora/60000;
-                        req.session.previps[0].duration = fin;
+                        previps[0].duration = fin;
                     }
                 }else {
                     for(var i = 0; i<rows.length; i++){
@@ -50,28 +50,26 @@ exports.precods = function(req, res) {
                             fin=new Date(fin).getTime();
                             ahora = new Date().getTime();
                             fin = fin/60000 - ahora/60000;
-                            req.session.previps[i].duration = fin;
+                            previps[i].duration = fin;
                         }
                     }
                 }
-                console.log(req.session.previps);
-                res.render('getcodes',{data: rows,jumps: req.session.jumps});
+                res.render('getcodes',{data: previps,jumps: req.session.jumps});
             });
         });
 
 	} else res.redirect('/bad_login');
 }
 exports.end = function(req,res) {
-    console.log(req.session.previps);
+    var input = JSON.parse(JSON.stringify(req.body));
     if(req.session.isUserLogged){
         var ahora = new Date().getTime();
-        console.log(req.session.jumps);
-        if(req.session.previps.length == 1) {
+        if(typeof input.ids == "string") {
             var query = "INSERT INTO vip SET ? ";
-            ahora = ahora + req.session.previps[0].duration*60*1000;
+            ahora = ahora + input.duration*60*1000;
             var fin = new Date(ahora);
             var data = {
-                id : req.session.previps[0].id,
+                id : input.ids,
                 name:req.session.jumps[0][1],
                 last_name:req.session.jumps[0][2],
                 fnac: req.session.jumps[0][3],
@@ -81,9 +79,9 @@ exports.end = function(req,res) {
             var data = [];
             var query = "INSERT INTO vip (`id`, `name`, `last_name`, `fnac`, `date_f`) VALUES ?";
             for (var i = 0; i<req.session.jumps.length; i++){
-                ahora = ahora + req.session.previps[req.session.previps.length - 1 - i].duration*60*1000;
+                ahora = ahora + input.duration[input.duration.length - 1 - i]*60*1000;
                 var fin = new Date(ahora);
-                var aux = [req.session.previps[req.session.previps.length - 1 - i].id, req.session.jumps[i][1], req.session.jumps[i][2], req.session.jumps[i][3], fin.toLocaleString()];
+                var aux = [input.ids[input.ids.length - 1 - i], req.session.jumps[i][1], req.session.jumps[i][2], req.session.jumps[i][3], fin.toLocaleString()];
                 data.push(aux);
                 ahora = new Date().getTime();
             }
@@ -93,7 +91,6 @@ exports.end = function(req,res) {
                 if (err)
                     console.log("Error selecting : %s ", err);
                 req.session.jumps = [];
-                req.session.previps = [];
                 res.redirect('/venta');
 
             });
