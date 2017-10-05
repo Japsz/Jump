@@ -67,7 +67,7 @@ exports.remove_red = function(req, res){
                             query += "OR id = ?";
                         }
                     }
-                    con.query(query, function (err, result) {
+                    con.query(query,ids, function (err, result) {
                         if (err)
                             console.log("Error Deleting red : %s ", err);
                         res.send("1");
