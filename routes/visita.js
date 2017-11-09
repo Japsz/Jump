@@ -63,6 +63,7 @@ exports.precods = function(req, res) {
 exports.end = function(req,res) {
     var input = JSON.parse(JSON.stringify(req.body));
     if(req.session.isUserLogged){
+
         var ahora = new Date().getTime();
         if(typeof input.ids == "string") {
             var query = "INSERT INTO vip SET ? ";
@@ -153,7 +154,7 @@ exports.save = function(req, res){
 		} else {
             var data = [];
             if(input.isconv != "no"){
-                var query = "INSERT INTO visita (`idjumper`, `duration`, `date_g`, `status`,`idinfo`) VALUES ?";
+                    var query = "INSERT INTO visita (`idjumper`, `duration`, `date_g`, `status`,`idinfo`) VALUES ?";
             } else
             var query = "INSERT INTO visita (`idjumper`, `duration`, `date_g`, `status`) VALUES ?";
             for (var i = 0; i<req.session.jumps.length; i++){
