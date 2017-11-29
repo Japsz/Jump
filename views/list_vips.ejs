@@ -1,4 +1,3 @@
-<input type="hidden" id="num" value="<%=data.length%>">
 <table class="table table-striped table-responsive">
     <thead>
     <tr>
@@ -22,11 +21,11 @@
             years = "AD"
         }
     %>
-    <tr id="<%= data[k].id%>">
+    <tr id="<%= data[k].id%>" style="font-weight: bolder">
         <td><%= data[k].name%></td>
         <td><%= data[k].last_name%></td>
         <td><%= years%></td>
-        <td><div id="count<%= data[k].id%>"></div></td>
+        <td><div id="<%= ahora.toString()%>count<%= data[k].id%>"></div></td>
     </tr>
     <script type="text/javascript">
         var hours, minutes, seconds;
@@ -34,7 +33,7 @@
             var target_date = new Date('<%= data[k].date_f %>').getTime();
             // get tag element
             var row = document.getElementById('<%= data[k].id %>');
-            var countdown = document.getElementById('count<%= data[k].id %>');
+            var countdown = document.getElementById('<%= ahora.toString()%>count<%= data[k].id %>');
             // find the amount of "seconds" between now and target
             var current_date = new Date().getTime();
             var seconds_left = (target_date - current_date) / 1000;
@@ -43,9 +42,7 @@
 
             minutes = parseInt(seconds / 60);
             seconds = parseInt(seconds % 60);
-            if (seconds_left <= -10*60){
-                window.location.href = "/sudo_del/<%= data[k].id%>";
-            } else if (seconds_left <= 0){
+            if (seconds_left <= 0){
                 row.className = "danger";
                 countdown.className = "text-danger";
                 countdown.innerHTML = "<b>TIEMPO CUMPLIDO</b> - #<%=data[k].id%>";

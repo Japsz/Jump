@@ -32,7 +32,6 @@
                                         years = "AD"
                                     }
                             %>
-                            <input type="hidden" name="fin" value="<%=data[k].date_f%>">
                             <tr id="<%= data[k].id%>" style="font-weight: bolder">
                                 <td><%= data[k].name%></td>
                                 <td><%= data[k].last_name%></td>
@@ -94,37 +93,23 @@
             <div id="ups"></div>
         </div>
     </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        socket.on('ajax',function(){
+            console.log("si?");
+            $.ajax({
+                url:"/table_stream",
+                success: function (data) {
+                    $("#tabla").html(data);
+                }
+            })
+        })
+    </script>
+
 
 
 </section>
-
-<script>
-    setInterval(
-        function () {
-            var fdates = document.getElementsByName("fin")
-            var fins = [];
-            for(var i = 0; i < fdates.length; i++){
-                fins.push(fdates[i].value);
-            }
-            if (window.XMLHttpRequest) {
-                // code for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp = new XMLHttpRequest();
-            } else {
-                // code for IE6, IE5
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xmlhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    if(this.responseText != "1"){
-                        window.location.href = "/vip_list";
-                    }
-                }
-            };
-            xmlhttp.open("POST", "/table_stream", true);
-            xmlhttp.setRequestHeader("Content-type", 'application/json');
-            xmlhttp.send(JSON.stringify({fin: fins}));
-        },5000);
-</script>
 
 
         

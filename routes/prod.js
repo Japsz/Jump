@@ -30,23 +30,14 @@ exports.uv_stream = function(req, res){
     });
 };
 exports.tables = function(req, res){
-    var input = JSON.parse(JSON.stringify(req.body));
     req.getConnection(function(err,connection){
 
         connection.query('SELECT * FROM vip ORDER BY date_f ASC',function(err,rows)
         {
             if(err)
                 console.log("Error Selecting : %s ",err );
-            if(input.fin.length != rows.length){
-                res.send("0");
-            } else {
-                for(var i = 0; i < input.fin.length; i++){
-                    if(new Date(input.fin[i]).toLocaleTimeString() != new Date(rows[i].date_f).toLocaleTimeString()){
-                        res.send("0");
-                    }
-                }
-                res.send("1");
-            }
+            console.log(rows);
+            res.render('list_vips',{data:rows});
         });
         //console.log(query.sql);
     });
@@ -138,13 +129,15 @@ exports.extend = function(req,res){
                 duration: parseInt(input.tiempo) + 5,
                 date_g: new Date().toLocaleString(),
                 status: 'ended'
-            }
+            };
             connection.query("INSERT INTO visita SET  ?",[data], function (err, rows) {
                 if (err)
                     console.log("Error updating : %s ", err);
                 connection.query("UPDATE vip SET date_f = ? WHERE id = ?",[fin.toLocaleString(), input.id], function (err, rows) {
                     if (err)
                         console.log("Error updating : %s ", err);
+                    req.app.locals.io.emit('ajax');
+
                     res.redirect('/vip_list');
                 });
             });
@@ -189,7 +182,7 @@ exports.sudo_del = function(req,res){
             connection.query("UPDATE visita SET status = 'ended' WHERE id = ? ",[idvip], function(err,rows){
                 if(err)
                     console.log("Error deleting : %s", err);
-
+                req.app.locals.io.emit('ajax');
                 res.redirect('/vip_list');
             });
         });

@@ -41,6 +41,14 @@
                 </table>
             </div>
         </div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io();
+    socket.emit('actualizar');
+    socket.on('ajax',function(){
+        console.log("much connected");
+    })
+</script>
 
 
 <%- include layouts/footer.ejs %>

@@ -13,6 +13,7 @@ var prejump = require('./routes/prejump');
 var app = express();
 var flash = require('connect-flash');
 
+
 var connection  = require('express-myconnection');
 var mysql = require('mysql');
 
@@ -63,7 +64,7 @@ app.get('/gethom', prejump.gethom);
 
 // Visitas en progreso
 app.get('/vip_list', prod.list);
-app.post('/table_stream', prod.tables);
+app.get('/table_stream', prod.tables);
 app.get('/vip/save', prod.save);
 app.post('/vip/check', prod.check);
 app.get('/vip/end/:id', prod.time_end);
@@ -129,6 +130,15 @@ app.post('/user_login_handler', users.user_login_handler);
 
 app.use(app.router);
 
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app);
+server.listen(app.get('port'), function(){
   console.log('The game starts on port ' + app.get('port'));
 });
+const io = require('socket.io')(server);
+io.on('connection', function(socket){
+    console.log("conexion");
+    socket.on('actualizar',function(){
+        console.log("jajA");
+    });
+});
+app.locals.io = io;

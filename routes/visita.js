@@ -92,6 +92,7 @@ exports.end = function(req,res) {
                 if (err)
                     console.log("Error selecting : %s ", err);
                 req.session.jumps = [];
+                req.app.locals.io.emit('ajax');
                 res.redirect('/venta');
 
             });
