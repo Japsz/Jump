@@ -1,5 +1,5 @@
 <%- include layouts/admin_header.ejs %>
-<h1 class="page-header">Eventos<a class="btn btn-primary pull-right" data-toggle="modal" href="#create_evnt">+ Nuevo</a></h1>
+<h1 class="page-header">Eventos<a class="btn btn-primary pull-right" data-toggle="modal" data-target="#create_evnt">+ Nuevo</a></h1>
 <div class="table">
     <table class="table table-striped">
         <thead>
@@ -67,39 +67,4 @@
         </div>
     </div>
 </div>
-<script>
-        function check() {
-            if(document.getElementsByName("hasta")[0].value == "no"){
-                document.getElementsByName("end")[0].disabled = false;
-                document.getElementsByName("hasta")[0].value = "si";
-            } else {
-                document.getElementsByName("end")[0].disabled = true;
-                document.getElementsByName("hasta")[0].value = "no";
-            }
-        }
-    </script>
-    <script>
-        function getjumps() {
-
-            if (window.XMLHttpRequest) {
-                // code for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp = new XMLHttpRequest();
-            } else {
-                // code for IE6, IE5
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xmlhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    if (this.responseText == "1") {
-                        document.getElementById("success").innerHTML = "<div class='alert alert-success'><strong>Exito!</strong> Se genero el csv en el escritorio.</div>";
-                        $("#success").fadeTo(2000, 500).slideUp(500, function(){
-                            $("#success").slideUp(500);
-                        });
-                    }
-                }
-            };
-            xmlhttp.open("GET", "/g_csv_j", true);
-            xmlhttp.send();
-        }
-    </script>
 <%- include layouts/footer.ejs %>
