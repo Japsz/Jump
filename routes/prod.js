@@ -159,7 +159,7 @@ exports.save = function(req,res){
             	id : req.session.visita.id,
                 name		:rows[0].name,
                 last_name		:rows[0].last_name,
-				ended  : 0,
+				ended  : 9,
 				date_f : fin.toLocaleString()
             };
 
@@ -173,20 +173,29 @@ exports.save = function(req,res){
 };
 
 exports.sudo_del = function(req,res){
-		var idvip = req.params.id;
-		req.getConnection(function(err, connection){
-			connection.query("DELETE FROM vip WHERE id = ? ",[idvip], function(err,rows){
-            if(err)
-                console.log("Error deleting : %s", err);
-
-            connection.query("UPDATE visita SET status = 'ended' WHERE id = ? ",[idvip], function(err,rows){
+    var idvip = req.params.id;
+    req.getConnection(function(err, connection){
+        connection.query("SELECT * FROM vip WHERE id = ?",idvip,function(err,exvip){
+            connection.query("DELETE FROM vip WHERE id = ? ",[idvip], function(err,rows){
                 if(err)
                     console.log("Error deleting : %s", err);
-                req.app.locals.io.emit('ajax');
-                res.redirect('/vip_list');
+                if(!exvip[0].ended){
+                    connection.query("UPDATE visita SET status = 'ended' WHERE id = ? ",[idvip], function(err,rows){
+                        if(err)
+                            console.log("Error deleting : %s", err);
+                        req.app.locals.io.emit('ajax');
+                        res.redirect('/vip_list');
+                    });
+                } else {
+                    connection.query("UPDATE evento SET estado = 'fin',asistentes = ? WHERE idevento = ? ",[exvip[0].ended,idvip], function(err,rows){
+                        if(err)
+                            console.log("Error deleting : %s", err);
+                        req.app.locals.io.emit('ajax');
+                        res.redirect('/vip_list');
+                    });
+                }
             });
         });
     });
-
 };
 

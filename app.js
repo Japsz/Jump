@@ -9,6 +9,7 @@ var users = require('./routes/users');
 var admin = require('./routes/admin');
 var prod = require('./routes/prod');
 var visita = require('./routes/visita');
+var evento = require('./routes/evento');
 var prejump = require('./routes/prejump');
 var app = express();
 var flash = require('connect-flash');
@@ -80,6 +81,13 @@ app.post('/visit/save', visita.save);
 app.get('/precods', visita.precods);
 app.get('/getcod/:cod', visita.cods);
 app.post('/venta_fin', visita.end);
+
+//Eventos
+app.get('/evnt_list/:type',evento.list);
+app.post('/setended',evento.setended);
+app.get('/evnt_delete/:id',evento.delete);
+app.post('/evnt_save',evento.save);
+app.get('/evnt_start/:id',evento.start);
 
 // Convenios
 app.get('/convs', convenio.convs);

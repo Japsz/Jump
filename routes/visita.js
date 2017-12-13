@@ -63,7 +63,6 @@ exports.precods = function(req, res) {
 exports.end = function(req,res) {
     var input = JSON.parse(JSON.stringify(req.body));
     if(req.session.isUserLogged){
-
         var ahora = new Date().getTime();
         if(typeof input.ids == "string") {
             var query = "INSERT INTO vip SET ? ";
