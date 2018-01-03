@@ -1,51 +1,44 @@
 <%- include layouts/user_header.ejs %>
 <h1 class="page-header">Eventos</h1>
-<div class="table">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Descripción</th>
-            <th>Tipo</th>
-            <th>Fecha</th>
-            <th>Duración</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
+<div class="panel-group" id="acordion" role="tablist" aria-multiselectable="true">
         <% if(data.length){
             var tru = false;
+            var list;
             for(var i = 0;i<data.length;i++){
                 if(new Date(data[i].fecha).toLocaleDateString() == new Date().toLocaleDateString()){
                     tru = true;%>
-        <tr>
-            <td><%= data[i].nom%></td>
-            <td><%= data[i].tipo%></td>
-            <td><%= new Date(data[i].fecha).toLocaleString()%></td>
-            <td><%= data[i].duration%></td>
-            <td class="btn-group"><a class="btn btn-primary" href="/evnt_start/<%= data[i].idevento%>">Comenzar</a></td>
-        </tr>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="heading<%=data[i].idevento%>">
+            <h3 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=data[i].idevento%>" aria-expanded="true" aria-controls="collapse<%=data[i].idevento%>">
+                    <strong><%=data[i].nom%></strong> <%= data[i].tipo%>
+                </a>
+                <p class="pull-right"><%= new Date(data[i].fecha).toLocaleDateString()%></p>
+            </h3>
+        </div>
+        <div id="collapse<%=data[i].idevento%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%=data[i].idevento%>">
+            <div class="panel-body"><h4>Observaciones:</h4></div>
+            <ul class="list-group">
+                <% list = data[i].obs.split("@@@");
+                for(var j = 0;j<list.length;j++){%>
+                <li class="list-group-item"><%= list[j]%></li>
+                <%}%>
+                <a href="/evnt_start/<%= data[i].idevento%>"><li class="list-group-item list-group-item-success">Comenzar</li></a>
+            </ul>
+        </div>
+    </div>
         <%      }
             }
             if(!tru){%>
-        <tr>
-            <td>No hay Eventos para hoy</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+        <div class="panel panel-default">
+            <div class="panel-heading">No hay eventos hoy</div>
+        </div>
             <%}
         } else {%>
-        <tr>
-            <td>No hay Eventos para hoy</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <%}%>
-        </tbody>
-    </table>
+    <div class="panel panel-default">
+        <div class="panel-heading">No hay eventos hoy</div>
+    </div>
+    <%}%>
 </div>
 
 <%- include layouts/footer.ejs %>
