@@ -23,6 +23,17 @@ exports.list = function(req, res){
         //console.log(query.sql);
     });
 };
+exports.obs_add = function(req,res){
+    var input = JSON.parse(JSON.stringify(req.body));
+    console.log(input);
+    req.getConnection(function(err,connection){
+        connection.query("UPDATE evento SET obs = CONCAT(obs,?) WHERE idevento = ? ",["@@@" + input.obs,input.idevento],function(err,rows){
+            if(err)throw err;
+            res.redirect("/vip_list");
+        })
+    });
+};
+
 exports.save = function(req,res){
     var input = JSON.parse(JSON.stringify(req.body));
     req.getConnection(function(err,connection){

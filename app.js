@@ -87,6 +87,7 @@ app.get('/evnt_list/:type',evento.list);
 app.post('/setended',evento.setended);
 app.get('/evnt_delete/:id',evento.delete);
 app.post('/evnt_save',evento.save);
+app.post('/obs_add',evento.obs_add);
 app.get('/evnt_start/:id',evento.start);
 
 // Convenios

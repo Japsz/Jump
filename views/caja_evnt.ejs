@@ -13,8 +13,10 @@
         </thead>
         <tbody>
         <% if(data.length){
+            var tru = false;
             for(var i = 0;i<data.length;i++){
-                if(new Date(data[i].fecha).toLocaleDateString() == new Date().toLocaleDateString()){%>
+                if(new Date(data[i].fecha).toLocaleDateString() == new Date().toLocaleDateString()){
+                    tru = true;%>
         <tr>
             <td><%= data[i].nom%></td>
             <td><%= data[i].tipo%></td>
@@ -24,6 +26,15 @@
         </tr>
         <%      }
             }
+            if(!tru){%>
+        <tr>
+            <td>No hay Eventos para hoy</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+            <%}
         } else {%>
         <tr>
             <td>No hay Eventos para hoy</td>

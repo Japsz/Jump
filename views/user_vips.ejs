@@ -34,7 +34,8 @@
                         <td><a class="modif btn btn-info" data-toggle="modal" data-id="<%=data[k].id%>" data-time="<%=hora%>" data-target="#extend"> + <span class="glyphicon glyphicon-time"  aria-hidden="true"></span></a> </td>
                         <%} else {
                             num += data[k].ended - 1%>
-                        <td><a href="#<%= data[k].id%>" class="btn btn-info" data-toggle="collapse">+ <span class="glyphicon glyphicon-user"></span></a></td>
+                        <td class="btn-group"><a href="#<%= data[k].id%>" class="btn btn-info" data-toggle="collapse">+ <span class="glyphicon glyphicon-user"></span></a><a
+                                    onclick="set(this)" href="#obsevnt" data-idevento="<%=data[k].id%>" data-toggle="modal" class="btn btn-default">+ <span class="glyphicon glyphicon-comment"></span></a></td>
                        <%}%>
                         <td><a href="/sudo_del/<%= data[k].id%>" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
 
@@ -67,8 +68,36 @@
     socket.emit('actualizar');
     socket.on('ajax',function(){
         console.log("much connected");
-    })
+    });
+    function set(e){
+        $("#id_modal").val($(e).data('idevento'));
+    }
 </script>
+<div class="modal fade" id="obsevnt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/obs_add" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Añadir Observación</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Observaciones</label>
+                        <textarea name="obs" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-success" name="idevento" id="id_modal" type="submit">Añadir</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 
 <%- include layouts/footer.ejs %>

@@ -1,5 +1,10 @@
 <%- include layouts/admin_header.ejs %>
 <h1 class="page-header">Eventos<a class="btn btn-primary pull-right" data-toggle="modal" data-target="#create_evnt">+ Nuevo</a></h1>
+<div class="btn-group" id="info">
+    <a href="/evnt_list/all" class="btn btn-primary">Todos</a>
+    <a href="/evnt_list/new" class="btn btn-primary">Sin iniciar</a>
+    <a href="/evnt_list/fin" class="btn btn-primary">Finalizados</a>
+</div>
 <div class="table">
     <table class="table table-striped">
         <thead>
@@ -8,18 +13,41 @@
             <th>Tipo</th>
             <th>Fecha</th>
             <th>Duración</th>
+            <th>Estado</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
         <% if(data.length){
-            for(var i = 0;i<data.length;i++){%>
+            for(var i = 0;i<data.length;i++){
+            switch(data[i].estado){
+                case "new":
+                    data[i].estado = "Programado";
+                    break;
+                case "inprog":
+                    data[i].estado = "En Progreso";
+                    break;
+                case "fin":
+                    data[i].estado = "Finalizado";
+                    break;
+                default:
+                    data[i].estado = "Nuevo";
+                    break;
+            }%>
         <tr>
             <td><%= data[i].nom%></td>
             <td><%= data[i].tipo%></td>
             <td><%= new Date(data[i].fecha).toLocaleString()%></td>
             <td><%= data[i].duration%></td>
+            <td><%= data[i].estado%></td>
+            <% if(data[i].estado != "Finalizado"){%>
             <td class="btn-group"><a class="btn btn-warning">Editar</a><a class="btn btn-danger" href="/evnt_delete/<%= data[i].idevento%>">Eliminar</a></td>
+            <%} else {%>
+            <td>Asistentes: <%=data[i].asistentes%></td>
+            <%}%>
+        </tr>
+        <tr id="<%=data[i].idevento%>" class="collapse">
+            
         </tr>
         <%  }
         } else {%>
@@ -53,14 +81,14 @@
                     <label>Duración (Minutos)</label>
                     <input type="number" name="duration" class="form-control">
                     <label>Observaciones</label>
-                    <input type="textarea" name="obs" class="form-control">
+                    <textarea name="obs" class="form-control"></textarea>
                     <input type="hidden" name="estado" value="new">
                 </div>
             </div>
             <div class="modal-footer">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-danger" type="submit">Crear</button>
+                    <button class="btn btn-success" type="submit">Crear</button>
                 </div>
             </div>
             </form>
