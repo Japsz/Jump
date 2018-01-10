@@ -2,20 +2,20 @@
 exports.list = function(req, res){
 	if(req.session.isAdminLogged){
 		req.getConnection(function(err,connection){
-					 
-						var query = connection.query('SELECT * FROM user',function(err,rows)
-						{
-								
-								if(err)
-										console.log("Error Selecting : %s ",err );
-				 
-								res.render('user',{page_title:"Stats",data:rows});
-										
-						 });
-						 //console.log(query.sql);
-				});
-		}
-		else res.redirect('/bad_login');  
+
+			var query = connection.query('SELECT * FROM user',function(err,rows)
+			{
+
+					if(err)
+							console.log("Error Selecting : %s ",err );
+
+					res.render('user',{page_title:"Stats",data:rows});
+
+			 });
+				 //console.log(query.sql);
+		});
+	}
+	else res.redirect('/bad_login');
 };
 
 //Vista agregar usuario.
@@ -79,7 +79,7 @@ exports.g_csv_j = function(req,res){
                 var ahora = new Date();
                 if(rows.length){
                     // 'C:/Users/Go Jump/Desktop/'
-                    writer.pipe(fs.createWriteStream('C:/Users/Go Jump/Desktop/CAJA/Jumpers hasta ~ ' + ahora.toLocaleDateString() + '.csv'));
+                    writer.pipe(fs.createWriteStream('public/csvs/Jumpers_hasta_~_' + ahora.toLocaleDateString() + '.csv'));
                     for (var i = 0; i <rows.length; i++) {
                         if(typeof rows[i].correo == "string"){
 							correo = rows[i].correo;
@@ -91,7 +91,42 @@ exports.g_csv_j = function(req,res){
                     }
                     writer.end();
                 }
-                res.send('1');
+                res.send('/csvs/Jumpers_hasta_~_' + ahora.toLocaleDateString() + '.csv');
+            });
+
+            // console.log(query.sql); get raw query
+
+        });
+    }
+    else res.redirect('/bad_login');
+};
+// Logica Generar csv Eventos.
+exports.evnt_csv = function(req,res){
+    if(req.session.isAdminLogged){
+        var csvWriter = require('csv-write-stream');
+        var writer = csvWriter({ headers: ["Nombre", "Tipo", "Fecha", "Duracion", "Asistentes","Observaciones"]});
+        var fs = require('fs');
+        console.log(req.body);
+        req.getConnection(function (err, connection) {
+
+            var query = connection.query("SELECT * FROM evento WHERE fecha >= ? AND fecha <= ? ",[new Date(req.body.desde),new Date(req.body.hasta)], function(err, rows)
+            {
+
+                if (err)
+                    console.log("Error Select : %s ",err );
+                var fnac;
+                var ahora = req.body.desde;
+                if(rows.length){
+                    // 'C:/Users/Go Jump/Desktop/'
+                    writer.pipe(fs.createWriteStream('public/csvs/Eventos_desde_el' + ahora+ '.csv'));
+                    for (var i = 0; i <rows.length; i++) {
+                        fnac = new Date(rows[i].fecha).toLocaleString();
+						rows[i].obs = rows[i].obs.replace(/\@\@\@/g," | ");
+                        writer.write([rows[i].nom, rows[i].tipo, fnac,rows[i].duration,rows[i].asistentes, rows[i].obs]);
+                    }
+                    writer.end();
+                }
+                res.send('/csvs/Eventos_desde_el' + ahora + '.csv');
             });
 
             // console.log(query.sql); get raw query
@@ -103,9 +138,10 @@ exports.g_csv_j = function(req,res){
 // Logica Generar csv visitas.
 exports.g_csv = function(req,res){
 	if(req.session.isAdminLogged){
-		var input = JSON.parse(JSON.stringify(req.body));
+		var input = req.body;
+		console.log(input);
         // 'C:/Users/Go Jump/Desktop/Visitas - '
-        var camino = "C:/Users/Go Jump/Desktop/CAJA/Visitas - ";
+        var camino = "/csvs/Visitas_-_";
 		var dats =[];
 		if(input.hasta == "si"){
 			dats.push(input.ini);
@@ -113,11 +149,10 @@ exports.g_csv = function(req,res){
             fin += 1000*60*60*24;
             fin = new Date(fin);
 			dats.push(fin);
-			camino += input.ini + " ~ " + input.end + ".csv";
-			console.log(dats);
+			camino += input.ini + "_~_" + input.end + ".csv";
 		} else {
 			var fin = new Date(input.ini).getTime();
-			fin += 1000*60*60*24;
+			fin += 1000*60*60*25;
 			fin = new Date(fin);
             camino += input.ini + ".csv";
             dats.push(input.ini);
@@ -137,7 +172,8 @@ exports.g_csv = function(req,res){
 					var nac, sec_left, years, date_g;
                     var ahora = new Date().getTime();
 				    if(rows.length){
-				    	writer.pipe(fs.createWriteStream(camino));
+				    	console.log("public" + camino);
+				    	writer.pipe(fs.createWriteStream("public" + camino));
 				    	for (var i = 0; i <rows.length; i++) {
 				    		date_g = new Date(rows[i].date_g);
 				    		nac = new Date(rows[i].fnac).getTime();
@@ -147,8 +183,10 @@ exports.g_csv = function(req,res){
 								date_g.toLocaleDateString(),date_g.toLocaleTimeString()]);
 				    	}
 				    	writer.end();
-				    } 
-			    	res.redirect('/csv');					
+                        res.send(camino);
+				    } else {
+				    	res.send("0");
+					}
 				});
 				
 			 // console.log(query.sql); get raw query

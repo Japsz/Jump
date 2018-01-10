@@ -3,7 +3,6 @@
 <h1>Estadísticas</h1>
 <div class="row">
     <h3>Generar Visitas</h3>
-    <form class="form" action='/g_csv' method="POST">
         <div class=form-group>
             <label for="datepicker">Desde:</label>
             <input type="date" class="form-control" name="ini" id="datepicker">
@@ -11,18 +10,45 @@
             <input type="date" name="end" id="datepicker2" class="form-control" disabled>
         </div>
         <div class="form-group">
-            <button class="btn btn-lg btn-primary" type="submit">Generar</button>
+            <a class="btn btn-lg btn-primary getcsv" data-tipo="visitas" >Generar</a>
             <label>
-                <input type="checkbox"  value="no" name="hasta" onclick="check()"> Seleccionar múltiples días.
+                <input type="checkbox"  value="no" name="hasta" id="checkhasta" onclick="check()"> Seleccionar múltiples días.
             </label>
         </div>
-    </form>
 </div>
 <div class="row">
     <h3>Generar Jumpers</h3>
-    <button type="button" class="btn btn-primary" onclick="getjumps()"> Generar </button>
+    <a type="button" class="btn btn-primary getcsv" data-tipo="jumpers"> Generar </a>
 </div>
-    <script>
+
+    <script type="text/javascript">
+        $(".getcsv").click(function(e){
+            var yo = $(this);
+            var data;
+            if(yo.data('tipo') == "visitas"){
+                data = {ini : $("#datepicker").val(),end: $("#datepicker2").val(),hasta: $("#checkhasta").val()}
+            } else {
+                data = {};
+            }
+            $.ajax({
+                type: 'POST',
+                data: data,
+                url: '/csv_' + yo.data('tipo'),
+                success: function(data) {
+                    if(data == "0"){
+                        alert("No se encontraron visitas");
+                    } else {
+                        yo.attr("href",data);
+                        yo.attr("download",data);
+                        yo.removeClass("btn-primary");
+                        yo.removeClass("getcsv");
+                        yo.addClass("btn-success");
+                        yo.html("<i class='fa fa-download'></i> Descargar csv");
+                    }
+                }
+            });
+        });
+
         function check() {
             if(document.getElementsByName("hasta")[0].value == "no"){
                 document.getElementsByName("end")[0].disabled = false;
@@ -31,30 +57,6 @@
                 document.getElementsByName("end")[0].disabled = true;
                 document.getElementsByName("hasta")[0].value = "no";
             }
-        }
-    </script>
-    <script>
-        function getjumps() {
-
-            if (window.XMLHttpRequest) {
-                // code for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp = new XMLHttpRequest();
-            } else {
-                // code for IE6, IE5
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xmlhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    if (this.responseText == "1") {
-                        document.getElementById("success").innerHTML = "<div class='alert alert-success'><strong>Exito!</strong> Se genero el csv en el escritorio.</div>";
-                        $("#success").fadeTo(2000, 500).slideUp(500, function(){
-                            $("#success").slideUp(500);
-                        });
-                    }
-                }
-            };
-            xmlhttp.open("GET", "/g_csv_j", true);
-            xmlhttp.send();
         }
     </script>
 <%- include layouts/footer.ejs %>

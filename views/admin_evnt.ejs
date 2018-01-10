@@ -1,5 +1,6 @@
 <%- include layouts/admin_header.ejs %>
-<h1 class="page-header">Eventos<a class="btn btn-primary pull-right" data-toggle="modal" data-target="#create_evnt">+ Nuevo</a></h1>
+<h1 class="page-header">Eventos<div class="btn btn-group pull-right"><a class="btn btn-primary" data-toggle="modal" data-target="#create_evnt">+ Nuevo</a><a
+            class="btn btn-info" onclick="reset()" data-toggle="modal" href="#modalcsv">Generar csv</a></div></h1>
 <div class="btn-group" id="info">
     <a href="/evnt_list/all" class="btn btn-primary">Todos</a>
     <a href="/evnt_list/new" class="btn btn-primary">Sin iniciar</a>
@@ -88,11 +89,66 @@
             <div class="modal-footer">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-success" type="submit">Crear</button>
+                    <button class="btn btn-info">Crear</button>
                 </div>
             </div>
             </form>
         </div>
     </div>
 </div>
+<div class="modal fade" id="modalcsv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Crear Csv</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Desde:</label>
+                    <input type="date" id="desde" class="form-control">
+                    <label>Hasta:</label>
+                    <input type="date" id="hasta" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-info getcsvof" id="crear">Crear</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(".getcsvof").click(function(e){
+        var yo = $(this);
+        $.ajax({
+            type: 'POST',
+            data: {desde : $("#desde").val(),hasta: $("#hasta").val()},
+            url: '/evnt_csv',
+            success: function(data) {
+                yo.attr("href",data);
+                yo.attr("download","Eventos Desde ~ " + $("#desde").val() + ".csv");
+                yo.removeClass("btn-info");
+                yo.removeClass("getcsvof");
+                yo.addClass("btn-success");
+                yo.html("<i class='fa fa-download'></i> Descargar csv");
+            }
+        });
+    });
+    function reset(){
+        var yo = $("#crear");
+        $("#desde").val("");
+        $("#hasta").val("");
+        yo.attr("href",'#');
+        yo.removeAttr("download");
+        yo.removeClass("btn-success");
+        yo.addClass("btn-info");
+        yo.addClass("getcsvof");
+        yo.html("Crear");
+    }
+
+
+</script>
 <%- include layouts/footer.ejs %>
