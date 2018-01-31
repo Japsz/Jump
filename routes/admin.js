@@ -79,7 +79,7 @@ exports.g_csv_j = function(req,res){
                 var ahora = new Date();
                 if(rows.length){
                     // 'C:/Users/Go Jump/Desktop/'
-                    writer.pipe(fs.createWriteStream('public/csvs/Jumpers_hasta_~_' + ahora.toLocaleDateString() + '.csv'));
+                    writer.pipe(fs.createWriteStream('C:/Users/Go Jump/Desktop/Jump/public/csvs/Jumpers_hasta_~_' + ahora.toLocaleDateString() + '.csv'));
                     for (var i = 0; i <rows.length; i++) {
                         if(typeof rows[i].correo == "string"){
 							correo = rows[i].correo;
@@ -118,7 +118,7 @@ exports.evnt_csv = function(req,res){
                 var ahora = req.body.desde;
                 if(rows.length){
                     // 'C:/Users/Go Jump/Desktop/'
-                    writer.pipe(fs.createWriteStream('public/csvs/Eventos_desde_el' + ahora+ '.csv'));
+                    writer.pipe(fs.createWriteStream('C:/Users/Go Jump/Desktop/Jump/public/csvs/Eventos_desde_el' + ahora+ '.csv'));
                     for (var i = 0; i <rows.length; i++) {
                         fnac = new Date(rows[i].fecha).toLocaleString();
 						rows[i].obs = rows[i].obs.replace(/\@\@\@/g," | ");
@@ -172,8 +172,7 @@ exports.g_csv = function(req,res){
 					var nac, sec_left, years, date_g;
                     var ahora = new Date().getTime();
 				    if(rows.length){
-				    	console.log("public" + camino);
-				    	writer.pipe(fs.createWriteStream("public" + camino));
+				    	writer.pipe(fs.createWriteStream("C:/Users/Go Jump/Desktop/Jump/public" + camino));
 				    	for (var i = 0; i <rows.length; i++) {
 				    		date_g = new Date(rows[i].date_g);
 				    		nac = new Date(rows[i].fnac).getTime();
