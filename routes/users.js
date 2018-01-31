@@ -3,11 +3,17 @@ exports.bad_login = function(req, res){
 };
 
 exports.user_login = function(req, res){
+    req.session.isAdminLogged = null;
+    req.session.isUserLogged = null;
+    req.session.isMonitLogged = null;
 	res.render('user_login', { title: 'Go Jump! - User Login' });
 };
 
 
 exports.admin_login = function(req, res){
+    req.session.isAdminLogged = null;
+    req.session.isUserLogged = null;
+    req.session.isMonitLogged = null;
 	res.render('admin_login', { title: 'Go Jump! - Admins Login' });
 };
 
@@ -26,6 +32,9 @@ exports.admin_logout = function(req, res){
 exports.user_login_handler = function(req, res){
 
 	var input = JSON.parse(JSON.stringify(req.body));
+    req.session.isAdminLogged = null;
+    req.session.isUserLogged = null;
+    req.session.isMonitLogged = null;
 
 	var username = input.username;
 	var password = input.password;
@@ -63,6 +72,9 @@ exports.user_login_handler = function(req, res){
 
 exports.admin_login_handler = function(req, res){
 
+    req.session.isAdminLogged = null;
+    req.session.isUserLogged = null;
+    req.session.isMonitLogged = null;
 	var input = JSON.parse(JSON.stringify(req.body));
 
 	var username = input.username;
