@@ -34,6 +34,21 @@ function label(str) {
             return str;
     }
 }
+// Lógica borrar convenios
+exports.rm_conv = function(req,res){
+  if(req.session.isAdminLogged){
+      req.getConnection(function(err,connection){
+         if(err)console.log(err);
+         connection.query("DELETE FROM convinfo WHERE idconv = ?",[req.params.id],function(err,rows){
+             if(err)console.log(err);
+             connection.query("DELETE FROM convenio WHERE idconvenio = ?",[req.params.id],function(err,rows){
+                 if(err)console.log(err);
+                 res.redirect("/convs");
+             });
+          });
+      });
+  }
+};
 // Logica agregar convenio.
 exports.save_conv = function(req,res){
     if(req.session.isAdminLogged){

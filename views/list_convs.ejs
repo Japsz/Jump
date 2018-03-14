@@ -23,7 +23,7 @@
                 %>
                 <tr>
                     <td><%= data[i].name%></td>
-                    <td><div class="btn-group"><a class="btn btn-primary" href="#"><i class="glyphicon glyphicon-wrench"></i> Editar</a><a class="btn btn-danger" href="#"> - Borrar</a></div></td>
+                    <td><div class="btn-group"><a class="btn btn-danger" onclick="getmodal(<%= data[i].idconvenio %>)"> - Borrar</a></div></td>
                     <td></td>
                 </tr>
 
@@ -97,5 +97,29 @@
             </div>
         </div>
     </div>
-            
+    <div class="modal fade" id="rm_conv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Eliminar convenio</h4>
+                </div>
+                <div class="modal-body">
+                    <p>¿ Estás seguro que quieres borrar el convenio ?</p>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <a class="btn btn-danger" id="rmconv">Borrar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    function getmodal(idconv){
+        $("#rmconv").attr("href","/conv_rm/" + idconv);
+        $("#rm_conv").modal("toggle");
+    }
+</script>
 <%- include layouts/footer.ejs %>

@@ -88,10 +88,12 @@ app.post('/setended',evento.setended);
 app.get('/evnt_delete/:id',evento.delete);
 app.post('/evnt_save',evento.save);
 app.post('/obs_add',evento.obs_add);
+app.post('/evnt_upd',evento.upd_evnt);
 app.get('/evnt_start/:id',evento.start);
 
 // Convenios
 app.get('/convs', convenio.convs);
+app.get('/conv_rm/:id', convenio.rm_conv);
 app.post('/conv/add', convenio.save_conv);
 app.post('/convinfo/add', convenio.save_convinfo);
 
