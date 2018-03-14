@@ -80,6 +80,21 @@ exports.start = function(req,res){
         });
     });
 };
+exports.upd_evnt = function(req,res){
+    if(req.session.isAdminLogged){
+        var input = JSON.parse(JSON.stringify(req.body));
+        var idevnt = input.idevnt;
+        delete input.idevnt;
+        console.log(input);
+        req.getConnection(function(err,connection){
+            connection.query("UPDATE evento SET ? WHERE idevento = ?",[input,idevnt],function(err,rows){
+                if (err)
+                    console.log("Error insrting : %s ", err);
+                res.redirect("/evnt_list/all");
+            });
+        });
+    }
+};
 exports.setended = function(req,res){
     if(req.session.isUserLogged){
         var input = JSON.parse(JSON.stringify(req.body));
