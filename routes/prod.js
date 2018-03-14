@@ -179,21 +179,23 @@ exports.sudo_del = function(req,res){
             connection.query("DELETE FROM vip WHERE id = ? ",[idvip], function(err,rows){
                 if(err)
                     console.log("Error deleting : %s", err);
-                if(!exvip[0].ended){
-                    connection.query("UPDATE visita SET status = 'ended' WHERE id = ? ",[idvip], function(err,rows){
-                        if(err)
-                            console.log("Error deleting : %s", err);
-                        req.app.locals.io.emit('ajax');
-                        res.redirect('/vip_list');
-                    });
-                } else {
-                    connection.query("UPDATE evento SET estado = 'fin',asistentes = ? WHERE idevento = ? ",[exvip[0].ended,idvip], function(err,rows){
-                        if(err)
-                            console.log("Error deleting : %s", err);
-                        req.app.locals.io.emit('ajax');
-                        res.redirect('/vip_list');
-                    });
-                }
+                if(exvip.length){
+                    if(!exvip[0].ended){
+                        connection.query("UPDATE visita SET status = 'ended' WHERE id = ? ",[idvip], function(err,rows){
+                            if(err)
+                                console.log("Error deleting : %s", err);
+                            req.app.locals.io.emit('ajax');
+                            res.redirect('/vip_list');
+                        });
+                    } else {
+                        connection.query("UPDATE evento SET estado = 'fin',asistentes = ? WHERE idevento = ? ",[exvip[0].ended,idvip], function(err,rows){
+                            if(err)
+                                console.log("Error deleting : %s", err);
+                            req.app.locals.io.emit('ajax');
+                            res.redirect('/vip_list');
+                        });
+                    }
+                } else res.redirect('/vip_list');
             });
         });
     });
