@@ -84,13 +84,13 @@ exports.admin_login_handler = function(req, res){
          
           connection.query('SELECT * FROM admin WHERE username = ? AND password = ?',[username,password],function(err,rows)
           {
-          	  if(rows.length == 0 ){
-          	  	console.log('Invalid Username or Password.');
-          	  	res.redirect('/bad_login');
-          	  }
 
               if(err)
                   console.log("Error Selecting : %s ",err );
+              if(rows.length == 0 ){
+                  console.log('Invalid Username or Password.');
+                  res.redirect('/bad_login');
+              }
               
               if(rows.length == 1){
               	req.session.isAdminLogged = true;
