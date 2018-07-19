@@ -122,8 +122,10 @@ exports.extend = function(req,res){
             if (err)
                 console.log("Error updating : %s ", err);
             var ahora = new Date(rows[0].date_f).getTime();
+            console.log(new Date(rows[0].date_f));
             ahora = ahora + parseInt(input.tiempo)*60*1000;
             var fin = new Date(ahora);
+            console.log(fin);
             var data = {
                 idjumper : rows[0].idjumper,
                 duration: parseInt(input.tiempo) + 5,
@@ -133,7 +135,7 @@ exports.extend = function(req,res){
             connection.query("INSERT INTO visita SET  ?",[data], function (err, rows) {
                 if (err)
                     console.log("Error updating : %s ", err);
-                connection.query("UPDATE vip SET date_f = ? WHERE id = ?",[fin.toLocaleString(), input.id], function (err, rows) {
+                connection.query("UPDATE vip SET date_f = ? WHERE id = ?",[fin, input.id], function (err, rows) {
                     if (err)
                         console.log("Error updating : %s ", err);
                     req.app.locals.io.emit('ajax');
