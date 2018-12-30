@@ -47,3 +47,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 public/cods
+/node_modules
+public/csvs
