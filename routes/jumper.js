@@ -63,7 +63,7 @@ exports.add2session = function(req, res){
             req.getConnection(function (err, connection) {
                 connection.query(query,ids, function (err, rows) {
                     if (err) console.log("Error selecting : %s ", err);
-                    var dateFormat = require('dateFormat');
+                    var dateFormat = require('dateformat');
                     for(var i = 0; i < rows.length;i++){
                         var aux = [rows[i].id,rows[i].name,
                             rows[i].last_name, dateFormat(rows[i].fnac,"yyyy-mm-dd")];
@@ -115,7 +115,7 @@ exports.save = function(req,res){
     if(req.session.isUserLogged){
         var data =[];
         var aux;
-        var dateFormat = require('dateFormat');
+        var dateFormat = require('dateformat');
         for(var i = 0; i < req.session.pjumps.length;i++){
             req.session.pjumps[i].fnac = dateFormat(req.session.pjumps[i].fnac,
                 "yyyy-mm-dd");

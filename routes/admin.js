@@ -77,9 +77,11 @@ exports.g_csv_j = function(req,res){
                     console.log("Error Select : %s ",err );
                 var fnac, correo;
                 var ahora = new Date();
+		var t_string = ahora.getTime().toString();
+		var pat = '/csvs/Jumper_hasta_~_' + ahora.toLocaleDateString() + '---'+ t_string + '.csv';
                 if(rows.length){
                     // 'C:/Users/Go Jump/Desktop/'
-                    writer.pipe(fs.createWriteStream('C:/Users/Go Jump/Desktop/Jump/public/csvs/Jumpers_hasta_~_' + ahora.toLocaleDateString() + '.csv'));
+                    writer.pipe(fs.createWriteStream('/home/gojump/Jump/public' + pat));
                     for (var i = 0; i <rows.length; i++) {
                         if(typeof rows[i].correo == "string"){
 							correo = rows[i].correo;
@@ -91,7 +93,7 @@ exports.g_csv_j = function(req,res){
                     }
                     writer.end();
                 }
-                res.send('/csvs/Jumpers_hasta_~_' + ahora.toLocaleDateString() + '.csv');
+                res.send(pat);
             });
 
             // console.log(query.sql); get raw query
@@ -115,10 +117,12 @@ exports.evnt_csv = function(req,res){
                 if (err)
                     console.log("Error Select : %s ",err );
                 var fnac;
+		var t_string = new Date().getTime().toString();
                 var ahora = req.body.desde;
+		var pat = '/csvs/Eventos_desde_el' + ahora + '---' + t_string + '.csv';
                 if(rows.length){
                     // 'C:/Users/Go Jump/Desktop/'
-                    writer.pipe(fs.createWriteStream('C:/Users/Go Jump/Desktop/Jump/public/csvs/Eventos_desde_el' + ahora+ '.csv'));
+                    writer.pipe(fs.createWriteStream('/home/gojump/Jump/public' + pat));
                     for (var i = 0; i <rows.length; i++) {
                         fnac = new Date(rows[i].fecha).toLocaleString();
 						rows[i].obs = rows[i].obs.replace(/\@\@\@/g," | ");
@@ -126,7 +130,7 @@ exports.evnt_csv = function(req,res){
                     }
                     writer.end();
                 }
-                res.send('/csvs/Eventos_desde_el' + ahora + '.csv');
+                res.send(pat);
             });
 
             // console.log(query.sql); get raw query
@@ -140,21 +144,22 @@ exports.g_csv = function(req,res){
 	if(req.session.isAdminLogged){
 		var input = req.body;
 		console.log(input);
-        // 'C:/Users/Go Jump/Desktop/Visitas - '
-        var camino = "/csvs/Visitas_-_";
+        	// 'C:/Users/Go Jump/Desktop/Visitas - '
+	        var camino = "/csvs/Visitas_-_";
 		var dats =[];
+		var t_string = new Date().getTime().toString();
 		if(input.hasta == "si"){
 			dats.push(input.ini);
-            var fin = new Date(input.end).getTime();
-            fin += 1000*60*60*24;
-            fin = new Date(fin);
+            		var fin = new Date(input.end).getTime();
+            		fin += 1000*60*60*24;
+            		fin = new Date(fin);
 			dats.push(fin);
-			camino += input.ini + "_~_" + input.end + ".csv";
+			camino += input.ini + "_~_" + input.end + "---" + t_string + ".csv";
 		} else {
 			var fin = new Date(input.ini).getTime();
 			fin += 1000*60*60*25;
 			fin = new Date(fin);
-            camino += input.ini + ".csv";
+            camino += input.ini + "---" + t_string + ".csv";
             dats.push(input.ini);
 			dats.push(fin);
 		}
@@ -172,7 +177,7 @@ exports.g_csv = function(req,res){
 					var nac, sec_left, years, date_g;
                     var ahora = new Date().getTime();
 				    if(rows.length){
-				    	writer.pipe(fs.createWriteStream("C:/Users/Go Jump/Desktop/Jump/public" + camino));
+				    	writer.pipe(fs.createWriteStream("/home/gojump/Jump/public" + camino));
 				    	for (var i = 0; i <rows.length; i++) {
 				    		date_g = new Date(rows[i].date_g);
 				    		nac = new Date(rows[i].fnac).getTime();
