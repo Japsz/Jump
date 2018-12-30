@@ -21,10 +21,10 @@
             years = "AD"
         }
     %>
-    <tr id="<%= data[k].id%>" style="font-weight: bolder">
-        <td><%= data[k].name%></td>
-        <td><%= data[k].last_name%></td>
-        <td><%= years%></td>
+    <tr id="<%= data[k].id%>" style="font-weight: bold">
+        <td style="font-weight:600"><%= data[k].name%></td>
+        <td style="font-weight:600"><%= data[k].last_name%></td>
+        <td style="font-weight:500"><%= years%></td>
         <td><div id="<%= ahora.toString()%>count<%= data[k].id%>"></div></td>
     </tr>
     <script type="text/javascript">

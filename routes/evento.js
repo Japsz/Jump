@@ -64,7 +64,7 @@ exports.start = function(req,res){
                 name		:rows[0].nom,
                 last_name		:"",
                 ended  : 1,
-                date_f : fin.toLocaleString()
+                date_f : fin
             };
 
             connection.query("INSERT INTO vip SET ? ",data, function(err, rows){

@@ -73,7 +73,7 @@ exports.end = function(req,res) {
                 name:req.session.jumps[0][1],
                 last_name:req.session.jumps[0][2],
                 fnac: req.session.jumps[0][3],
-                date_f: fin.toLocaleString()
+                date_f: fin
             };
         } else {
             var data = [];
@@ -81,7 +81,7 @@ exports.end = function(req,res) {
             for (var i = 0; i<req.session.jumps.length; i++){
                 ahora = ahora + input.duration[input.duration.length - 1 - i]*60*1000;
                 var fin = new Date(ahora);
-                var aux = [input.ids[input.ids.length - 1 - i], req.session.jumps[i][1], req.session.jumps[i][2], req.session.jumps[i][3], fin.toLocaleString()];
+                var aux = [input.ids[input.ids.length - 1 - i], req.session.jumps[i][1], req.session.jumps[i][2], req.session.jumps[i][3], fin];
                 data.push(aux);
                 ahora = new Date().getTime();
             }
@@ -109,15 +109,15 @@ exports.cods = function(req, res) {
                 for(var i = 0; i < req.session.jumps.length; i++){
                     if(rows[0].idjumper == req.session.jumps[i][0]){
                         // 'C:/Users/Go Jump/Desktop/Jump/public/cods/'
-                        var pat = 'C:/Users/Go Jump/Desktop/Jump/public/cods/' + req.params.cod.toString() + req.session.jumps[i][1].toString() + '.png';
-                        jimps.read('C:/Users/Go Jump/Desktop/Jump/public/cods/base.png', function (err,image2) {
+                        var pat = '/home/gojump/Jump/public/cods/' + req.params.cod.toString() + req.session.jumps[i][1].toString() + '.png';
+                        jimps.read('/home/gojump/Jump/public/cods/base.png', function (err,image2) {
                             if(err) console.log(err);
                             jimps.loadFont(jimps.FONT_SANS_32_BLACK).then(function (font) {
-                                image2.print(font, 0, 20, req.params.cod.toString());
-                                image2.print(font, 100, 20, req.session.jumps[i][1].toString());
+                                image2.print(font, 100, 20, req.params.cod.toString());
+                                image2.print(font, 200, 20, req.session.jumps[i][1].toString());
                                 jimps.loadFont(jimps.FONT_SANS_16_BLACK).then(function (font) {
-                                    image2.print(font, 0, 60, (parseInt(rows[0].duration) - 5).toString() + " Minutos");
-                                    image2.rotate(90);
+                                    image2.print(font, 100, 60, (parseInt(rows[0].duration) - 5).toString() + " Minutos");
+                                    image2.rotate(270);
                                     image2.write( pat, function (){
                                         res.redirect('cods/' + req.params.cod.toString() + req.session.jumps[i][1].toString() + '.png');
                                     });
@@ -143,7 +143,7 @@ exports.save = function(req, res){
         	var data = {
 				idjumper : req.session.jumps[0][0],
 				duration: parseInt(tiempos) + 5,
-				date_g: nowdate.toLocaleString(),
+				date_g: nowdate,
 				status: 'inprog'
 			}
 			if(input.isconv != "no"){
@@ -158,7 +158,7 @@ exports.save = function(req, res){
             } else
             var query = "INSERT INTO visita (`idjumper`, `duration`, `date_g`, `status`) VALUES ?";
             for (var i = 0; i<req.session.jumps.length; i++){
-                var aux = [req.session.jumps[i][0], parseInt(tiempos[i]) + 5, nowdate.toLocaleString(), 'inprog'];
+                var aux = [req.session.jumps[i][0], parseInt(tiempos[i]) + 5, nowdate, 'inprog'];
                 if(input.isconv != "no"){
                     aux.push(input.isconv);
                 }

@@ -69,6 +69,7 @@
                     <h3>Plan: <%= duration%> Minutos</h3>
                     <h4><%= jumps[jumps.length - 1 - i][1]%></h4>
                     <h4> Edad : <%= years%></h4>
+		    <a class="btn btn-info" href="/getcod/<%= data[i].id%>" target="_blank">Mostrar Pulsera</a>
                 </div>
                 <%
                 }
@@ -83,8 +84,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="btn-group pull-right" style="margin-right: 20px">
-            <a onclick="getcods()" class="btn btn-info">Generar códigos</a>
+        <div class="pull-right" style="margin-right: 20px">
             <button type="submit" class="btn btn-primary">Terminar venta</button>
         </div>
     </div>
