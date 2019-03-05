@@ -118,7 +118,7 @@ exports.evnt_csv = function(req,res){
                 var fnac;
 				var t_string = new Date().getTime().toString();
                 var ahora = req.body.desde;
-				var pat = '/csvs/Eventos_desde_el' + ahora + '---.csv';
+				var pat = '/csvs/Eventos_desde_el' + ahora + '---'+ t_string + '.csv';
                 if(rows.length){
                     // 'C:/Users/Go Jump/Desktop/'
                     writer.pipe(fs.createWriteStream('/home/gojump/Jump/public' + pat));
