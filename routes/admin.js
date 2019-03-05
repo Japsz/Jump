@@ -127,8 +127,8 @@ exports.evnt_csv = function(req,res){
 						rows[i].obs = rows[i].obs.replace(/\@\@\@/g," | ");
                         writer.write([rows[i].nom, rows[i].tipo, fnac,rows[i].duration,rows[i].asistentes, rows[i].obs]);
                     }
-                    writer.end();
                 }
+                writer.end();
                 res.send(pat);
             });
             // console.log(query.sql); get raw query
