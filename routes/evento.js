@@ -36,6 +36,7 @@ exports.obs_add = function(req,res){
 
 exports.save = function(req,res){
     var input = JSON.parse(JSON.stringify(req.body));
+    console.log(req.body);
     req.getConnection(function(err,connection){
         connection.query("INSERT INTO evento SET ?",input,function(err,rows){
             if(err)throw err;
