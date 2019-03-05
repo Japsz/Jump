@@ -113,13 +113,12 @@ exports.evnt_csv = function(req,res){
 
             var query = connection.query("SELECT * FROM evento WHERE fecha >= ? AND fecha <= ? ",[new Date(req.body.desde),new Date(req.body.hasta)], function(err, rows)
             {
-
                 if (err)
                     console.log("Error Select : %s ",err );
                 var fnac;
-		var t_string = new Date().getTime().toString();
+				var t_string = new Date().getTime().toString();
                 var ahora = req.body.desde;
-		var pat = '/csvs/Eventos_desde_el' + ahora + '---' + t_string + '.csv';
+				var pat = '/csvs/Eventos_desde_el' + ahora + '---.csv';
                 if(rows.length){
                     // 'C:/Users/Go Jump/Desktop/'
                     writer.pipe(fs.createWriteStream('/home/gojump/Jump/public' + pat));
@@ -132,9 +131,7 @@ exports.evnt_csv = function(req,res){
                 }
                 res.send(pat);
             });
-
             // console.log(query.sql); get raw query
-
         });
     }
     else res.redirect('/bad_login');
