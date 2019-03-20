@@ -16,6 +16,8 @@
     "jade": "*",
     "jimp": "^0.2.27",
     "mysql": "2.2.0",
+    "mysqldump": "^2.2.1",
+    "node-ssh": "^5.1.2",
     "passport": "^0.3.2",
     "socket.io": "^2.0.4"
   }

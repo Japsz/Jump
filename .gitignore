@@ -5,7 +5,10 @@ node_modules
 public/csvs
 # Folder config file
 Desktop.ini
-dumps/
+
+/dumps
+backupConfig.js
+dbConfig.js
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
