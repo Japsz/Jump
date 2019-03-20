@@ -1,6 +1,6 @@
 <%- include layouts/user_header.ejs %>
 
-<form action="/pjump_red/register" method='post' id="pform">
+<form id="pform">
     <div class="table-responsive">
         <h2 class="page-header">Pre Jumpers Red</h2>
         <table class="table table-striped">
@@ -13,58 +13,24 @@
                 <th><input type="checkbox" onClick="toggle(this)"/> Todos</th>
             </tr>
             </thead>
-            <tbody>
-            <div id="pjs">
-                <%
-                if(data.length){
-                    var nac, sec_left, years;
-                    var ahora = new Date().getTime();
-                    for(var i = 0;i < data.length;i++) {
-                        nac = new Date(data[i].fnac).getTime();
-                        sec_left = (ahora - nac) / 1000;
-                        years = parseInt(sec_left / 31536000);
-                %>
-
-                <tr>
-                    <td><%= data[i].name%></td>
-                    <td><%= data[i].last_name%></td>
-                    <td><%= years%></td>
-                    <td><a class="btn btn-info mpjump_red" data-toggle="modal" data-target="#mpjump_red"
-                           data-id="<%=data[i].id%>" data-nom="<%=data[i].name%>"
-                           data-ape="<%=data[i].last_name%>" data-fnac="<%= new Date(data[i].fnac).toLocaleDateString()%>"
-                           >Modificar</a></td>
-                    <td>
-                        <input  onclick="enable2()" name ='ids' type='checkbox' value=<%= data[i].id%>>
-                    </td>
-                </tr>
-                <%
-                    }
-                } else if(con == "no") { %>
-                <tr>
-                    <td>No se pudo conectar al registro online.</td>
-                </tr>
-                <%
-                } else {
-                    %>
-                <tr>
-                    <td>No hay coincidencias.</td>
-                </tr>
-                <%
-                }
-                %>
-            </div>
+            <tbody id="pjs">
+            <tr>
+                <td>No se pudo conectar al registro online.</td>
+            </tr>
             </tbody>
         </table>
     </div>
 
     
     <div class="col-md-6 col-md-offset-6">
-        <div class="form-inline form-group">
+        <div class="input-group">
             <input type="email" name="verificador" id="verif" class="form-control input-lg" placeholder="Correo">
-            <a class="btn btn-primary btn-danger btn-lg deljump disabled" data-toggle="modal" data-target="#deljump" id="del"> - Eliminar </a>
-            <button type="button" class="btn btn-primary btn-lg prejumps" id="myBtn1" disabled>
-            Registrar
-        </button>
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-danger btn-lg disabled" data-toggle="modal" data-target="#deljump" id="del"> - Eliminar </button>
+                <button type="button" class="btn btn-primary btn-lg prejumps" id="myBtn1" disabled>
+                    Registrar
+                </button>
+            </div>
         </div>
         <div class="modal fade" id="preregistro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -88,40 +54,146 @@
     </div>
 </form>
 
+<!-- Modal de modificacion -->
+<div class="modal fade" id="mpjump_red" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modificar</h4>
+            </div>
+            <form id="m_pjump_red">
+                <div class="modal-body">
+                    <label for="nom">Nombre</label>
+                    <input type="text" name="name" class="form-control" id="nom" required>
+                    <label for="ape">Apellido</label>
+                    <input type="text" name="last_name" class="form-control" id="ape" required>
+                    <label for="fnac">Fecha de nacimiento</label>
+                    <input type="date" name="fnac" class="form-control" id="fnac" value="" required>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="id" id="continue" value="">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Modificar</button>
+                    </div>
+                </div>
+            </form>
+            <script type="text/javascript">
+                $("#m_pjump_red").on('submit',function(e){
+                    e.preventDefault();
+                    var data = {};
+                    $("#m_pjump_red input").each(function(idx){
+                        data[$(this).attr('name')] = $(this).val()
+                    });
+                    $.ajax({
+                        type: 'post',
+                        data:data,
+                        url: 'http://administrador.gojump.cl/pjump/update',
+                        success: function(data){
+                            if(!data.err){
+                                $("#mpjump_red").modal('toggle');
+                                refreshRed();
+                            } else alert("Ocurrió un error Al conetarse con la red");
+                        }
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</div>
+
+
 <script language="JavaScript">
+    $(document).ready(function(){
+        refreshRed();
+    });
+    $(document).on("click", ".mpjump_red", function() {
+        var jumpid = $(this).data('id');
+        var nom = $(this).data('nom');
+        var ape = $(this).data('ape');
+        var fnac = $(this).data('fnac');
+        $(".modal-body #nom").val(nom);
+        $(".modal-body #ape").val(ape);
+        $(".modal-body #fnac").val(fnac);
+        $(".modal-footer #continue").val(jumpid);
+    });
+    function refreshRed(){
+        $.ajax({
+            url: 'http://administrador.gojump.cl/pjump/get',
+            type: 'get',
+            success: function(data){
+                if(!data.err){
+                    $("#pjs").html(data.html);
+                } else {
+                    alert("ocurrió un error buscando en la red");
+                }
+            }
+        });
+    }
+    $("#pform").on('submit',function(e){
+        e.preventDefault();
+        var val = [];
+        var dats = [];
+        $('#pjs :checkbox:checked').each(function(i){
+            val.push($(this).val());
+            dats.push($(this).data());
+        });
+
+        var verif = $("#verif").val();
+
+        if(verif === ""){
+            verif = 'null';
+        }
+        $.ajax({
+            type: 'post',
+            url: '/jumper_red/save/' + verif,
+            data: {list:dats},
+            success: function(data){
+                if(!data.err){
+                    $.ajax({
+                        type:'post',
+                        url:'http://administrador.gojump.cl/pjump/delete',
+                        data: {delList: val},
+                        success: function(data){
+                            if(!data.err){
+                                console.log("wena");
+                            } else alert("UPS, no sabemos que pasó pero no se borró lo que querías que se borrara penita.jpg xd lol wena pelao");
+                        }
+                    });
+                    window.location = data.relocate;
+                } else alert("Ups, algo ocurrió");
+            }
+        });
+        console.log(val);
+        console.log(dats);
+        return false;
+    });
     function toggle(source) {
         checkboxes = document.getElementsByName('ids');
         for(var i=0, n=checkboxes.length;i<n;i++) {
             checkboxes[i].checked = source.checked;
         }
         enable2();
-    }
-</script>
-<script>
+    };
     function del() {
         var val = [];
         $(':checkbox:checked[name=ids]').each(function(i){
             val[i] = $(this).val();
         });
-        var dats = {ids: val};
-        if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                if (this.responseText != "0") {
-                    window.location.href = "/registro_jumper_red";
-                }
+        var dats = {delList: val};
+        $.ajax({
+            type:'post',
+            url:'http://administrador.gojump.cl/pjump/delete',
+            data:dats,
+            success: function(data){
+                if(!data.err){
+                    refreshRed();
+                } else alert("UPS, no sabemos que pasó pero no se borró lo que querías que se borrara penita.jpg xd lol wena pelao");
             }
-        };
-        xmlhttp.open("POST", "/delete_pj_red", true);
-        xmlhttp.setRequestHeader("Content-type", 'application/json');
-        xmlhttp.send(JSON.stringify(dats));
+        });
     }
+    $()
 </script>
 
 
