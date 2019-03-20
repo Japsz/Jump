@@ -98,6 +98,7 @@ app.post('/conv/add', convenio.save_conv);
 app.post('/convinfo/add', convenio.save_convinfo);
 
 // Jumpers
+app.post('/jumper_red/save/:verif', jumper.save_red);
 app.get('/jumper/save/:verif', jumper.save);
 app.get('/begin_list', jumper.prelist);
 app.post('/jump_stream', jumper.list);
@@ -110,15 +111,12 @@ app.post('/delete_jump',jumper.delete_customer);
 app.post('/psave',prejump.save2);
 app.post('/sudo_pj',prejump.sudo_pj);
 app.post('/delete_pj',prejump.remove);
-app.post('/delete_pj_red',prejump.remove_red);
 app.get('/registro_jumper', prejump.list);
 app.get('/registro_jumper_red', prejump.list_red);
 app.post('/pjump/save', prejump.save);
 app.get('/pjump/:id', prejump.add);
 app.post('/pjump/register', prejump.transfer);
-app.post('/pjump_red/register', prejump.transfer_red);
 app.post('/m_pjump',prejump.edit);
-app.post('/m_pjump_red',prejump.edit_red);
 
 //Users
 app.get('/user', admin.list);

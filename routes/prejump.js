@@ -21,62 +21,9 @@ exports.list = function(req, res){
 exports.list_red = function(req, res){
 
     if(req.session.isUserLogged){
-        var red = require('mysql');
-        var con = red.createConnection({
-            host: "gojump.cl",
-            user: "gojumpcl_log",
-            password: "13551355",
-            database: "gojuamcl_1355"
-        });
-        con.connect(function(err) {
-            if (err) {
-                console.log("Error Selecting : %s ",err );
-                res.render('pjumpers_red',{page_title:"Pre Jumpers",data:[], con: "no"});
-            } else {
-                con.query("Select * FROM pJumper", function (err, result) {
-                    if (err)
-                        console.log("Error Selecting red : %s ",err );
-                    res.render('pjumpers_red',{page_title:"Pre Jumpers",data:result, con: "si"});
-                });
-            }
-        });
+            res.render('pjumpers_red',{page_title:"Pre Jumpers", con: "si"});
     }
     else res.redirect('/bad_login');
-};
-exports.remove_red = function(req, res){
-
-    if(req.session.isUserLogged){
-        var red = require('mysql');
-        var con = red.createConnection({
-            host: "gojump.cl",
-            user: "gojumpcl_log",
-            password: "13551355",
-            database: "gojuamcl_1355"
-        });
-        var input = JSON.parse(JSON.stringify(req.body));
-        var ids = input.ids;
-        if(ids.length){
-            con.connect(function (err) {
-                if (err) {
-                    console.log("Error Selecting : %s ", err);
-                    res.render('pjumpers_red', {page_title: "Pre Jumpers", data: [], con: "no"});
-                } else {
-                    var query = "DELETE FROM pJumper WHERE id = ?";
-                    if(typeof ids == "object"){
-                        for (var i = 1; i<ids.length; i++){
-                            query += "OR id = ?";
-                        }
-                    }
-                    con.query(query,ids, function (err, result) {
-                        if (err)
-                            console.log("Error Deleting red : %s ", err);
-                        res.send("1");
-                    });
-                }
-            });
-            } else res.send("0");
-    }
-    else res.send('0');
 };
 //Vista lista de projectos.
 exports.remove = function(req, res){
@@ -98,50 +45,6 @@ exports.remove = function(req, res){
             });
         } else
             res.send("0");
-        //  var phone = req.params.phone;
-        //
-        //  req.getConnection(function (err, connection) {
-        //
-        //     connection.query("DELETE FROM contact WHERE phone = ? ",[phone], function(err, rows)
-        //     {
-        //
-        //          if(err)
-        //              console.log("Error deleting : %s ",err );
-        //
-        //          res.redirect('/contact');
-        //
-        //     });
-        //  });
-    }
-    else res.redirect('/bad_login');
-};
-exports.edit_red = function(req, res){
-    if(req.session.isUserLogged){
-        var input = JSON.parse(JSON.stringify(req.body));
-        var data = {
-            name: input.nom,
-            last_name: input.ape,
-            fnac: input.fnac
-        };
-        var red = require('mysql');
-        var con = red.createConnection({
-            host: "gojump.cl",
-            user: "gojumpcl_log",
-            password: "13551355",
-            database: "gojuamcl_1355"
-        });
-        con.connect(function(err) {
-            if (err) {
-                console.log("Error Selecting : %s ",err );
-                res.render('pjumpers_red',{page_title:"Pre Jumpers",data:[], con: "no"});
-            } else {
-                con.query("UPDATE pJumper SET ? WHERE id = ?",[data,input.id], function (err, result) {
-                    if (err)
-                        console.log("Error Updating red : %s ",err );
-                    res.redirect('/registro_jumper_red');
-                });
-            }
-        });
     }
     else res.redirect('/bad_login');
 };
@@ -229,12 +132,12 @@ exports.save2 = function(req, res){
         var data = {
             name        :input.nom,
             last_name   :input.ape,
-            fnac    :input.fnac,
+            fnac    :input.fnac
         };
         var query = connection.query("INSERT INTO pJumper set ? ",data,function(err, rows){
             if (err){
                 console.log("Error inserting : %s", err);
-            } 
+            }
             res.send("yupi");
         });
     });
@@ -289,6 +192,7 @@ exports.transfer = function(req, res){
 	}
 	else res.redirect('/bad_login');
 };
+<<<<<<< HEAD
 exports.transfer_red = function(req, res){
     if(req.session.isUserLogged){
         var input = JSON.parse(JSON.stringify(req.body));
@@ -334,3 +238,6 @@ exports.transfer_red = function(req, res){
     }
     else res.redirect('/bad_login');
 };
+=======
+
+>>>>>>> 1369bb4... Registro online real
