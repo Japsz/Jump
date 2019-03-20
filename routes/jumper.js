@@ -108,7 +108,46 @@ exports.edit = function(req, res){
     }
     else res.redirect('/bad_login');
 };
+// Guardar desde pre jumpers
+exports.save_red = function(req,res){
 
+    if(req.session.isUserLogged){
+
+        var data =[];
+        var aux;
+        for(var i = 0; i < req.body.list.length;i++){
+            aux = [req.body.list[i].name,
+                req.body.list[i].last_name, req.body.list[i].fnac];
+            if(req.params.verif != "null"){
+                aux.push(req.params.verif);
+            }
+            data.push(aux);
+        }
+        if(req.params.verif != "null"){
+            var query = "INSERT INTO jumper (`name`, `last_name`, `fnac`, `correo`) VALUES ?";
+        } else {
+            var query = "INSERT INTO jumper (`name`, `last_name`, `fnac`) VALUES ?";
+        }
+        req.getConnection(function (err, connection) {
+
+            connection.query(query,[data], function (err, rows) {
+                if (err){
+                    console.log("Error inserting : %s ", err);
+                    res.send({err:true,errMsg:err});
+                } else {
+                    for(var j = 0;j<data.length;j++){
+                        data[j].unshift(rows.insertId + j);
+                        req.session.jumps.push(data[j]);
+                    }
+                    console.log(req.session.jumps);
+                    res.send({err:false,relocate:'/venta'});
+                }
+            });
+            // console.log(query.sql); get raw query
+        });
+    }
+    else res.send({err:false,relocate:'/bad_login'});
+};
 // Guardar desde pre jumpers
 exports.save = function(req,res){
 
@@ -133,7 +172,6 @@ exports.save = function(req,res){
             var query = "INSERT INTO jumper (`name`, `last_name`, `fnac`) VALUES ?";
         }
         req.getConnection(function (err, connection) {
-
             connection.query(query,[data], function (err, rows) {
                 if (err)
                     console.log("Error inserting : %s ", err);
