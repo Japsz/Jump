@@ -87,7 +87,7 @@ exports.edit = function(req, res){
         var data = {
             name: input.nom,
             last_name: input.ape,
-            fnac: input.fnac,
+            fnac: new Date(input.fnac),
             correo: input.verif
         }
         req.getConnection(function(err,connection){

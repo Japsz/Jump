@@ -106,22 +106,26 @@ exports.cods = function(req, res) {
         req.getConnection(function (err, connection) {
             connection.query('SELECT visita.*,jumper.name FROM visita LEFT JOIN jumper ON jumper.id = visita.idjumper WHERE visita.id = ?',[req.params.cod],function(err, rows){
                 if (err) console.log("Error selecting : %s", err);
-             	// 'C:/Users/Go Jump/Desktop/Jump/public/cods/'
-                var pat = '/cods/' + req.params.cod.toString() + rows[0].name + '.png';
-                jimps.read('/home/gojump/Jump/public/cods/base.png', function (err,image2) {
-                	if(err) console.log(err);
-                        jimps.loadFont(jimps.FONT_SANS_32_BLACK).then(function (font) {
-                        	image2.print(font, 100, 20, req.params.cod.toString());
+                        // 'C:/Users/Go Jump/Desktop/Jump/public/cods/'
+                        
+var pat = 'cods/' + req.params.cod.toString() + rows[0].name + '.png';
+                        jimps.read('/home/gojump/Jump/public/cods/base.png', function (err,image2) {
+                            if(err) console.log(err);
+                            jimps.loadFont(jimps.FONT_SANS_32_BLACK).then(function (font) {
+                                image2.print(font, 100, 20, req.params.cod.toString());
                                 image2.print(font, 200, 20, rows[0].name);
                                 jimps.loadFont(jimps.FONT_SANS_16_BLACK).then(function (font) {
                                     image2.print(font, 100, 60, (parseInt(rows[0].duration) - 5).toString() + " Minutos");
                                     image2.rotate(270);
-                                    image2.write("/home/gojump/Jump/public" + pat, function (){
+                                    image2.write("/home/gojump/Jump/public/" +  pat, function (){
                                         res.redirect(pat);
                                     });
                                 });
+                            });
                         });
-                });
+                        break;
+                    }
+                }
             });
         });
     } else res.redirect('/bad_login');
