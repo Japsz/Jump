@@ -69,7 +69,6 @@ app.get('/vip/near/:id', prod.time_near);
 
 //Visitas
 app.get('/venta', visita.add);
-app.get('/getbackup', require('./routes/database').backup);
 app.get('/venta/sessionpop/:id', visita.d_from_session);
 app.post('/visit/save', visita.save);
 app.get('/precods', visita.precods);
@@ -135,7 +134,7 @@ app.post('/user_login_handler', users.user_login_handler);
 app.use(app.router);
 
 
-const mysqldump = require('mysqldump');
+//const mysqldump = require('mysqldump');
 var node_ssh, ssh;
 node_ssh = require('node-ssh');
 ssh = new node_ssh();
@@ -143,8 +142,8 @@ ssh = new node_ssh();
 const configs = require('./backupConfig');
 
 const password = configs.ssh.password;
-const filename = 'dump-' + configs.mysqlHost.database + '-' + new Date().toLocaleDateString() + '--'+ new Date().toLocaleTimeString().replace(/:/g,'') + '.sql';
-const startDump = './dumps/' + filename;
+const filename = 'dump-' + configs.mysqlHost.database + '-' + new Date().toLocaleDateString() + '--'+ new Date().toLocaleTimeString().replace(/:/g,'').replace(/ /g,'').replace(/(a|p).m./g,'') + '.sql';
+const startDump = '/home/gojump/Jump/dumps/' + filename;
 var server = http.createServer(app);
 ssh.connect({
     host: configs.ssh.host,
@@ -159,28 +158,17 @@ ssh.connect({
 }).then(function(conn){
     server.listen(app.get('port'), function(){
         console.log('The game starts on port ' + app.get('port'));
-        mysqldump({
-            connection: dbConfigs,
-            dump:{
-                schema:{
-                    table:{
-                        dropIfExist:true,
-                    },
-                },
-            },
-            dumpToFile: startDump,
-        }).then(function(e){
-            ssh.putFile(startDump, '/home/nodequantum/GJ-Admin/backups/' + filename).then(function() {
-                console.log("The File uploaded successfully");
-                ssh.execCommand('mysql -u ' + configs.mysqlHost.user + ' --password=' + configs.mysqlHost.password +' "' + configs.mysqlHost.database +'" < ' + filename, { cwd:'/home/nodequantum/GJ-Admin/backups/' }).then(function(result) {
-                    console.log('STDOUT: ' + result.stdout);
-                    console.log('STDERR: ' + result.stderr);
-                });
-            }, function(error) {
-                console.log("Something's wrong");
-                console.log(error);
-                throw error;
+        var exec = require('child_process').exec;
+		var child = exec(' mysqldump -u root --password=gojump1355 jump > /home/gojump/Jump/dumps/' + filename);
+        ssh.putFile(startDump, '/home/nodequantum/GJ-Admin/backups/' + filename).then(function() {
+            console.log("The File uploaded successfully");
+            ssh.execCommand('mysql -u ' + configs.mysqlHost.user + ' --password=' + configs.mysqlHost.password +' "' + configs.mysqlHost.database +'" < ' + filename, { cwd:'/home/nodequantum/GJ-Admin/backups/' }).then(function(result) {
+                console.log('STDOUT: ' + result.stdout);
+                console.log('STDERR: ' + result.stderr);
             });
+        }, function(error) {
+            console.log("Something's wrong");
+            console.log(error);
         });
     });
 });

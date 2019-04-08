@@ -1,13 +1,12 @@
 {
-  "name": "application-name",
-  "version": "0.0.1",
-  "less": "/views/assets/less/main.less",
-  "style": "/node_modules/bootstrap/dist/css/bootstrap.css",
+  "name": "Gojump-ubuntu",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
+    "child_process": "^1.0.2",
     "connect-flash": "^0.1.1",
     "ejs": "^1.0.0",
     "express": "3.5.1",
