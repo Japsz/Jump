@@ -25,7 +25,6 @@
                     <td><a href="/sudo_del/<%= data[k].id%>" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
 
                 </tr>
-
                 <%
                 }
                 } else{%>
@@ -33,6 +32,51 @@
                 <% } %>
                 </tbody>
             </table>
+        </div>
+        <div class="modal fade" id="monit_prejump" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Agregar Prejumper</h4>
+                    </div>
+                    <form id="monit_pjump">
+                        <div class="modal-body">
+                            <label>Nombre</label>
+                            <input type="text" name="nom" class="form-control" id="nom">
+                            <label>Apellido</label>
+                            <input type="text" name="ape" class="form-control" id="ape">
+                            <label>Fecha de nacimiento</label>
+                            <input type="date" name="fnac" class="form-control" id="fnac">
+                        </div>
+                        <div class="modal-footer">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <button type="submit"  class="btn btn-primary">+ Prejumper</button>
+                            </div>
+                        </div>
+                    </form>
+                    <script type="text/javascript">
+                        $("#monit_pjump").on('submit',function(e){
+                           e.preventDefault();
+                           var data = {};
+                           $("#monit_pjump input").each(function(idx){
+                               data[$(this).attr('name')] = $(this).val();
+                           });
+                           $.ajax({
+                               type: 'post',
+                               url: "/sudo_pj",
+                               data: data,
+                               success: function(data){
+                                   alert("Exito");
+                                   console.log(data);
+                                   $("#monit_pjump").trigger('reset');
+                               }
+                           });
+                        });
+                    </script>
+                </div>
+            </div>
         </div>
 
 <%- include layouts/footer.ejs %>
