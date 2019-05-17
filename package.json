@@ -11,16 +11,16 @@
     "connect-flash": "^0.1.1",
     "csv-write-stream": "^2.0.0",
     "dateformat": "^3.0.3",
-    "ejs": "^1.0.0",
-    "express": "3.5.1",
+    "ejs": "^2.6.1",
+    "express": "^4.17.0",
     "express-myconnection": "1.0.4",
     "flash": "^1.1.0",
     "jade": "*",
-    "jimp": "^0.2.27",
+    "jimp": "^0.2.28",
     "mysql": "2.2.0",
-    "mysqldump": "^2.2.1",
+    "mysqldump": "^2.3.0",
     "node-ssh": "^5.1.2",
     "passport": "^0.3.2",
-    "socket.io": "^2.0.4"
+    "socket.io": "^2.2.0"
   }
 }
