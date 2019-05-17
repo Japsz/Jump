@@ -1,0 +1,91 @@
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vips</title>
+    <!-- Main Style -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/jasny-bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/main2.css">
+
+
+    <style>
+        .invis {
+            width: 10px;
+            height: 10px;
+        }
+
+    </style>
+    <!-- Responsive Style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css">
+
+    <!--Fonts-->
+    <link rel="stylesheet" media="screen" href="/assets/fonts/font-awesome/font-awesome.min.css">
+
+    <!-- Extras -->
+    <link rel="stylesheet" type="text/css" href="/assets/extras/animate.css">
+
+    <link rel="shortcut icon" href="/assets/img/logo.png">
+</head>
+<body>
+<section id="header">
+    <div class="container">
+        <div class='banner text-center'>
+            <h1 class="section-title wow bounceInDown animated"><span>Tiempos</span></h1>
+            <div class="col-sm-12 col-md-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        En Curso
+                    </div>
+                    <div id="tabla">
+                    </div>
+                </div>
+            </div>
+            <div id="ups"></div>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- jQuery Load -->
+    <script src="/assets/js/jquery-min.js"></script>
+    <script>
+        var socket = io("http://127.0.0.1:4300");
+        $.ajax({
+            url:"http://localhost:4300/table_stream",
+            success: function (data) {
+                $("#tabla").html(data);
+            }
+        });
+        socket.on('ajax',function(){
+            $.ajax({
+                url:"http://localhost:4300/table_stream",
+                success: function (data) {
+                    $("#tabla").html(data);
+                }
+            });
+        });
+    </script>
+
+
+
+</section>
+<!-- Bootstrap JS -->
+<script src="/assets/js/bootstrap.min.js"></script>
+<!-- WOW JS plugin for animation -->
+<script src="/assets/js/wow.js"></script>
+
+
+
+
+<!-- All JS plugin Triggers -->
+<script src="/assets/js/main.js"></script>
+<!-- Smooth scroll -->
+<script src="/assets/js/smooth-scroll.js"></script>
+<!--  -->
+<script src="/assets/js/jasny-bootstrap.min.js"></script>
+<!-- Counterup -->
+<!-- waypoints -->
+
+
+</body>
+</html>
