@@ -139,11 +139,11 @@ var node_ssh, ssh;
 node_ssh = require('node-ssh');
 ssh = new node_ssh();
 
-const configs = require('./backupConfig');
+var configs = require('./backupConfig');
 
-const password = configs.ssh.password;
-const filename = 'dump-' + configs.mysqlHost.database + '-' + new Date().toLocaleDateString() + '--'+ new Date().toLocaleTimeString().replace(/:/g,'').replace(/ /g,'').replace(/(a|p).m./g,'') + '.sql';
-const startDump = '/home/gojump/Jump/dumps/' + filename;
+var password = configs.ssh.password;
+var filename = 'dump-' + configs.mysqlHost.database + '-' + new Date().toLocaleDateString() + '--'+ new Date().toLocaleTimeString().replace(/:/g,'').replace(/ /g,'').replace(/(a|p).m./g,'') + '.sql';
+var startDump = '/home/gojump/Jump/dumps/' + filename;
 var server = http.createServer(app);
 ssh.connect({
     host: configs.ssh.host,
@@ -173,7 +173,7 @@ ssh.connect({
     });
 });
 
-const io = require('socket.io')(server);
+var io = require('socket.io')(server);
 io.on('connection', function(socket){
     console.log("conexion");
     socket.on('actualizar',function(){
