@@ -145,19 +145,22 @@ const password = configs.ssh.password;
 const filename = 'dump-' + configs.mysqlHost.database + '-' + new Date().toLocaleDateString() + '--'+ new Date().toLocaleTimeString().replace(/:/g,'').replace(/ /g,'').replace(/(a|p).m./g,'') + '.sql';
 const startDump = '/home/gojump/Jump/dumps/' + filename;
 var server = http.createServer(app);
-ssh.connect({
-    host: configs.ssh.host,
-    username: configs.ssh.username,
-    password,
-    tryKeyboard: true,
-    onKeyboardInteractive: (name, instructions, instructionsLang, prompts, finish) => {
-    if (prompts.length > 0 && prompts[0].prompt.toLowerCase().includes('password')){
-    finish([password])
-}
-},
-}).then(function(conn){
-    server.listen(app.get('port'), function(){
-        console.log('The game starts on port ' + app.get('port'));
+server.listen(app.get('port'), function(){
+    console.log('The game starts on port ' + app.get('port'));
+    ssh.connect({
+        host: configs.ssh.host,
+        username: configs.ssh.username,
+        password,
+        tryKeyboard: true,
+        onKeyboardInteractive: (name, instructions, instructionsLang, prompts, finish) => {
+        if (prompts.length > 0 && prompts[0].prompt.toLowerCase().includes('password')){
+        finish([password])
+    }
+    },
+    },function (error){
+    	console.log(error);
+        throw error;
+    }).then(function(conn){
         var exec = require('child_process').exec;
 		var child = exec(' mysqldump -u root --password=gojump1355 jump > /home/gojump/Jump/dumps/' + filename);
         ssh.putFile(startDump, '/home/nodequantum/GJ-Admin/backups/' + filename).then(function() {
