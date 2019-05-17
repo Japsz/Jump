@@ -89,7 +89,7 @@
                     $.ajax({
                         type: 'post',
                         data:data,
-                        url: 'http://administrador.gojump.cl/pjump/update',
+                        url: 'https://administrador.gojump.cl/pjump/update',
                         success: function(data){
                             if(!data.err){
                                 $("#mpjump_red").modal('toggle');
@@ -120,7 +120,7 @@
     });
     function refreshRed(){
         $.ajax({
-            url: 'http://administrador.gojump.cl/pjump/get',
+            url: 'https://administrador.gojump.cl/pjump/get',
             type: 'get',
             success: function(data){
                 if(!data.err){
@@ -153,7 +153,7 @@
                 if(!data.err){
                     $.ajax({
                         type:'post',
-                        url:'http://administrador.gojump.cl/pjump/delete',
+                        url:'https://administrador.gojump.cl/pjump/delete',
                         data: {delList: val},
                         success: function(data){
                             if(!data.err){
@@ -184,7 +184,7 @@
         var dats = {delList: val};
         $.ajax({
             type:'post',
-            url:'http://administrador.gojump.cl/pjump/delete',
+            url:'https://administrador.gojump.cl/pjump/delete',
             data:dats,
             success: function(data){
                 if(!data.err){
