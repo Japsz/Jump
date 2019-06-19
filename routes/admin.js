@@ -161,11 +161,11 @@ exports.g_csv = function(req,res){
 			dats.push(fin);
 		}
 		var csvWriter = require('csv-write-stream');
-		var writer = csvWriter({ headers: ["n°visita", "Edad", "idjumper", "tiempo", "fecha", "hora"]});
+		var writer = csvWriter({ headers: ["n°visita", "Edad", "idjumper", "tiempo","exento", "fecha", "hora"]});
 		var fs = require('fs');
 		req.getConnection(function (err, connection) {
 				
-				connection.query("SELECT visita.id, visita.idjumper, visita.duration, visita.date_g, jumper.fnac FROM jumper INNER JOIN visita" +
+				connection.query("SELECT visita.id, visita.idjumper, visita.duration,visita.exento, visita.date_g, jumper.fnac FROM jumper INNER JOIN visita" +
 					" ON jumper.id=visita.idjumper AND visita.date_g >= ? AND  visita.date_g < ? AND visita.status = 'ended'",dats, function(err, rows)
 				{
 	
@@ -181,7 +181,7 @@ exports.g_csv = function(req,res){
                             sec_left = (ahora - nac) / 1000;
                             years = parseInt(sec_left / 31536000);
                             writer.write([rows[i].id, years.toString(), rows[i].idjumper,(parseInt(rows[i].duration)-5).toString(),
-								date_g.toLocaleDateString(),date_g.toLocaleTimeString()]);
+								rows[i].exento,date_g.toLocaleDateString(),date_g.toLocaleTimeString()]);
 				    	}
 				    	writer.end();
                         res.send(camino);
