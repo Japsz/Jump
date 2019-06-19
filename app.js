@@ -146,43 +146,45 @@ const password = configs.ssh.password;
 const filename = 'dump-' + configs.mysqlHost.database + '-' + new Date().toLocaleDateString() + '--'+ new Date().toLocaleTimeString().replace(/:/g,'') + '.sql';
 const startDump = './dumps/' + filename;
 var server = http.createServer(app);
-ssh.connect({
-    host: configs.ssh.host,
-    username: configs.ssh.username,
-    password,
-    tryKeyboard: true,
-    onKeyboardInteractive: (name, instructions, instructionsLang, prompts, finish) => {
-    if (prompts.length > 0 && prompts[0].prompt.toLowerCase().includes('password')){
-    finish([password])
-}
-},
-}).then(function(conn){
-    server.listen(app.get('port'), function(){
-        console.log('The game starts on port ' + app.get('port'));
-        mysqldump({
-            connection: dbConfigs,
-            dump:{
-                schema:{
-                    table:{
-                        dropIfExist:true,
+server.listen(app.get('port'), function(){
+    console.log('The game starts on port ' + app.get('port'));
+
+    ssh.connect({
+        host: configs.ssh.host,
+        username: configs.ssh.username,
+        password,
+        tryKeyboard: true,
+        onKeyboardInteractive: (name, instructions, instructionsLang, prompts, finish) => {
+        if (prompts.length > 0 && prompts[0].prompt.toLowerCase().includes('password')){
+        finish([password])
+    }
+    },
+    }).then(function(conn){
+            mysqldump({
+                connection: dbConfigs,
+                dump:{
+                    schema:{
+                        table:{
+                            dropIfExist:true,
+                        },
                     },
                 },
-            },
-            dumpToFile: startDump,
-        }).then(function(e){
-            ssh.putFile(startDump, '/home/nodequantum/GJ-Admin/backups/' + filename).then(function() {
-                console.log("The File uploaded successfully");
-                ssh.execCommand('mysql -u ' + configs.mysqlHost.user + ' --password=' + configs.mysqlHost.password +' "' + configs.mysqlHost.database +'" < ' + filename, { cwd:'/home/nodequantum/GJ-Admin/backups/' }).then(function(result) {
-                    console.log('STDOUT: ' + result.stdout);
-                    console.log('STDERR: ' + result.stderr);
+                dumpToFile: startDump,
+            }).then(function(e){
+                ssh.putFile(startDump, '/home/nodequantum/GJ-Admin/backups/' + filename).then(function() {
+                    console.log("The File uploaded successfully");
+                    ssh.execCommand('mysql -u ' + configs.mysqlHost.user + ' --password=' + configs.mysqlHost.password +' "' + configs.mysqlHost.database +'" < ' + filename, { cwd:'/home/nodequantum/GJ-Admin/backups/' }).then(function(result) {
+                        console.log('STDOUT: ' + result.stdout);
+                        console.log('STDERR: ' + result.stderr);
+                    });
+                }, function(error) {
+                    console.log("Something's wrong");
+                    console.log(error);
+                    throw error;
                 });
-            }, function(error) {
-                console.log("Something's wrong");
-                console.log(error);
-                throw error;
             });
-        });
     });
+    
 });
 
 const io = require('socket.io')(server);
