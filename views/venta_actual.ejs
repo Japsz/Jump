@@ -55,8 +55,14 @@
                                 </div>
                             </td>
                             <td>
-                                <input type="checkbox" class="form-control" onclick="setExento(this)" data-idjumper="<%= data[i][0]%>" name="isExento">
-                                <input type="hidden" name="exentos" id="exent<%= data[i][0]%>" value="0">
+                                <select name="exentos" class="form-control" id="exentType<%=data[i][0]%>" required>
+                                    <option value="venta" selected>No</option>
+                                    <option value="acompanante">Acompañante</option>
+                                    <option value="giftcard">Gift Card</option>
+                                    <option value="promo1">Promoción 1</option>
+                                    <option value="promo2">Promoción 2</option>
+                                    <option value="promo3">Promoción 3</option>
+                                </select>
                             </td>
                         </tr>
                         <%
@@ -84,7 +90,14 @@
                                         </a>
                                     </div></td>
                                 <td>
-                                    <input type="checkbox" class="form-control" onclick="toggleExentos(this)">
+                                    <select name="Allexentos" class="form-control" onchange="toggleExentos(this)" id="exentTypeAll">
+                                        <option value="venta" selected>No</option>
+                                        <option value="acompanante">Acompañante</option>
+                                        <option value="giftcard">Gift Card</option>
+                                        <option value="promo1">Promoción 1</option>
+                                        <option value="promo2">Promoción 2</option>
+                                        <option value="promo3">Promoción 3</option>
+                                    </select>
                                 </td>
                             </tr>
                         </div>
@@ -117,19 +130,11 @@
     </form>
     <script type="text/javascript">
         function toggleExentos(source){
-            if(source.checked) var exentVal = 1;
-            else var exentVal = 0;
-            $("input[name='isExento']").each(function(idx){
-                if(this.checked != source.checked) this.checked = source.checked;
-            });
-            $("input[name='exentos']").each(function(idx){
+            var exentVal = source.value;
+            console.log(exentVal);
+            $("select[name='exentos']").each(function(idx){
                 $(this).val(exentVal);
             });
-        }
-        function setExento(source){
-            if(source.checked) var exentVal = 1;
-            else var exentVal = 0;
-            $("#exent" + $(source).data('idjumper')).val(exentVal);
         }
     </script>
         <div class="modal fade" id="conv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -168,7 +173,6 @@
 <script language="JavaScript">
     function toggle(source) {
         tiempos = document.getElementsByName('tiempos');
-
         for(var i=0, n=tiempos.length;i<n;i++) {
             tiempos[i].value = source.value;
         }
