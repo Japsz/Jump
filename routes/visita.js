@@ -146,7 +146,7 @@ exports.save = function(req, res){
 				duration: parseInt(tiempos) + 5,
 				date_g: nowdate.toLocaleString(),
 				status: 'inprog',
-                exento: parseInt(exentos)
+                exento: exentos
 			}
 			if(input.isconv != "no"){
         	    data.idinfo = input.isconv;
@@ -160,7 +160,7 @@ exports.save = function(req, res){
             } else
             var query = "INSERT INTO visita (`idjumper`, `duration`, `date_g`, `status`,`exento`) VALUES ?";
             for (var i = 0; i<req.session.jumps.length; i++){
-                var aux = [req.session.jumps[i][0], parseInt(tiempos[i]) + 5, nowdate.toLocaleString(), 'inprog',parseInt(exentos[i])];
+                var aux = [req.session.jumps[i][0], parseInt(tiempos[i]) + 5, nowdate.toLocaleString(), 'inprog',exentos[i]];
                 if(input.isconv != "no"){
                     aux.push(input.isconv);
                 }

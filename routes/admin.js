@@ -159,7 +159,7 @@ exports.g_csv = function(req,res){
 			dats.push(fin);
 		}
 		var csvWriter = require('csv-write-stream');
-		var writer = csvWriter({ headers: ["n°visita", "Edad", "idjumper", "tiempo","exento", "fecha", "hora"]});
+		var writer = csvWriter({ headers: ["n°Visita", "Edad", "idjumper", "tiempo","tipoVenta", "fecha", "hora"]});
 		var fs = require('fs');
 		req.getConnection(function (err, connection) {
 				
