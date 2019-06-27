@@ -175,12 +175,21 @@ server.listen(app.get('port'), function(){
         });
     });
 });
-
-var io = require('socket.io')(server);
+var videoUtils = require('./modelo/socketUtils');
+const io = require('socket.io')(server);
 io.on('connection', function(socket){
     console.log("conexion");
     socket.on('actualizar',function(){
         console.log("jajA");
+    });
+    socket.on('isVideoPosible',function(callback){
+        videoUtils.checkVips(function(err,obj){
+            if(err){
+                callback(err,obj);
+            } else {
+                callback(null,obj);
+            }
+        });
     });
 });
 app.locals.io = io;
