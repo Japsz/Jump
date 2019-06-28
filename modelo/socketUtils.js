@@ -1,12 +1,8 @@
 var mysql      = require('mysql');
-var poolDb = mysql.createPool({
-    connectionLimit: 10,
-    host     : 'localhost',
-    user     : 'root',
-    password : '1234',
-    port: 3306,
-    database : 'jump'
-});
+var dbConfig = require('./../dbConfig');
+dbConfig.connectionLimit = 10;
+var poolDb = mysql.createPool(dbConfig);
+
 var obj = {};
 var videoQueue = require('./videoList').lista;
 
