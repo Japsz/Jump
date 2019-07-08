@@ -144,7 +144,7 @@ const configs = require('./backupConfig');
 
 const password = configs.ssh.password;
 const filename = 'dump-' + configs.mysqlHost.database + '-' + new Date().toLocaleDateString() + '--'+ new Date().toLocaleTimeString().replace(/:/g,'') + '.sql';
-const startDump = './dumps/' + filename;
+const startDump = 'C:/Users/Go Jump/Desktop/Jump/dumps/' + filename;
 var server = http.createServer(app);
 ssh.connect({
     host: configs.ssh.host,
@@ -170,6 +170,7 @@ ssh.connect({
             },
             dumpToFile: startDump,
         }).then(function(e){
+            console.log("dump listo");
             ssh.putFile(startDump, '/home/nodequantum/GJ-Admin/backups/' + filename).then(function() {
                 console.log("The File uploaded successfully");
                 ssh.execCommand('mysql -u ' + configs.mysqlHost.user + ' --password=' + configs.mysqlHost.password +' "' + configs.mysqlHost.database +'" < ' + filename, { cwd:'/home/nodequantum/GJ-Admin/backups/' }).then(function(result) {
