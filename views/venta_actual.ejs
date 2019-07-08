@@ -18,6 +18,7 @@
                             <th>Tiempo</th>
                             <th></th>
                             <th></th>
+                            <th>Exento</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -45,12 +46,24 @@
                                     <option value="360">360</option>
                                 </select></td>
                             <td><a class="btn btn-danger btn-sm" href="/venta/sessionpop/<%= i%>"> - Quitar</a></td>
-                            <td><div id="<%= data[i][0]%>">
+                            <td>
+                                <div id="<%= data[i][0]%>">
                                     <input name="horas" type="hidden" value="no">
                                     <a data-id="<%= data[i][0]%>" data-toggle="modal" data-target="#timeset" class="timeset btn btn-info">
                                         <span class="glyphicon glyphicon-time" id="tiempo" name="bot" aria-hidden="true"></span>
                                     </a>
-                                </div></td>
+                                </div>
+                            </td>
+                            <td>
+                                <select name="exentos" class="form-control" id="exentType<%=data[i][0]%>" required>
+                                    <option value="venta" selected>No</option>
+                                    <option value="acompanante">Acompañante</option>
+                                    <option value="giftcard">Gift Card</option>
+                                    <option value="promo1">Promoción 1</option>
+                                    <option value="promo2">Promoción 2</option>
+                                    <option value="promo3">Promoción 3</option>
+                                </select>
+                            </td>
                         </tr>
                         <%
                         if(i == len - 1 && len > 1){
@@ -67,7 +80,7 @@
                                         <option value="120" onClick="toggle(this)">120</option>
                                         <option value="180" onClick="toggle(this)">180</option>
                                         <option value="240" onClick="toggle(this)">240</option>
-                                        <option value="360">360</option>
+                                        <option value="360" onClick="toggle(this)">360</option>
                                     </select></td>
                                 <td></td>
                                 <td><div id="tot">
@@ -76,13 +89,23 @@
                                             <span class="glyphicon glyphicon-time" id="tiempo" aria-hidden="true"></span>
                                         </a>
                                     </div></td>
+                                <td>
+                                    <select name="Allexentos" class="form-control" onchange="toggleExentos(this)" id="exentTypeAll">
+                                        <option value="venta" selected>No</option>
+                                        <option value="acompanante">Acompañante</option>
+                                        <option value="giftcard">Gift Card</option>
+                                        <option value="promo1">Promoción 1</option>
+                                        <option value="promo2">Promoción 2</option>
+                                        <option value="promo3">Promoción 3</option>
+                                    </select>
+                                </td>
                             </tr>
                         </div>
                         <%
                         }
                         }
                         } else{%>
-                        <tr><td>No hay Jumpers asociados a esta venta</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                        <tr><td>No hay Jumpers asociados a esta venta</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
                         <%
 
                         }
@@ -105,6 +128,15 @@
             </div>
         </div>
     </form>
+    <script type="text/javascript">
+        function toggleExentos(source){
+            var exentVal = source.value;
+            console.log(exentVal);
+            $("select[name='exentos']").each(function(idx){
+                $(this).val(exentVal);
+            });
+        }
+    </script>
         <div class="modal fade" id="conv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -141,7 +173,6 @@
 <script language="JavaScript">
     function toggle(source) {
         tiempos = document.getElementsByName('tiempos');
-
         for(var i=0, n=tiempos.length;i<n;i++) {
             tiempos[i].value = source.value;
         }

@@ -136,6 +136,7 @@ exports.save = function(req, res){
 	if(req.session.isUserLogged){
         var input = JSON.parse(JSON.stringify(req.body));
         var tiempos = input.tiempos;
+        var exentos = input.exentos;
         req.session.horas = input.horas;
         var nowdate = new Date();
         console.log(input.tiempos);
@@ -144,7 +145,8 @@ exports.save = function(req, res){
 				idjumper : req.session.jumps[0][0],
 				duration: parseInt(tiempos) + 5,
 				date_g: nowdate.toLocaleString(),
-				status: 'inprog'
+				status: 'inprog',
+                exento: exentos
 			}
 			if(input.isconv != "no"){
         	    data.idinfo = input.isconv;
@@ -154,11 +156,11 @@ exports.save = function(req, res){
 		} else {
             var data = [];
             if(input.isconv != "no"){
-                    var query = "INSERT INTO visita (`idjumper`, `duration`, `date_g`, `status`,`idinfo`) VALUES ?";
+                    var query = "INSERT INTO visita (`idjumper`, `duration`, `date_g`, `status`,`exento`,`idinfo`) VALUES ?";
             } else
-            var query = "INSERT INTO visita (`idjumper`, `duration`, `date_g`, `status`) VALUES ?";
+            var query = "INSERT INTO visita (`idjumper`, `duration`, `date_g`, `status`,`exento`) VALUES ?";
             for (var i = 0; i<req.session.jumps.length; i++){
-                var aux = [req.session.jumps[i][0], parseInt(tiempos[i]) + 5, nowdate.toLocaleString(), 'inprog'];
+                var aux = [req.session.jumps[i][0], parseInt(tiempos[i]) + 5, nowdate.toLocaleString(), 'inprog',exentos[i]];
                 if(input.isconv != "no"){
                     aux.push(input.isconv);
                 }
