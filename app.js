@@ -135,56 +135,9 @@ app.post('/user_login_handler', users.user_login_handler);
 app.use(app.router);
 
 
-const mysqldump = require('mysqldump');
-var node_ssh, ssh;
-node_ssh = require('node-ssh');
-ssh = new node_ssh();
-
-const configs = require('./backupConfig');
-
-const password = configs.ssh.password;
-const filename = 'dump-' + configs.mysqlHost.database + '-' + new Date().toLocaleDateString() + '--'+ new Date().toLocaleTimeString().replace(/:/g,'') + '.sql';
-const startDump = './dumps/' + filename;
 var server = http.createServer(app);
 server.listen(app.get('port'), function(){
     console.log('The game starts on port ' + app.get('port'));
-
-    ssh.connect({
-        host: configs.ssh.host,
-        username: configs.ssh.username,
-        password,
-        tryKeyboard: true,
-        onKeyboardInteractive: (name, instructions, instructionsLang, prompts, finish) => {
-        if (prompts.length > 0 && prompts[0].prompt.toLowerCase().includes('password')){
-        finish([password])
-    }
-    },
-    }).then(function(conn){
-            mysqldump({
-                connection: dbConfigs,
-                dump:{
-                    schema:{
-                        table:{
-                            dropIfExist:true,
-                        },
-                    },
-                },
-                dumpToFile: startDump,
-            }).then(function(e){
-                ssh.putFile(startDump, '/home/nodequantum/GJ-Admin/backups/' + filename).then(function() {
-                    console.log("The File uploaded successfully");
-                    ssh.execCommand('mysql -u ' + configs.mysqlHost.user + ' --password=' + configs.mysqlHost.password +' "' + configs.mysqlHost.database +'" < ' + filename, { cwd:'/home/nodequantum/GJ-Admin/backups/' }).then(function(result) {
-                        console.log('STDOUT: ' + result.stdout);
-                        console.log('STDERR: ' + result.stderr);
-                    });
-                }, function(error) {
-                    console.log("Something's wrong");
-                    console.log(error);
-                    throw error;
-                });
-            });
-    });
-    
 });
 var videoUtils = require('./modelo/socketUtils');
 const io = require('socket.io')(server);
