@@ -69,7 +69,7 @@ app.get('/vip/near/:id', prod.time_near);
 
 //Visitas
 app.get('/venta', visita.add);
-app.get('/getbackup', require('./routes/database').backup);
+// app.get('/getbackup', require('./routes/database').backup);
 app.get('/venta/sessionpop/:id', visita.d_from_session);
 app.post('/visit/save', visita.save);
 app.get('/precods', visita.precods);
@@ -112,7 +112,7 @@ app.get('/pjump/:id', prejump.add);
 app.post('/pjump/register', prejump.transfer);
 app.post('/m_pjump',prejump.edit);
 
-//Users
+//Admin
 app.get('/user', admin.list);
 app.get('/user/add', admin.add);
 app.get('/csv', admin.stats);
@@ -130,6 +130,9 @@ app.get('/admin_login', users.admin_login);
 app.get('/bad_login', users.bad_login);
 app.post('/admin_login_handler', users.admin_login_handler);
 app.post('/user_login_handler', users.user_login_handler);
+app.get('/tipo_promocion', admin.tipo_promo);
+app.get('/rmv_tipo_promo/:idtipo_promo', admin.remove_tipo_promo);
+app.post('/add_tipo_promo', admin.add_tipo_promo);
 
 
 app.use(app.router);
