@@ -3,10 +3,12 @@ exports.add = function(req, res) {
 	if (req.session.isUserLogged) {
         req.getConnection(function (err, connection){
             connection.query("SELECT * FROM convenio", function(err, rows){
-                if (err)
-                    console.log("Error selecting : %s ", err);
-                req.session.convs = rows;
-                res.render('venta_actual',{data:req.session.jumps, convs : rows});
+                if (err) console.log("Error selecting : %s ", err);
+                connection.query("SELECT * FROM tipo_promo", function(err, tipo_promo){
+                    if (err) console.log("Error selecting tipo_promo: %s ", err);
+                    req.session.convs = rows;
+                    res.render('venta_actual',{data:req.session.jumps, convs : rows, tipo_promo: tipo_promo});
+                });
             });
         });
 	}

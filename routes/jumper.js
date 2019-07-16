@@ -27,6 +27,35 @@ exports.list = function(req, res){
     else res.redirect('/bad_login');
 
 };
+// Cargar base 
+exports.cargar = function(req, res){
+    var input = JSON.parse(JSON.stringify(req.body));
+    var dats = [];
+    if(req.session.isUserLogged){
+        if(input.verif == ""){
+            var query = "SELECT * FROM jumper WHERE name LIKE ? AND last_name LIKE ? ORDER BY name, last_name";
+            dats.push(input.nom + "%");
+            dats.push(input.ape + "%");
+        } else {
+            var query = 'SELECT * FROM jumper WHERE name LIKE ? AND last_name LIKE ? AND correo LIKE ? ORDER BY name, last_name';
+            dats.push(input.nom + "%");
+            dats.push(input.ape + "%");
+            dats.push(input.verif + "%");
+        }
+        req.getConnection(function(err,connection){
+            connection.query(query,dats,function(err,rows)
+            {
+                if(err)
+                    console.log("Error Selecting : %s ",err );
+                res.render('jump_stream',{data:rows});
+
+            });
+            //console.log(query.sql);
+        });
+    }
+    else res.redirect('/bad_login');
+
+};
 exports.getbsq_b = function (req, res) {
     var input = JSON.parse(JSON.stringify(req.body));
     console.log(input.cor);
@@ -112,7 +141,6 @@ exports.edit = function(req, res){
 exports.save_red = function(req,res){
 
     if(req.session.isUserLogged){
-
         var data =[];
         var aux;
         for(var i = 0; i < req.body.list.length;i++){
@@ -129,7 +157,6 @@ exports.save_red = function(req,res){
             var query = "INSERT INTO jumper (`name`, `last_name`, `fnac`) VALUES ?";
         }
         req.getConnection(function (err, connection) {
-
             connection.query(query,[data], function (err, rows) {
                 if (err){
                     console.log("Error inserting : %s ", err);

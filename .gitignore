@@ -1,9 +1,14 @@
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
-
+node_modules
+public/csvs
 # Folder config file
 Desktop.ini
+/dumps
+backupConfig.js
+dbConfig.js
+
 /dumps
 backupConfig.js
 dbConfig.js
@@ -16,6 +21,7 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+
 
 # Windows shortcuts
 *.lnk

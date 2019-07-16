@@ -274,3 +274,54 @@ exports.delete_user = function(req,res){
 		}
 		else res.redirect('/bad_login');
 };
+
+//Vista que renderiza los tipo de promocion y da la opcion de agregar o eliminar
+exports.tipo_promo = function(req, res){
+	if(req.session.isAdminLogged){
+		req.getConnection(function (err, connection) {
+			connection.query("SELECT * FROM tipo_promo", function(err, tipo_promo){
+	            if (err) console.log("Error selecting tipo_promo: %s ", err);
+	            res.render('tipo_promo',{tipo_promo: tipo_promo});
+	        });
+	    });
+	} else res.redirect('/bad_login');
+};
+
+//Vista que elimina un tipo de promocion
+exports.remove_tipo_promo = function(req, res){
+	if(req.session.isAdminLogged){
+		var idtipo_promo = req.params.idtipo_promo;
+		req.getConnection(function (err, connection) {
+			connection.query("DELETE FROM tipo_promo WHERE idtipo_promo = ?",[idtipo_promo], function(err, promo){
+	            if (err) console.log("Error deleting tipo_promo: %s ", err);
+	            connection.query("SELECT * FROM tipo_promo", function(err, tipo_promo){
+		            if (err) console.log("Error selecting tipo_promo: %s ", err);
+		            res.render('tipo_promo',{tipo_promo: tipo_promo});
+		        });
+	        });
+	    });
+	} else res.redirect('/bad_login');
+};
+
+//Vista que elimina un tipo de promocion
+exports.add_tipo_promo = function(req, res){
+	if(req.session.isAdminLogged){
+		var input = JSON.parse(JSON.stringify(req.body));
+		var value = input.tipo_promo.toLowerCase().split(" ").join("");
+		var tipo_promo = input.tipo_promo;
+		var data = {
+			tipo_promo: tipo_promo,
+			name_value: value
+		};
+		req.getConnection(function (err, connection) {
+			connection.query("INSERT INTO tipo_promo SET ? ",data, function(err, promo){
+	            if (err) console.log("Error inserting tipo_promo: %s ", err);
+	            connection.query("SELECT * FROM tipo_promo", function(err, tipo_promo){
+		            if (err) console.log("Error selecting tipo_promo: %s ", err);
+		            res.render('tipo_promo',{tipo_promo: tipo_promo});
+		        });
+	        });
+	    });
+	} else res.redirect('/bad_login');
+};
+
