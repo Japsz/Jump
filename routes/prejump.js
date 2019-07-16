@@ -192,4 +192,3 @@ exports.transfer = function(req, res){
 	}
 	else res.redirect('/bad_login');
 };
-

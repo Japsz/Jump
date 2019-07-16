@@ -56,12 +56,19 @@
                             </td>
                             <td>
                                 <select name="exentos" class="form-control" id="exentType<%=data[i][0]%>" required>
-                                    <option value="venta" selected>No</option>
-                                    <option value="acompanante">Acompañante</option>
-                                    <option value="giftcard">Gift Card</option>
-                                    <option value="promo1">Promoción 1</option>
-                                    <option value="promo2">Promoción 2</option>
-                                    <option value="promo3">Promoción 3</option>
+                                    <%
+                                    for(var k = 0; k < tipo_promo.length; k++){
+                                        if(k == 0){
+                                        %>
+                                            <option value="<%=tipo_promo[k].name_value%>" selected><%=tipo_promo[k].tipo_promo%></option>
+                                        <%
+                                        } else{
+                                        %>
+                                            <option value="<%=tipo_promo[k].name_value%>"><%=tipo_promo[k].tipo_promo%></option>
+                                        <%
+                                        }
+                                    }
+                                    %>
                                 </select>
                             </td>
                         </tr>
@@ -91,12 +98,19 @@
                                     </div></td>
                                 <td>
                                     <select name="Allexentos" class="form-control" onchange="toggleExentos(this)" id="exentTypeAll">
-                                        <option value="venta" selected>No</option>
-                                        <option value="acompanante">Acompañante</option>
-                                        <option value="giftcard">Gift Card</option>
-                                        <option value="promo1">Promoción 1</option>
-                                        <option value="promo2">Promoción 2</option>
-                                        <option value="promo3">Promoción 3</option>
+                                        <%
+                                        for(var k = 0; k < tipo_promo.length; k++){
+                                            if(k == 0){
+                                            %>
+                                                <option value="<%=tipo_promo[k].name_value%>" selected><%=tipo_promo[k].tipo_promo%></option>
+                                            <%
+                                            } else{
+                                            %>
+                                                <option value="<%=tipo_promo[k].name_value%>"><%=tipo_promo[k].tipo_promo%></option>
+                                            <%
+                                            }
+                                        }
+                                        %>
                                     </select>
                                 </td>
                             </tr>
@@ -171,11 +185,13 @@
         </div>
 </div>
 <script language="JavaScript">
+
     function toggle(source) {
         tiempos = document.getElementsByName('tiempos');
         for(var i=0, n=tiempos.length;i<n;i++) {
             tiempos[i].value = source.value;
         }
     }
+
 </script>
 <%- include layouts/footer.ejs %>
