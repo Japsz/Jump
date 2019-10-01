@@ -183,7 +183,7 @@ exports.sudo_del = function(req,res){
                     console.log("Error deleting : %s", err);
                 if(exvip.length){
                     if(!exvip[0].ended){
-                        connection.query("UPDATE visita SET status = 'ended' WHERE id = ? ",[idvip], function(err,rows){
+                        connection.query("UPDATE visita SET status = 'ended', date_f = CURRENT_TIMESTAMP WHERE id = ? ",[idvip], function(err,rows){
                             if(err)
                                 console.log("Error deleting : %s", err);
                             req.app.locals.io.emit('ajax');
