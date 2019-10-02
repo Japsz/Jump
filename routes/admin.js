@@ -181,7 +181,7 @@ exports.g_csv = function(req,res){
                             sec_left = (ahora - nac) / 1000;
                             years = parseInt(sec_left / 31536000);
                             writer.write([rows[i].id, years.toString(), rows[i].idjumper,(parseInt(rows[i].duration)-5).toString(),
-								rows[i].exento,date_g.toLocaleDateString(),date_g.toLocaleTimeString(), new Date(rows[0].date_f).toLocaleTimeString()]);
+								rows[i].exento,date_g.toLocaleDateString(),date_g.toLocaleTimeString(), new Date(rows[i].date_f).toLocaleTimeString()]);
 				    	}
 				    	writer.end();
                         res.send(camino);
