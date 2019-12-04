@@ -3,10 +3,12 @@ exports.add = function(req, res) {
 	if (req.session.isUserLogged) {
         req.getConnection(function (err, connection){
             connection.query("SELECT * FROM convenio", function(err, rows){
-                if (err)
-                    console.log("Error selecting : %s ", err);
-                req.session.convs = rows;
-                res.render('venta_actual',{data:req.session.jumps, convs : rows});
+                if (err) console.log("Error selecting : %s ", err);
+                connection.query("SELECT * FROM tipo_promo", function(err, tipo_promo){
+                    if (err) console.log("Error selecting tipo_promo: %s ", err);
+                    req.session.convs = rows;
+                    res.render('venta_actual',{data:req.session.jumps, convs : rows, tipo_promo: tipo_promo});
+                });
             });
         });
 	}
@@ -104,29 +106,24 @@ exports.cods = function(req, res) {
     if(req.session.isUserLogged){
         var jimps = require('jimp');
         req.getConnection(function (err, connection) {
-            connection.query('SELECT * FROM visita WHERE id = ?',[req.params.cod],function(err, rows){
+            connection.query('SELECT visita.*,jumper.name FROM visita LEFT JOIN jumper ON jumper.id = visita.idjumper WHERE visita.id = ?',[req.params.cod],function(err, rows){
                 if (err) console.log("Error selecting : %s", err);
-                for(var i = 0; i < req.session.jumps.length; i++){
-                    if(rows[0].idjumper == req.session.jumps[i][0]){
-                        // 'C:/Users/Go Jump/Desktop/Jump/public/cods/'
-                        var pat = 'C:/Users/Go Jump/Desktop/Jump/public/cods/' + req.params.cod.toString() + req.session.jumps[i][1].toString() + '.png';
-                        jimps.read('C:/Users/Go Jump/Desktop/Jump/public/cods/base.png', function (err,image2) {
-                            if(err) console.log(err);
-                            jimps.loadFont(jimps.FONT_SANS_32_BLACK).then(function (font) {
-                                image2.print(font, 0, 20, req.params.cod.toString());
-                                image2.print(font, 100, 20, req.session.jumps[i][1].toString());
+             	// 'C:/Users/Go Jump/Desktop/Jump/public/cods/'
+                var pat = '/cods/' + req.params.cod.toString() + rows[0].name + '.png';
+                jimps.read('C:/Users/Go Jump/Desktop/Jump/public/cods/base.png', function (err,image2) {
+                	if(err) console.log(err);
+                        jimps.loadFont(jimps.FONT_SANS_32_BLACK).then(function (font) {
+                        	image2.print(font, 100, 20, req.params.cod.toString());
+                                image2.print(font, 200, 20, rows[0].name);
                                 jimps.loadFont(jimps.FONT_SANS_16_BLACK).then(function (font) {
-                                    image2.print(font, 0, 60, (parseInt(rows[0].duration) - 5).toString() + " Minutos");
-                                    image2.rotate(90);
-                                    image2.write( pat, function (){
-                                        res.redirect('cods/' + req.params.cod.toString() + req.session.jumps[i][1].toString() + '.png');
+                                    image2.print(font, 100, 60, (parseInt(rows[0].duration) - 5).toString() + " Minutos");
+                                    image2.rotate(270);
+                                    image2.write("C:/Users/Go Jump/Desktop/Jump/public" + pat, function (){
+                                        res.redirect(pat);
                                     });
                                 });
-                            });
                         });
-                        break;
-                    }
-                }
+                });
             });
         });
     } else res.redirect('/bad_login');

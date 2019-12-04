@@ -6,7 +6,7 @@ exports.list = function(req, res){
 
      	req.getConnection(function(err,connection){
 
-        	var query = connection.query('SELECT * FROM pJumper',function(err,rows)
+        	var query = connection.query('SELECT * FROM pjumper',function(err,rows)
         	{
             	if(err)
             	    console.log("Error Selecting : %s ",err );
@@ -102,7 +102,7 @@ exports.save = function(req, res){
 			last_name	:input.ape,
 			fnac	:input.fnac,
 		};
-		var query = connection.query("INSERT INTO pJumper set ? ",data,function(err, rows){
+		var query = connection.query("INSERT INTO pjumper set ? ",data,function(err, rows){
 			if (err) console.log("Error inserting : %s", err);
 
 			res.redirect('/pjump/1');
@@ -117,7 +117,7 @@ exports.sudo_pj = function(req, res){
             last_name   :input.ape,
             fnac    :input.fnac,
         };
-        var query = connection.query("INSERT INTO pJumper set ? ",data,function(err, rows){
+        var query = connection.query("INSERT INTO pjumper set ? ",data,function(err, rows){
             if (err){
                 console.log("Error inserting at" + new Date().toLocaleString() + " : %s", err);
             }
@@ -134,7 +134,7 @@ exports.save2 = function(req, res){
             last_name   :input.ape,
             fnac    :input.fnac
         };
-        var query = connection.query("INSERT INTO pJumper set ? ",data,function(err, rows){
+        var query = connection.query("INSERT INTO pjumper set ? ",data,function(err, rows){
             if (err){
                 console.log("Error inserting : %s", err);
             }
@@ -151,7 +151,7 @@ exports.delete = function(req, res){
             last_name	:input.ape,
             fnac	:input.fnac,
         };
-        var query = connection.query("INSERT INTO pJumper set ? ",data,function(err, rows){
+        var query = connection.query("INSERT INTO pjumper set ? ",data,function(err, rows){
             if (err) console.log("Error inserting : %s", err);
 
             res.redirect('/pjump')
@@ -169,8 +169,8 @@ exports.transfer = function(req, res){
             verif = 'null';
         }
 		if(ids.length){
-			var query = "SELECT * FROM pJumper WHERE id = ?";
-			var query2 = "DELETE FROM pJumper WHERE id = ?";
+			var query = "SELECT * FROM pjumper WHERE id = ?";
+			var query2 = "DELETE FROM pjumper WHERE id = ?";
 			if(typeof ids == "object"){
                 for (var i = 1; i<ids.length; i++){
                     query += "OR id = ?";

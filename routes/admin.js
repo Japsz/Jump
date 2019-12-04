@@ -77,9 +77,11 @@ exports.g_csv_j = function(req,res){
                     console.log("Error Select : %s ",err );
                 var fnac, correo;
                 var ahora = new Date();
+		var t_string = ahora.getTime().toString();
+		var pat = '/csvs/Jumper_hasta_~_' + ahora.toLocaleDateString() + '---'+ t_string + '.csv';
                 if(rows.length){
                     // 'C:/Users/Go Jump/Desktop/'
-                    writer.pipe(fs.createWriteStream('C:/Users/Go Jump/Desktop/Jump/public/csvs/Jumpers_hasta_~_' + ahora.toLocaleDateString() + '.csv'));
+                    writer.pipe(fs.createWriteStream('C:/Users/Go Jump/Desktop/Jump/public' + pat));
                     for (var i = 0; i <rows.length; i++) {
                         if(typeof rows[i].correo == "string"){
 							correo = rows[i].correo;
@@ -91,7 +93,7 @@ exports.g_csv_j = function(req,res){
                     }
                     writer.end();
                 }
-                res.send('/csvs/Jumpers_hasta_~_' + ahora.toLocaleDateString() + '.csv');
+                res.send(pat);
             });
 
             // console.log(query.sql); get raw query
@@ -111,26 +113,25 @@ exports.evnt_csv = function(req,res){
 
             var query = connection.query("SELECT * FROM evento WHERE fecha >= ? AND fecha <= ? ",[new Date(req.body.desde),new Date(req.body.hasta)], function(err, rows)
             {
-
                 if (err)
                     console.log("Error Select : %s ",err );
                 var fnac;
+				var t_string = new Date().getTime().toString();
                 var ahora = req.body.desde;
+				var pat = '/csvs/Eventos_desde_el' + ahora + '---'+ t_string + '.csv';
                 if(rows.length){
                     // 'C:/Users/Go Jump/Desktop/'
-                    writer.pipe(fs.createWriteStream('C:/Users/Go Jump/Desktop/Jump/public/csvs/Eventos_desde_el' + ahora+ '.csv'));
+                    writer.pipe(fs.createWriteStream('C:/Users/Go Jump/Desktop/Jump/public' + pat));
                     for (var i = 0; i <rows.length; i++) {
                         fnac = new Date(rows[i].fecha).toLocaleString();
 						rows[i].obs = rows[i].obs.replace(/\@\@\@/g," | ");
                         writer.write([rows[i].nom, rows[i].tipo, fnac,rows[i].duration,rows[i].asistentes, rows[i].obs]);
                     }
-                    writer.end();
                 }
-                res.send('/csvs/Eventos_desde_el' + ahora + '.csv');
+                writer.end();
+                res.send(pat);
             });
-
             // console.log(query.sql); get raw query
-
         });
     }
     else res.redirect('/bad_login');
@@ -140,30 +141,31 @@ exports.g_csv = function(req,res){
 	if(req.session.isAdminLogged){
 		var input = req.body;
 		console.log(input);
-        // 'C:/Users/Go Jump/Desktop/Visitas - '
-        var camino = "/csvs/Visitas_-_";
+        	// 'C:/Users/Go Jump/Desktop/Visitas - '
+	        var camino = "/csvs/Visitas_-_";
 		var dats =[];
+		var t_string = new Date().getTime().toString();
 		if(input.hasta == "si"){
 			dats.push(input.ini);
-            var fin = new Date(input.end).getTime();
-            fin += 1000*60*60*24;
-            fin = new Date(fin);
+            		var fin = new Date(input.end).getTime();
+            		fin += 1000*60*60*24;
+            		fin = new Date(fin);
 			dats.push(fin);
-			camino += input.ini + "_~_" + input.end + ".csv";
+			camino += input.ini + "_~_" + input.end + "---" + t_string + ".csv";
 		} else {
 			var fin = new Date(input.ini).getTime();
 			fin += 1000*60*60*25;
 			fin = new Date(fin);
-            camino += input.ini + ".csv";
+            camino += input.ini + "---" + t_string + ".csv";
             dats.push(input.ini);
 			dats.push(fin);
 		}
 		var csvWriter = require('csv-write-stream');
-		var writer = csvWriter({ headers: ["n°Visita", "Edad", "idjumper", "tiempo","tipoVenta", "fecha", "hora"]});
+		var writer = csvWriter({ headers: ["n°Visita", "Edad", "idjumper", "tiempo","tipoVenta", "fecha", "hora entrada", "hora salida"]});
 		var fs = require('fs');
 		req.getConnection(function (err, connection) {
 				
-				connection.query("SELECT visita.id, visita.idjumper, visita.duration,visita.exento, visita.date_g, jumper.fnac FROM jumper INNER JOIN visita" +
+				connection.query("SELECT visita.id, visita.idjumper, visita.duration,visita.exento, visita.date_g, visita.date_f, jumper.fnac FROM jumper INNER JOIN visita" +
 					" ON jumper.id=visita.idjumper AND visita.date_g >= ? AND  visita.date_g < ? AND visita.status = 'ended'",dats, function(err, rows)
 				{
 	
@@ -179,7 +181,7 @@ exports.g_csv = function(req,res){
                             sec_left = (ahora - nac) / 1000;
                             years = parseInt(sec_left / 31536000);
                             writer.write([rows[i].id, years.toString(), rows[i].idjumper,(parseInt(rows[i].duration)-5).toString(),
-								rows[i].exento,date_g.toLocaleDateString(),date_g.toLocaleTimeString()]);
+								rows[i].exento,date_g.toLocaleDateString(),date_g.toLocaleTimeString(), new Date(rows[i].date_f).toLocaleTimeString()]);
 				    	}
 				    	writer.end();
                         res.send(camino);
@@ -272,3 +274,54 @@ exports.delete_user = function(req,res){
 		}
 		else res.redirect('/bad_login');
 };
+
+//Vista que renderiza los tipo de promocion y da la opcion de agregar o eliminar
+exports.tipo_promo = function(req, res){
+	if(req.session.isAdminLogged){
+		req.getConnection(function (err, connection) {
+			connection.query("SELECT * FROM tipo_promo", function(err, tipo_promo){
+	            if (err) console.log("Error selecting tipo_promo: %s ", err);
+	            res.render('tipo_promo',{tipo_promo: tipo_promo});
+	        });
+	    });
+	} else res.redirect('/bad_login');
+};
+
+//Vista que elimina un tipo de promocion
+exports.remove_tipo_promo = function(req, res){
+	if(req.session.isAdminLogged){
+		var idtipo_promo = req.params.idtipo_promo;
+		req.getConnection(function (err, connection) {
+			connection.query("DELETE FROM tipo_promo WHERE idtipo_promo = ?",[idtipo_promo], function(err, promo){
+	            if (err) console.log("Error deleting tipo_promo: %s ", err);
+	            connection.query("SELECT * FROM tipo_promo", function(err, tipo_promo){
+		            if (err) console.log("Error selecting tipo_promo: %s ", err);
+		            res.render('tipo_promo',{tipo_promo: tipo_promo});
+		        });
+	        });
+	    });
+	} else res.redirect('/bad_login');
+};
+
+//Vista que elimina un tipo de promocion
+exports.add_tipo_promo = function(req, res){
+	if(req.session.isAdminLogged){
+		var input = JSON.parse(JSON.stringify(req.body));
+		var value = input.tipo_promo.toLowerCase().split(" ").join("");
+		var tipo_promo = input.tipo_promo;
+		var data = {
+			tipo_promo: tipo_promo,
+			name_value: value
+		};
+		req.getConnection(function (err, connection) {
+			connection.query("INSERT INTO tipo_promo SET ? ",data, function(err, promo){
+	            if (err) console.log("Error inserting tipo_promo: %s ", err);
+	            connection.query("SELECT * FROM tipo_promo", function(err, tipo_promo){
+		            if (err) console.log("Error selecting tipo_promo: %s ", err);
+		            res.render('tipo_promo',{tipo_promo: tipo_promo});
+		        });
+	        });
+	    });
+	} else res.redirect('/bad_login');
+};
+

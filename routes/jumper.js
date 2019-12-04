@@ -92,10 +92,9 @@ exports.add2session = function(req, res){
             req.getConnection(function (err, connection) {
                 connection.query(query,ids, function (err, rows) {
                     if (err) console.log("Error selecting : %s ", err);
-                    var dateFormat = require('dateFormat');
                     for(var i = 0; i < rows.length;i++){
                         var aux = [rows[i].id,rows[i].name,
-                            rows[i].last_name, dateFormat(rows[i].fnac,"yyyy-mm-dd")];
+                            rows[i].last_name, new Date(rows[i].fnac).toISOString().split('T')[0]];
                         req.session.jumps.push(aux);
                     }
                     if(parseInt(input.continue)) {
@@ -141,7 +140,6 @@ exports.edit = function(req, res){
 exports.save_red = function(req,res){
 
     if(req.session.isUserLogged){
-
         var data =[];
         var aux;
         for(var i = 0; i < req.body.list.length;i++){
@@ -158,7 +156,6 @@ exports.save_red = function(req,res){
             var query = "INSERT INTO jumper (`name`, `last_name`, `fnac`) VALUES ?";
         }
         req.getConnection(function (err, connection) {
-
             connection.query(query,[data], function (err, rows) {
                 if (err){
                     console.log("Error inserting : %s ", err);
@@ -183,10 +180,8 @@ exports.save = function(req,res){
     if(req.session.isUserLogged){
         var data =[];
         var aux;
-        var dateFormat = require('dateFormat');
         for(var i = 0; i < req.session.pjumps.length;i++){
-            req.session.pjumps[i].fnac = dateFormat(req.session.pjumps[i].fnac,
-                "yyyy-mm-dd");
+            req.session.pjumps[i].fnac = new Date(req.session.pjumps[i].fnac).toISOString().split('T')[0];
             aux = [req.session.pjumps[i].name,
                 req.session.pjumps[i].last_name, req.session.pjumps[i].fnac];
             if(req.params.verif != "null"){

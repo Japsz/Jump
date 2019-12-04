@@ -5,6 +5,9 @@ node_modules
 public/csvs
 # Folder config file
 Desktop.ini
+/dumps
+backupConfig.js
+dbConfig.js
 
 /dumps
 backupConfig.js
@@ -53,3 +56,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 public/cods
+/node_modules
+public/csvs

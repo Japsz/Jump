@@ -75,7 +75,7 @@
                     <label>Apellido</label>
                     <input type="text" name="ape" class="form-control" id="ape">
                     <label>Fecha de nacimiento</label>
-                    <input type="text" name="fnac" class="form-control" id="fnac">
+                    <input type="date" name="fnac" class="form-control" id="fnac">
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">
@@ -101,7 +101,7 @@
                     <label>Apellido</label>
                     <input type="text" name="ape" class="form-control" id="ape">
                     <label>Fecha de nacimiento</label>
-                    <input type="text" name="fnac" class="form-control" id="fnac">
+                    <input type="date" name="fnac" class="form-control" id="fnac">
                     <label>Correo</label>
                     <input type="text" name="verif" class="form-control" id="verif">
 
@@ -251,13 +251,6 @@
         $(".modal-body #fnac").val(fnac);
         $(".modal-body #verif").val(verif);
         $(".modal-footer #continue-j").val(jumpid);
-        $('#fnac').datetimepicker({
-            viewMode: 'years',
-            format: 'YYYY/MM/DD',
-            maxDate: new Date(),
-            locale: 'es',
-            useCurrent: false
-        });
     });
 
     $(document).on("click", ".mpjump", function() {

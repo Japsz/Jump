@@ -118,18 +118,19 @@ exports.extend = function(req,res){
 
     req.getConnection(function(err,connection){
 
-        connection.query("SELECT visita.idjumper, vip.date_f FROM visita INNER JOIN vip WHERE visita.id = vip.id AND vip.id = ?", [id], function (err, rows) {
+        connection.query("SELECT visita.*, vip.date_f as date_fin FROM visita INNER JOIN vip WHERE visita.id = vip.id AND vip.id = ?", [id], function (err, rows) {
             if (err)
                 console.log("Error updating : %s ", err);
-            var ahora = new Date(rows[0].date_f).getTime();
-            console.log(new Date(rows[0].date_f));
+            var ahora = new Date(rows[0].date_fin).getTime();
             ahora = ahora + parseInt(input.tiempo)*60*1000;
             var fin = new Date(ahora);
-            console.log(fin);
             var data = {
                 idjumper : rows[0].idjumper,
-                duration: parseInt(input.tiempo) + 5,
-                date_g: new Date().toLocaleString(),
+                duration: rows[0].duration,
+                exento: rows[0].exento,
+                idinfo: rows[0].idinfo,
+                date_g: new Date(rows[0].date_g).toLocaleString(),
+                date_f: new Date().toLocaleString(),
                 status: 'ended'
             };
             connection.query("INSERT INTO visita SET  ?",[data], function (err, rows) {
@@ -138,8 +139,12 @@ exports.extend = function(req,res){
                 connection.query("UPDATE vip SET date_f = ? WHERE id = ?",[fin, input.id], function (err, rows) {
                     if (err)
                         console.log("Error updating : %s ", err);
+                    connection.query('UPDATE visita SET date_g = ?, duration = ? where id = ?', [new Date().toLocaleString(),parseInt(input.tiempo) + 5, id], function(err, rows){
+                        if(err){
+                            console.log(err)
+                        }
+                    })
                     req.app.locals.io.emit('ajax');
-
                     res.redirect('/vip_list');
                 });
             });
@@ -183,7 +188,7 @@ exports.sudo_del = function(req,res){
                     console.log("Error deleting : %s", err);
                 if(exvip.length){
                     if(!exvip[0].ended){
-                        connection.query("UPDATE visita SET status = 'ended' WHERE id = ? ",[idvip], function(err,rows){
+                        connection.query("UPDATE visita SET status = 'ended', date_f = CURRENT_TIMESTAMP WHERE id = ? ",[idvip], function(err,rows){
                             if(err)
                                 console.log("Error deleting : %s", err);
                             req.app.locals.io.emit('ajax');

@@ -1,19 +1,26 @@
 <%- include layouts/user_header.ejs %>
     <h2 class="page-header">Jumpers</h2>
+<form id="busqForm">
     <div class="row placeholder">
-        <div class="col-sm-4 col-xs-4">
-            <label>Correo</label>
-            <input type="text" class="form-control" name="verif" placeholder="juanp@gmail.com" onkeyup="stream()">
+        <div class="col-md-12">
+            <div class="col-sm-4 col-xs-4">
+                <label>Correo</label>
+                <input type="text" class="form-control" name="verif" placeholder="juanp@gmail.com">
+            </div>
+            <div class="col-sm-4 col-xs-4">
+                <label>Nombre</label>
+                <input type="text" class="form-control" name="nom" placeholder="Juan ">
+            </div>
+            <div class="col-sm-4 col-xs-4">
+                <label>Apellido</label>
+                <input type="text" class="form-control" name="ape" placeholder="Pérez">
+            </div>
         </div>
-        <div class="col-sm-4 col-xs-4">
-            <label>Nombre</label>
-            <input type="text" class="form-control" name="nom" placeholder="Juan " onkeyup="stream()">
-        </div>
-        <div class="col-sm-4 col-xs-4">
-            <label>Apellido</label>
-            <input type="text" class="form-control" name="ape" placeholder="Pérez" onkeyup="stream()">
+        <div class="col-md-12" style="padding:15px; padding-left: 35px; padding-right: 35px">
+            <button style="width: 100%" type="submit" class="btn btn-success"><i class="glyphicon glyphicon-search"></i></button>
         </div>
     </div>
+</form>
 <form action="/jumper/add2session" method="post">
     <div class="table-responsive">
         <table class="table table-striped"  >
@@ -78,6 +85,22 @@
 
 </div>
 <script>
+    var jumpTimeout;
+    //Reinicia el timeout con tiempo de 1,75(s)
+    $("#busqForm input").on('keyup',function(e){
+        if(e.keyCode != 13){
+            clearTimeout(jumpTimeout);
+            jumpTimeout = setTimeout(stream,1750);
+        }
+    });
+    //Maneja el formulario de búsquedas.
+    $("#busqForm").on('submit',function(e){
+        e.preventDefault();
+        clearTimeout(jumpTimeout);
+        stream();
+        console.log("submit");
+        return false;
+    });
     function stream() {
         var nom = document.getElementsByName("nom")[0].value;
         var ape = document.getElementsByName("ape")[0].value;
