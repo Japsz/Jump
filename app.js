@@ -69,7 +69,7 @@ app.get('/vip/near/:id', prod.time_near);
 
 //Visitas
 app.get('/venta', visita.add);
-app.get('/getbackup', require('./routes/database').backup);
+// app.get('/getbackup', require('./routes/database').backup);
 app.get('/venta/sessionpop/:id', visita.d_from_session);
 app.post('/visit/save', visita.save);
 app.get('/precods', visita.precods);
@@ -112,7 +112,7 @@ app.get('/pjump/:id', prejump.add);
 app.post('/pjump/register', prejump.transfer);
 app.post('/m_pjump',prejump.edit);
 
-//Users
+//Admin
 app.get('/user', admin.list);
 app.get('/user/add', admin.add);
 app.get('/csv', admin.stats);
@@ -135,16 +135,16 @@ app.post('/user_login_handler', users.user_login_handler);
 app.use(app.router);
 
 
-const mysqldump = require('mysqldump');
+//const mysqldump = require('mysqldump');
 var node_ssh, ssh;
 node_ssh = require('node-ssh');
 ssh = new node_ssh();
 
-const configs = require('./backupConfig');
+var configs = require('./backupConfig');
 
 const password = configs.ssh.password;
 const filename = 'dump-' + configs.mysqlHost.database + '-' + new Date().toLocaleDateString() + '--'+ new Date().toLocaleTimeString().replace(/:/g,'') + '.sql';
-const startDump = 'C:/Users/Go Jump/Desktop/Jump/dumps/' + filename;
+const startDump = './dumps/' + filename;
 var server = http.createServer(app);
 server.listen(app.get('port'), function(){
     console.log('The game starts on port ' + app.get('port'));
