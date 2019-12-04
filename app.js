@@ -144,7 +144,7 @@ const configs = require('./backupConfig');
 
 const password = configs.ssh.password;
 const filename = 'dump-' + configs.mysqlHost.database + '-' + new Date().toLocaleDateString() + '--'+ new Date().toLocaleTimeString().replace(/:/g,'') + '.sql';
-const startDump = './dumps/' + filename;
+const startDump = 'C:/Users/Go Jump/Desktop/Jump/dumps/' + filename;
 var server = http.createServer(app);
 server.listen(app.get('port'), function(){
     console.log('The game starts on port ' + app.get('port'));
